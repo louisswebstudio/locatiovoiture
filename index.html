@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bestore Car — Car Rental in Tangier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Epilogue:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ── Top Bar ──────────────────────────────────────── -->
+  <div class="top-bar">
+    <div class="top-bar__inner">
+      <span class="top-bar__left" data-i18n="topbar.address">Avenue Arrar N°27, Branes Narjiss, Tanger-Médina</span>
+      <span class="top-bar__right"><span data-i18n="topbar.hours">Open 24h/7</span> · 📞 <span data-i18n="topbar.phone">+212 6 61 66 12 30</span></span>
+    </div>
+  </div>
+
+  <!-- ── Navbar ─────────────────────────────────────── -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+
+      <a href="index.html" class="logo-link">
+        <img src="assets/images/logo.png" alt="Bestore Car" class="logo-img" style="height:55px; width:auto; object-fit:contain;">
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list">
+          <li><a href="#" class="nav__link nav__link--active" data-i18n="nav.home">Home</a></li>
+          <li><a href="fleet.html" class="nav__link" data-i18n="nav.fleet">Our Fleet</a></li>
+          <li><a href="contact.html" class="nav__link" data-i18n="nav.contact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- Language switcher -->
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-switcher__btn" data-lang="ar">ع</button>
+        <button class="lang-switcher__btn" data-lang="fr">FR</button>
+        <button class="lang-switcher__btn" data-lang="en">EN</button>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="nav-hamburger__line"></span>
+        <span class="nav-hamburger__line"></span>
+        <span class="nav-hamburger__line"></span>
+      </button>
+
+      <a href="tel:+212661661230" class="nav-phone">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        <span data-i18n="nav.phone.label">+212 6 61 66 12 30</span>
+      </a>
+
+      <a href="https://wa.me/212661661230"
+         class="btn-whatsapp"
+         target="_blank"
+         rel="noopener noreferrer">
+        <span data-i18n="nav.cta">Book on WhatsApp</span>
+        <span class="btn-whatsapp__circle">
+          <svg class="btn-whatsapp__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2.5 13.5L13.5 2.5M13.5 2.5H6M13.5 2.5V10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero__wrapper">
+
+      <!-- Background card -->
+      <div class="hero__card">
+        <img
+          class="hero__bg-img"
+          src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1400&q=80"
+          alt="Luxury car on the road"
+          loading="eager"
+        >
+        <div class="hero__overlay"></div>
+
+        <!-- Main content -->
+        <div class="hero__content">
+
+          <div class="hero__label" id="heroLabel">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+            </svg>
+            <span data-i18n="hero.label">Welcome To Bestore Car</span>
+          </div>
+
+          <h1 class="hero__heading" id="heroHeading" data-i18n="hero.heading">
+            Looking for a car rental in Tangier?
+          </h1>
+
+          <p class="hero__subtext" id="heroSubtext" data-i18n="hero.sub">
+            Whether you're planning a weekend trip, a business journey,
+            or just need a reliable ride — Bestore Car has the right vehicle for you.
+          </p>
+
+          <div class="hero__ctas">
+            <a
+              href="tel:+212661661230"
+              class="hero__btn hero__btn--red"
+              data-i18n="hero.cta1">+212 6 61 66 12 30</a>
+
+            <div class="hero__btn-wrap">
+              <a href="https://wa.me/212661661230" class="hero__btn hero__btn--white" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta2">Explore Our Fleet</a>
+              <span class="hero__btn-circle" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#040401" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <p class="hero__tagline" data-i18n="hero.tagline">Starting from 280 MAD / day — No hidden fees</p>
+
+        </div>
+      </div>
+
+      <!-- Booking bar -->
+      <div class="hero__booking">
+        <div class="booking-bar">
+
+          <div class="booking-bar__field">
+            <label class="booking-bar__label" for="qs-pickup" data-i18n="qs.pickup">Pickup Date</label>
+            <input class="booking-bar__input" type="date" id="qs-pickup" required>
+          </div>
+
+          <div class="booking-bar__sep" aria-hidden="true"></div>
+
+          <div class="booking-bar__field">
+            <label class="booking-bar__label" for="qs-return" data-i18n="qs.return">Return Date</label>
+            <input class="booking-bar__input" type="date" id="qs-return" required>
+          </div>
+
+          <button class="booking-bar__send" id="qs-submit" type="button">
+            <span data-i18n="qs.btn">View Our Fleet →</span>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── About ─────────────────────────────────────────── -->
+  <section class="about" id="about">
+    <div class="about__inner">
+
+      <div class="about__images" id="aboutImages">
+        <span class="about__deco about__deco--asterisk" aria-hidden="true">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M27 0 31.7 18.9 51.3 10.4 42.8 30 62.4 33 42.8 36 51.3 54.6 31.7 46.1 27 65 22.3 46.1 2.7 54.6 11.2 36-8.4 33 11.2 30 2.7 10.4 22.3 18.9Z" fill="#FF3600"/>
+          </svg>
+        </span>
+        <span class="about__deco about__deco--star" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="#12182B"/>
+          </svg>
+        </span>
+        <div class="about__img-main-wrap">
+          <span class="about__img-border about__img-border--main" aria-hidden="true"></span>
+          <img class="about__img-main" src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800" alt="Bestore Car premium vehicle" loading="lazy">
+        </div>
+        <div class="about__img-overlay-wrap">
+          <span class="about__img-border about__img-border--overlay" aria-hidden="true"></span>
+          <img class="about__img-overlay" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600" alt="Bestore Car fleet" loading="lazy">
+        </div>
+      </div>
+
+      <div class="about__content" id="aboutContent">
+        <div class="about__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+          </svg>
+          <span class="about__label-text" data-i18n="about.label">About Us</span>
+        </div>
+        <h2 class="about__heading" data-i18n="about.heading">Your trusted partner for car rental in Tangier</h2>
+        <p class="about__desc" data-i18n="about.desc">Since 2019, Bestore Car has been serving clients with a well-maintained, modern fleet. Based in Tangier-Medina, we offer transparent pricing and reliable service you can count on.</p>
+        <div class="about__features">
+          <div class="about__feature about__feature--bordered">
+            <div class="about__feature-icon-wrap">
+              <span class="about__feature-icon-bg" aria-hidden="true"></span>
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M17 2C8.716 2 2 8.716 2 17c0 3.18.88 6.15 2.416 8.676L2 32l6.468-2.35A14.924 14.924 0 0017 32c8.284 0 15-6.716 15-15S25.284 2 17 2zm0 27.6a12.518 12.518 0 01-6.384-1.75l-.456-.273-4.74 1.537 1.585-4.615-.3-.476A12.537 12.537 0 014.4 17C4.4 9.892 10.093 4.4 17 4.4S29.6 9.892 29.6 17 24.108 29.6 17 29.6zm6.883-9.342c-.378-.189-2.228-1.1-2.574-1.226-.345-.126-.596-.189-.846.189-.251.377-.972 1.226-1.19 1.477-.22.252-.44.283-.818.095-.378-.189-1.59-.585-3.03-1.869-1.12-.996-1.876-2.226-2.095-2.601-.22-.378-.024-.582.165-.771.169-.169.378-.44.567-.66.19-.22.252-.378.378-.63.126-.251.063-.472-.032-.66-.094-.19-.846-2.039-1.158-2.793-.305-.734-.616-.636-.846-.648-.22-.01-.472-.013-.724-.013-.252 0-.66.095-1.007.472-.346.378-1.323 1.29-1.323 3.15 0 1.86 1.354 3.655 1.543 3.906.189.252 2.666 4.068 6.455 5.706.904.39 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#FF3600"/>
+              </svg>
+            </div>
+            <div class="about__feature-body">
+              <h3 class="about__feature-title" data-i18n="about.f1.title">Instant WhatsApp Booking</h3>
+              <p class="about__feature-desc" data-i18n="about.f1.desc">Send us a message and get confirmation within 30 minutes.</p>
+            </div>
+          </div>
+          <div class="about__feature">
+            <div class="about__feature-icon-wrap">
+              <span class="about__feature-icon-bg" aria-hidden="true"></span>
+              <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M36 17h-1v-5.586l-4-4H24V5a2 2 0 00-2-2H4a2 2 0 00-2 2v13H1a1 1 0 000 2h1.05a4 4 0 007.9 0h8.1a4 4 0 007.9 0H36a1 1 0 000-2zm-29 5a2 2 0 110-4 2 2 0 010 4zm17 0a2 2 0 110-4 2 2 0 010 4zM22 17H4V5h16v12zm2-8.586L26.586 11H24V8.414z" fill="#FF3600"/>
+              </svg>
+            </div>
+            <div class="about__feature-body">
+              <h3 class="about__feature-title" data-i18n="about.f2.title">Flexible Pickup &amp; Delivery</h3>
+              <p class="about__feature-desc" data-i18n="about.f2.desc">Agency, airport, hotel or anywhere in Tangier.</p>
+            </div>
+          </div>
+        </div>
+        <div class="about__cta-wrap">
+          <a href="contact.html" class="about__cta">
+            <span data-i18n="about.cta">contact us</span>
+            <span class="about__cta-circle" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 13.5L13.5 2.5M13.5 2.5H6M13.5 2.5V10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Fleet ─────────────────────────────────────────── -->
+  <section class="fleet" id="fleet">
+    <div class="fleet__inner">
+      <div class="fleet__header" id="fleetHeader">
+        <div class="fleet__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+          </svg>
+          <span class="fleet__label-text" data-i18n="fleet.label">Our Fleet</span>
+        </div>
+        <h2 class="fleet__heading" data-i18n="fleet.heading">Explore our available vehicles in Tangier</h2>
+      </div>
+      <div class="fleet__carousel-wrap">
+        <div class="fleet__track" id="fleetTrack"></div>
+      </div>
+      <div class="fleet__nav-row">
+        <button class="fleet__nav" id="fleetPrev" aria-label="Previous slide">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2L4 8L10 14" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="fleet__nav" id="fleetNext" aria-label="Next slide">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 2L12 8L6 14" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ───────────────────────────────────── -->
+  <section class="hiw" id="how-it-works">
+    <div class="hiw__inner">
+      <div class="hiw__left" id="hiwLeft">
+        <div class="hiw__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+          </svg>
+          <span class="hiw__label-text" data-i18n="how.label">How It Works</span>
+        </div>
+        <h2 class="hiw__heading" data-i18n="how.heading">Three simple steps to get on the road</h2>
+        <p class="hiw__desc" data-i18n="how.desc">We've made car rental as simple as possible — from choosing your car to getting the keys.</p>
+        <div class="hiw__steps" id="hiwSteps">
+          <div class="hiw__step">
+            <span class="hiw__step-num">01</span>
+            <div class="hiw__step-content">
+              <h3 class="hiw__step-title" data-i18n="how.s1.title">Browse &amp; Choose</h3>
+              <p class="hiw__step-desc" data-i18n="how.s1.desc">Explore our fleet and pick the vehicle that fits your needs and budget.</p>
+            </div>
+          </div>
+          <div class="hiw__step">
+            <span class="hiw__step-num">02</span>
+            <div class="hiw__step-content">
+              <h3 class="hiw__step-title" data-i18n="how.s2.title">Book on WhatsApp</h3>
+              <p class="hiw__step-desc" data-i18n="how.s2.desc">Send us your request. We confirm availability within 30 minutes.</p>
+            </div>
+          </div>
+          <div class="hiw__step">
+            <span class="hiw__step-num">03</span>
+            <div class="hiw__step-content">
+              <h3 class="hiw__step-title" data-i18n="how.s3.title">Hit the Road</h3>
+              <p class="hiw__step-desc" data-i18n="how.s3.desc">Pick up your car and enjoy the drive.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hiw__right" id="hiwRight">
+        <span class="hiw__deco hiw__deco--asterisk" aria-hidden="true">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M27 0 31.7 18.9 51.3 10.4 42.8 30 62.4 33 42.8 36 51.3 54.6 31.7 46.1 27 65 22.3 46.1 2.7 54.6 11.2 36-8.4 33 11.2 30 2.7 10.4 22.3 18.9Z" fill="#FF3600"/>
+          </svg>
+        </span>
+        <span class="hiw__deco hiw__deco--star" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="#12182B"/>
+          </svg>
+        </span>
+        <div class="hiw__img-wrap">
+          <span class="hiw__img-border" aria-hidden="true"></span>
+          <img class="hiw__img" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800" alt="Happy customer driving a rental car" loading="lazy">
+        </div>
+        <div class="hiw__badge">
+          <p class="hiw__badge-count" data-i18n="how.badge.count">500+</p>
+          <p class="hiw__badge-label" data-i18n="how.badge.label">happy clients in Tangier</p>
+          <div class="hiw__badge-rule"></div>
+          <div class="hiw__badge-avatars" aria-hidden="true">
+            <span class="hiw__avatar hiw__avatar--1"></span>
+            <span class="hiw__avatar hiw__avatar--2"></span>
+            <span class="hiw__avatar hiw__avatar--3"></span>
+            <span class="hiw__avatar hiw__avatar--plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Why Choose Us ──────────────────────────────────── -->
+  <section class="wcu" id="why-choose-us">
+    <div class="wcu__inner">
+      <div class="wcu__header" id="wcuHeader">
+        <div class="wcu__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+          </svg>
+          <span class="wcu__label-text" data-i18n="wcu.label">Why Choose Us</span>
+        </div>
+        <h2 class="wcu__heading" data-i18n="wcu.heading">Quality and reliability for every journey</h2>
+      </div>
+      <div class="wcu__grid">
+        <div class="wcu__col wcu__col--features" id="wcuLeft">
+          <div class="wcu__feature wcu__feature--sep">
+            <div class="wcu__feat-icon-wrap">
+              <span class="wcu__feat-icon-bg" aria-hidden="true"></span>
+              <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 9L8.5 3H19.5L22 9" stroke="#FF3600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 9H27V15C27 16.1 26.1 17 25 17H3C1.9 17 1 16.1 1 15V9Z" stroke="#FF3600" stroke-width="1.6"/>
+                <circle cx="7" cy="18" r="2" stroke="#FF3600" stroke-width="1.6"/>
+                <circle cx="21" cy="18" r="2" stroke="#FF3600" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div class="wcu__feat-body">
+              <h3 class="wcu__feat-title" data-i18n="wcu.f1.title">Diverse Modern Fleet</h3>
+              <p class="wcu__feat-desc" data-i18n="wcu.f1.desc">From compact city cars to spacious SUVs.</p>
+            </div>
+          </div>
+          <div class="wcu__feature">
+            <div class="wcu__feat-icon-wrap">
+              <span class="wcu__feat-icon-bg" aria-hidden="true"></span>
+              <svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M3 11C3 5.48 7.48 1 13 1C18.52 1 23 5.48 23 11" stroke="#FF3600" stroke-width="1.6" stroke-linecap="round"/>
+                <rect x="1" y="11" width="4.5" height="7.5" rx="2.25" stroke="#FF3600" stroke-width="1.6"/>
+                <rect x="20.5" y="11" width="4.5" height="7.5" rx="2.25" stroke="#FF3600" stroke-width="1.6"/>
+                <path d="M23 18.5C23 21 18.5 23 13 23" stroke="#FF3600" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="wcu__feat-body">
+              <h3 class="wcu__feat-title" data-i18n="wcu.f2.title">Responsive Support</h3>
+              <p class="wcu__feat-desc" data-i18n="wcu.f2.desc">Available 7 days a week.</p>
+            </div>
+          </div>
+        </div>
+        <div class="wcu__col wcu__col--center" id="wcuCenter">
+          <div class="wcu__img-stack">
+            <img class="wcu__img-featured" src="whychoose.png" alt="Luxury car in Tangier" loading="lazy">
+          </div>
+        </div>
+        <div class="wcu__col wcu__col--features" id="wcuRight">
+          <div class="wcu__feature wcu__feature--sep">
+            <div class="wcu__feat-icon-wrap">
+              <span class="wcu__feat-icon-bg" aria-hidden="true"></span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M22 17.5L14.5 12.5V5C14.5 3.9 13.6 3 12.5 3C11.4 3 10.5 3.9 10.5 5V12.5L3 17.5L3.1 19L11 16.5V21L9 22.5V24L12.5 23L16 24V22.5L14 21V16.5L21.9 19L22 17.5Z" fill="#FF3600"/>
+              </svg>
+            </div>
+            <div class="wcu__feat-body">
+              <h3 class="wcu__feat-title" data-i18n="wcu.f3.title">Airport Delivery</h3>
+              <p class="wcu__feat-desc" data-i18n="wcu.f3.desc">Ibn Battouta Airport pickup and drop-off.</p>
+            </div>
+          </div>
+          <div class="wcu__feature">
+            <div class="wcu__feat-icon-wrap">
+              <span class="wcu__feat-icon-bg" aria-hidden="true"></span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M2 2H10.17C10.70 2 11.21 2.21 11.59 2.59L21.41 12.41C22.20 13.19 22.20 14.47 21.41 15.26L15.26 21.41C14.47 22.20 13.19 22.20 12.41 21.41L2.59 11.59C2.21 11.21 2 10.70 2 10.17V2Z" stroke="#FF3600" stroke-width="1.6"/>
+                <circle cx="6" cy="6" r="1.75" fill="#FF3600"/>
+              </svg>
+            </div>
+            <div class="wcu__feat-body">
+              <h3 class="wcu__feat-title" data-i18n="wcu.f4.title">Transparent Pricing</h3>
+              <p class="wcu__feat-desc" data-i18n="wcu.f4.desc">No hidden fees. Price you see is final.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────── -->
+  <section class="faq" id="faq">
+    <div class="faq__wrapper">
+      <div class="faq__bg">
+        <div class="faq__inner">
+          <div class="faq__images" id="faqImages">
+            <img class="faq__collage" src="assets/images/image-1779501686217.webp" alt="Car rental collage" loading="lazy">
+          </div>
+          <div class="faq__content" id="faqContent">
+            <div class="faq__label-row">
+              <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+              </svg>
+              <span class="faq__label-text" data-i18n="faq.label">Frequently Asked Questions</span>
+            </div>
+            <h2 class="faq__heading" data-i18n="faq.heading">Everything you need to know about renting with us</h2>
+            <div class="faq__accordion" id="faqAccordion">
+              <div class="faq__item faq__item--open">
+                <button class="faq__question" aria-expanded="true">
+                  <span data-i18n="faq.q1">What documents do I need to rent a car?</span>
+                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div class="faq__answer">
+                  <p data-i18n="faq.a1">A valid driver's license and a national ID or passport. A security deposit may apply depending on the vehicle.</p>
+                </div>
+              </div>
+              <div class="faq__item">
+                <button class="faq__question" aria-expanded="false">
+                  <span data-i18n="faq.q2">What is the minimum age to rent a car?</span>
+                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div class="faq__answer">
+                  <p data-i18n="faq.a2">The minimum age is 21 years old with a valid driving license.</p>
+                </div>
+              </div>
+              <div class="faq__item">
+                <button class="faq__question" aria-expanded="false">
+                  <span data-i18n="faq.q3">How do I make a reservation?</span>
+                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div class="faq__answer">
+                  <p data-i18n="faq.a3">Send us a WhatsApp message with your name, dates and preferred vehicle. We confirm within 30 minutes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ──────────────────────────────────── -->
+  <section class="testimonials" id="testimonials">
+    <div class="testimonials__inner">
+      <div class="testimonials__header">
+        <div class="testimonials__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
+          </svg>
+          <span class="testimonials__label-text" data-i18n="testi.label">Testimonials</span>
+        </div>
+        <h2 class="testimonials__heading" data-i18n="testi.heading">What our customers are saying</h2>
+      </div>
+      <div class="testimonials__grid">
+        <div class="testimonials__card">
+          <div class="testimonials__stars">⭐⭐⭐⭐☆</div>
+          <div class="testimonials__review-wrap">
+            <p class="testimonials__review" data-i18n="testi.r1">"Renting with Bestore Car was the best decision for my Tangier trip. Clean car, price exactly as quoted — no surprises at pickup."</p>
+          </div>
+          <div class="testimonials__author">
+            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Karim+El+Fassi&size=60&background=FF3600&color=fff&rounded=true&bold=true" alt="Karim El Fassi">
+            <div class="testimonials__author-info">
+              <span class="testimonials__author-name" data-i18n="testi.r1.name">Karim El Fassi</span>
+              <span class="testimonials__author-role" data-i18n="testi.r1.role">Business Traveler, Casablanca</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonials__card">
+          <div class="testimonials__stars">⭐⭐⭐⭐⭐</div>
+          <div class="testimonials__review-wrap">
+            <p class="testimonials__review" data-i18n="testi.r2">"Needed a car at short notice, WhatsApp reply in under 10 minutes. Delivered to Ibn Battouta airport exactly on time. Highly recommend."</p>
+          </div>
+          <div class="testimonials__author">
+            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Sarah+M&size=60&background=040401&color=fff&rounded=true&bold=true" alt="Sarah Mitchell">
+            <div class="testimonials__author-info">
+              <span class="testimonials__author-name" data-i18n="testi.r2.name">Sarah Mitchell</span>
+              <span class="testimonials__author-role" data-i18n="testi.r2.role">Tourist, United Kingdom</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonials__card">
+          <div class="testimonials__stars">⭐⭐⭐⭐⭐</div>
+          <div class="testimonials__review-wrap">
+            <p class="testimonials__review" data-i18n="testi.r3">"Very professional. Vehicle was clean and exactly as described. Smooth process from first WhatsApp message to returning the keys."</p>
+          </div>
+          <div class="testimonials__author">
+            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Youssef+B&size=60&background=FF3600&color=fff&rounded=true&bold=true" alt="Youssef Bennani">
+            <div class="testimonials__author-info">
+              <span class="testimonials__author-name" data-i18n="testi.r3.name">Youssef Bennani</span>
+              <span class="testimonials__author-role" data-i18n="testi.r3.role">Local Business Owner, Tanger</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────── -->
+  <section class="cta" id="contact">
+    <div class="cta__wrapper">
+      <div class="cta__card">
+        <div class="cta__deco" aria-hidden="true">
+          <svg class="cta__deco-svg" viewBox="0 0 1300 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <circle cx="950" cy="220" r="100" stroke="white" stroke-width="1.2" opacity="0.13"/>
+            <circle cx="950" cy="220" r="190" stroke="white" stroke-width="1.2" opacity="0.10"/>
+            <circle cx="950" cy="220" r="280" stroke="white" stroke-width="1.2" opacity="0.08"/>
+            <circle cx="950" cy="220" r="370" stroke="white" stroke-width="1.2" opacity="0.06"/>
+            <circle cx="950" cy="220" r="460" stroke="white" stroke-width="1.2" opacity="0.05"/>
+            <circle cx="950" cy="220" r="550" stroke="white" stroke-width="1.2" opacity="0.04"/>
+            <circle cx="950" cy="220" r="640" stroke="white" stroke-width="1.2" opacity="0.03"/>
+          </svg>
+        </div>
+        <div class="cta__inner">
+          <div class="cta__left">
+            <h2 class="cta__heading" data-i18n="cta.heading">Ready to hit the road? Book your car today!</h2>
+            <p class="cta__subtext" data-i18n="cta.desc">Our team is available 7 days a week. Reach out on WhatsApp for an instant response.</p>
+            <div class="cta__btn-wrap">
+              <a href="https://wa.me/212661661230" class="cta__btn" target="_blank" rel="noopener noreferrer" data-i18n="cta.btn">Book on WhatsApp</a>
+              <span class="cta__btn-circle" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 13.5L13.5 2.5M13.5 2.5H6M13.5 2.5V10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="cta__right">
+            <img class="cta__car-img" src="cta-car-img.png" alt="Book a car with Bestore Car" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__wrapper">
+      <div class="footer__card">
+        <span class="footer__star footer__star--lg" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.18"/></svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bl" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/></svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bc" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/></svg>
+        </span>
+        <div class="footer__inner">
+          <div class="footer__cols">
+            <div class="footer__col footer__col--brand">
+              <a href="index.html" class="logo-link">
+                <img src="assets/images/logo.png" alt="Bestore Car" class="logo-img footer-logo" style="height:45px; width:auto; object-fit:contain;">
+              </a>
+              <p class="footer__desc" data-i18n="footer.desc">Your trusted car rental agency in Tangier since 2019. Modern fleet, fixed prices, airport delivery available.</p>
+            </div>
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.legal">Legal</h3>
+              <ul class="footer__links">
+                <li><a href="#" class="footer__link" data-i18n="footer.terms">Terms &amp; Conditions</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.privacy">Privacy Policy</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.notice">Legal Notice</a></li>
+              </ul>
+            </div>
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.links">Quick Links</h3>
+              <ul class="footer__links">
+                <li><a href="index.html" class="footer__link" data-i18n="footer.home">Home</a></li>
+                <li><a href="fleet.html" class="footer__link" data-i18n="footer.fleet">Fleet</a></li>
+                <li><a href="contact.html" class="footer__link" data-i18n="footer.contact">Contact Us</a></li>
+              </ul>
+            </div>
+            <div class="footer__col footer__col--contact">
+              <h3 class="footer__col-title" data-i18n="footer.touch">Get in Touch</h3>
+              <div class="footer__hours">
+                <p data-i18n="footer.hours">Open 24 hours, 7 days a week</p>
+              </div>
+              <p class="footer__phone">+212 6 61 66 12 30</p>
+              <a href="https://wa.me/212661661230" class="footer__wa-btn" target="_blank" rel="noopener noreferrer" data-i18n="footer.whatsapp">Chat on WhatsApp →</a>
+            </div>
+          </div>
+          <div class="footer__bottom">
+            <p class="footer__copy" data-i18n="footer.copy">© 2026 Bestore Car — Tangier, Morocco. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/i18n.js"></script>
+  <script>
+    (function() {
+      var today = new Date().toISOString().split('T')[0];
+      var pickupEl = document.getElementById('qs-pickup');
+      if (pickupEl) pickupEl.setAttribute('min', today);
+
+      document.getElementById('qs-submit').addEventListener('click', function() {
+        var pickup = document.getElementById('qs-pickup').value;
+        var ret = document.getElementById('qs-return').value;
+        if (pickup) sessionStorage.setItem('pickup_date', pickup);
+        if (ret) sessionStorage.setItem('return_date', ret);
+        window.location.href = 'fleet.html';
+      });
+    })();
+  </script>
+
+  <!-- ── Floating WhatsApp button ── -->
+  <a href="https://wa.me/212661661230" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+    </svg>
+  </a>
+</body>
+</html>

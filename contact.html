@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Bestore Car</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Epilogue:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────── -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+
+      <a href="index.html" class="logo-link">
+        <img src="assets/images/logo.png" alt="Bestore Car" class="logo-img" style="height:55px; width:auto; object-fit:contain;">
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list">
+          <li><a href="index.html"   class="nav__link" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="fleet.html"   class="nav__link" data-i18n="nav.fleet">أسطولنا</a></li>
+          <li><a href="contact.html" class="nav__link nav__link--active" data-i18n="nav.contact">تواصل معنا</a></li>
+        </ul>
+      </nav>
+
+      <!-- Language switcher -->
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-switcher__btn" data-lang="ar">ع</button>
+        <button class="lang-switcher__btn" data-lang="fr">FR</button>
+        <button class="lang-switcher__btn" data-lang="en">EN</button>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="nav-hamburger__line"></span>
+        <span class="nav-hamburger__line"></span>
+        <span class="nav-hamburger__line"></span>
+      </button>
+
+      <a href="tel:+212661661230" class="nav-phone">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        +212 6 61 66 12 30
+      </a>
+
+      <a href="https://wa.me/212661661230"
+         class="btn-whatsapp"
+         target="_blank"
+         rel="noopener noreferrer">
+        <span data-i18n="nav.cta">احجز عبر واتساب</span>
+        <span class="btn-whatsapp__circle">
+          <svg class="btn-whatsapp__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2.5 13.5L13.5 2.5M13.5 2.5H6M13.5 2.5V10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- ── Contact Hero ───────────────────────────────────── -->
+  <section class="contact-hero">
+    <div class="contact-hero__container">
+      <div class="contact-hero__card">
+
+        <!-- Background image -->
+        <img
+          class="contact-hero__bg-img"
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1400&q=80"
+          alt="Cars in a showroom"
+          loading="eager"
+        >
+
+        <!-- Dark overlay -->
+        <div class="contact-hero__overlay"></div>
+
+        <!-- Content -->
+        <div class="contact-hero__content">
+          <h1 class="contact-hero__heading" data-i18n="contact.hero">تواصل معنا</h1>
+          <nav class="contact-hero__breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html" class="contact-hero__bc-home" data-i18n="contact.bc.home">الرئيسية</a>
+            <span class="contact-hero__bc-sep" aria-hidden="true">/</span>
+            <span class="contact-hero__bc-current" data-i18n="contact.bc.current">تواصل معنا</span>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact Info + Form ───────────────────────────── -->
+  <section class="contact-section">
+    <div class="contact-section__container">
+      <div class="contact-card">
+
+        <!-- Left: dark info panel -->
+        <div class="contact-card__left">
+          <div class="contact-info">
+
+            <div class="contact-info__top">
+              <h2 class="contact-info__heading" data-i18n="contact.info.title">معلومات التواصل</h2>
+              <p class="contact-info__sub" data-i18n="contact.info.sub">تواصل معنا عبر واتساب للحصول على رد فوري!</p>
+            </div>
+
+            <ul class="contact-info__list">
+              <li class="contact-info__item">
+                <span class="contact-info__icon" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="19" stroke="white" stroke-width="1.5"/>
+                    <path d="M14 16c0-1.1.9-2 2-2h1l2 4-1.5 1.5c1 2 2.5 3.5 4.5 4.5L23.5 23l4 2v1c0 1.1-.9 2-2 2C13 28 12 16 14 16z" stroke="white" stroke-width="1.5" fill="none"/>
+                  </svg>
+                </span>
+                <span class="contact-info__text">+212 6 61 66 12 30</span>
+              </li>
+              <li class="contact-info__item">
+                <span class="contact-info__icon" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="19" stroke="white" stroke-width="1.5"/>
+                    <rect x="12" y="15" width="16" height="11" rx="1.5" stroke="white" stroke-width="1.5"/>
+                    <path d="M12 16l8 6 8-6" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="contact-info__text">contact@bestorecar.ma</span>
+              </li>
+              <li class="contact-info__item">
+                <span class="contact-info__icon" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="19" stroke="white" stroke-width="1.5"/>
+                    <path d="M20 11a7 7 0 0 1 7 7c0 5-7 12-7 12s-7-7-7-12a7 7 0 0 1 7-7z" stroke="white" stroke-width="1.5" fill="none"/>
+                    <circle cx="20" cy="18" r="2.5" stroke="white" stroke-width="1.5"/>
+                  </svg>
+                </span>
+                <span class="contact-info__text">Avenue Arrar N°27, Branes Narjiss,<br>Tanger-Médina</span>
+              </li>
+            </ul>
+
+            <div class="contact-info__socials">
+              <a href="#" class="contact-info__social" aria-label="Facebook">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                </svg>
+              </a>
+              <a href="https://www.instagram.com/bestore.car" class="contact-info__social" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1.2" fill="white" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://wa.me/212661661230" class="contact-info__social" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+                </svg>
+              </a>
+              <a href="#" class="contact-info__social" aria-label="TikTok">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.26 8.26 0 004.84 1.55V6.86a4.85 4.85 0 01-1.07-.17z"/>
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: contact form -->
+        <div class="contact-card__right">
+          <div class="contact-form-simple">
+            <h3 class="contact-form-simple__title" data-i18n="contact.form.title">تواصل معنا مباشرة</h3>
+
+            <a href="https://wa.me/212661661230"
+               class="contact-form__wa-btn"
+               target="_blank"
+               rel="noopener noreferrer"
+               data-i18n="contact.direct.btn">💬 تحدث عبر واتساب</a>
+
+            <p class="contact-form__divider" data-i18n="contact.direct.or">— أو أرسل رسالة سريعة —</p>
+
+            <form class="contact-form" id="contactForm" onsubmit="return false">
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-name" data-i18n="contact.form.name">الاسم الكامل</label>
+                <input class="contact-form__input" type="text" id="cf-name" placeholder="اسمك الكامل" data-i18n-placeholder="contact.form.ph.name" required autocomplete="name">
+              </div>
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-phone" data-i18n="contact.form.phone">رقم الواتساب</label>
+                <input class="contact-form__input" type="tel" id="cf-phone" placeholder="رقم واتساب" data-i18n-placeholder="contact.form.ph.phone" required autocomplete="tel">
+              </div>
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-message" data-i18n="contact.form.msg">الرسالة</label>
+                <textarea class="contact-form__textarea" id="cf-message" rows="3" placeholder="أود استئجار سيارة من [التاريخ] إلى [التاريخ]..." data-i18n-placeholder="contact.form.ph.msg"></textarea>
+              </div>
+              <button class="contact-form__submit" type="button" id="cfSubmit" data-i18n="contact.form.btn">أرسل عبر واتساب →</button>
+            </form>
+
+            <p class="contact-form__reply-note" data-i18n="contact.form.note">⚡ نرد خلال 30 دقيقة</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Google Maps ─────────────────────────────────────── -->
+  <section class="map-section">
+    <div class="map-section__container">
+      <iframe
+        class="map-section__embed"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.2!2d-5.8100!3d35.7595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0b875!2sAvenue%20Arrar%20N%C2%B027%2C%20Branes%20Narjiss%2C%20Tanger-M%C3%A9dina%2C%20Morocco!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Bestore Car location — Avenue Arrar N°27, Tanger-Médina"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__wrapper">
+      <div class="footer__card">
+
+        <!-- Decorative 4-pointed stars -->
+        <span class="footer__star footer__star--lg" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.18"/>
+          </svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bl" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/>
+          </svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bc" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/>
+          </svg>
+        </span>
+
+        <!-- Main content -->
+        <div class="footer__inner">
+
+          <div class="footer__cols">
+
+            <!-- Column 1: Brand -->
+            <div class="footer__col footer__col--brand">
+              <a href="index.html" class="logo-link">
+                <img src="assets/images/logo.png" alt="Bestore Car" class="logo-img footer-logo" style="height:45px; width:auto; object-fit:contain;">
+              </a>
+              <p class="footer__desc" data-i18n="footer.desc">وكالتك الموثوقة لتأجير السيارات في طنجة منذ 2019. أسطول حديث، أسعار ثابتة، خدمة توصيل متاحة.</p>
+            </div>
+
+            <!-- Column 2: Legal Policy -->
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.legal">قانوني</h3>
+              <ul class="footer__links">
+                <li><a href="#" class="footer__link" data-i18n="footer.terms">الشروط والأحكام</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.privacy">سياسة الخصوصية</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.notice">الإشعار القانوني</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 3: Quick Links -->
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.links">روابط سريعة</h3>
+              <ul class="footer__links">
+                <li><a href="index.html"  class="footer__link" data-i18n="footer.home">الرئيسية</a></li>
+                <li><a href="fleet.html"  class="footer__link" data-i18n="footer.fleet">الأسطول</a></li>
+                <li><a href="contact.html" class="footer__link" data-i18n="footer.contact">تواصل معنا</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 4: Get in Touch -->
+            <div class="footer__col footer__col--contact">
+              <h3 class="footer__col-title" data-i18n="footer.touch">تواصل معنا</h3>
+              <div class="footer__hours">
+                <p data-i18n="footer.hours">مفتوح 24 ساعة، 7 أيام في الأسبوع</p>
+              </div>
+              <p class="footer__phone">+212 6 61 66 12 30</p>
+              <a href="https://wa.me/212661661230"
+                 class="footer__wa-btn"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 data-i18n="footer.whatsapp">تحدث عبر واتساب →</a>
+            </div>
+
+          </div>
+
+          <!-- Bottom bar -->
+          <div class="footer__bottom">
+            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('cfSubmit').addEventListener('click', function () {
+      var name    = document.getElementById('cf-name').value.trim() || '—';
+      var phone   = document.getElementById('cf-phone').value.trim() || '—';
+      var message = document.getElementById('cf-message').value.trim();
+      var text = 'Hello Bestore Car!\nName: ' + name + '\nPhone: ' + phone + (message ? '\nMessage: ' + message : '');
+      window.open('https://wa.me/212661661230?text=' + encodeURIComponent(text), '_blank');
+    });
+  </script>
+  <script src="js/i18n.js"></script>
+
+  <!-- ── Floating WhatsApp button ── -->
+  <a href="https://wa.me/212661661230"
+     class="wa-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+    </svg>
+  </a>
+</body>
+</html>
