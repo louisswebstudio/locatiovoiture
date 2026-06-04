@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Detail — Bestore Car</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Epilogue:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────── -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+
+      <a href="index.html" class="logo-link">
+        <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img" style="height:150px; width:auto; object-fit:contain;">
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list">
+          <li><a href="index.html"   class="nav__link" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="fleet.html"   class="nav__link nav__link--active" data-i18n="nav.fleet">أسطولنا</a></li>
+          <li><a href="contact.html" class="nav__link" data-i18n="nav.contact">تواصل معنا</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-right">
+        <!-- Language switcher -->
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-switcher__btn" data-lang="ar">ع</button>
+          <button class="lang-switcher__btn" data-lang="fr">FR</button>
+          <button class="lang-switcher__btn" data-lang="en">EN</button>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav-hamburger__line"></span>
+          <span class="nav-hamburger__line"></span>
+          <span class="nav-hamburger__line"></span>
+        </button>
+
+        <a href="https://wa.me/212661661230"
+           class="btn-primary nav-cta"
+           target="_blank"
+           rel="noopener noreferrer"
+           data-i18n="nav.cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span data-i18n="nav.cta">احجز عبر واتساب</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ── Car Detail Hero ──────────────────────────────────── -->
+  <section class="cd-hero">
+    <div class="cd-hero__container">
+      <div class="cd-hero__card">
+
+        <!-- Background (car image set by JS) -->
+        <div class="cd-hero__bg" id="hero-bg"></div>
+
+        <!-- Dark overlay -->
+        <div class="cd-hero__overlay"></div>
+
+        <!-- Content -->
+        <div class="cd-hero__content">
+          <h1 class="cd-hero__heading" id="hero-car-name">—</h1>
+          <nav class="cd-hero__breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html" class="cd-hero__bc-home" data-i18n="nav.home">الرئيسية</a>
+            <span class="cd-hero__bc-sep" aria-hidden="true">/</span>
+            <a href="fleet.html" class="cd-hero__bc-fleet" data-i18n="nav.fleet">أسطولنا</a>
+            <span class="cd-hero__bc-sep" aria-hidden="true">/</span>
+            <span class="cd-hero__bc-current" id="breadcrumb-car">—</span>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Two-column layout ─────────────────────────────────── -->
+  <div class="cd-layout">
+
+    <!-- LEFT: Sticky Sidebar -->
+    <aside class="cd-sidebar">
+
+      <!-- Price -->
+      <div class="cd-price-block">
+        <span class="cd-price-amount" id="car-price">— MAD</span>
+        <span class="cd-price-label" data-i18n="fleet.perday">/ يوم</span>
+      </div>
+
+      <div class="cd-divider"></div>
+
+      <!-- Specs table -->
+      <div class="cd-specs">
+
+        <div class="spec-row">
+          <span class="spec-icon">
+            <!-- Passengers icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="6" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="spec-label" data-i18n="fleet.pass">ركاب</span>
+          <span class="spec-value" id="spec-passengers">—</span>
+        </div>
+
+        <div class="spec-row">
+          <span class="spec-icon">
+            <!-- Door icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="1" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="14" cy="10" r="1.5" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="spec-label" data-i18n="fleet.doors">أبواب</span>
+          <span class="spec-value" id="spec-doors">—</span>
+        </div>
+
+        <div class="spec-row">
+          <span class="spec-icon">
+            <!-- Transmission icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="4" cy="4" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="16" cy="4" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="10" cy="16" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 6.5V10.5a2 2 0 002 2h2M16 6.5V10.5a2 2 0 01-2 2h-2M10 12.5v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="spec-label" data-i18n="detail.spec.transmission">Transmission</span>
+          <span class="spec-value" id="spec-transmission">—</span>
+        </div>
+
+        <div class="spec-row">
+          <span class="spec-icon">
+            <!-- Fuel icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 18V5a2 2 0 012-2h6a2 2 0 012 2v2.5l1.5-1.5 1.5 1.5V14a2 2 0 01-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 10h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="spec-label" data-i18n="detail.spec.fuel">Fuel</span>
+          <span class="spec-value" id="spec-fuel">—</span>
+        </div>
+
+        <div class="spec-row">
+          <span class="spec-icon">
+            <!-- Air conditioning / wind icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M2 10h16M10 2v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M5.5 5.5L14.5 14.5M14.5 5.5L5.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+          </span>
+          <span class="spec-label" data-i18n="detail.spec.ac">Air Conditioning</span>
+          <span class="spec-value" data-i18n="detail.spec.yes">Yes</span>
+        </div>
+
+      </div>
+
+      <div class="cd-divider"></div>
+
+      <!-- What's included -->
+      <p class="cd-included-title" data-i18n="detail.included">What's included</p>
+      <div class="cd-includes">
+        <div class="include-item">
+          <span class="check">✓</span>
+          <span data-i18n="detail.inc.insurance">Insurance included</span>
+        </div>
+        <div class="include-item">
+          <span class="check">✓</span>
+          <span data-i18n="detail.inc.mileage">Unlimited mileage</span>
+        </div>
+        <div class="include-item">
+          <span class="check">✓</span>
+          <span data-i18n="detail.inc.pickup">Agency pickup — free</span>
+        </div>
+        <div class="include-item">
+          <span class="check">✓</span>
+          <span data-i18n="detail.inc.support">24/7 WhatsApp support</span>
+        </div>
+      </div>
+
+      <div class="cd-divider"></div>
+
+      <!-- WhatsApp book button -->
+      <a href="#" class="btn-primary" id="whatsapp-book">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span data-i18n="detail.book">Book on WhatsApp</span>
+        <span class="btn-arrow">→</span>
+      </a>
+      <p class="cd-confirm-note" data-i18n="detail.confirm">⚡ We confirm availability in 30 min</p>
+
+    </aside>
+
+    <!-- RIGHT: Main content -->
+    <div class="cd-main">
+
+      <!-- Image gallery -->
+      <div class="gallery-main">
+        <img id="gallery-main-img" src="" alt="" loading="eager"
+             onerror="this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800'">
+      </div>
+      <div class="gallery-thumbs">
+        <img class="thumb active" id="thumb-0" src="" alt="">
+        <img class="thumb" id="thumb-1" src="" alt="">
+        <img class="thumb" id="thumb-2" src="" alt="">
+      </div>
+
+      <!-- Car name + badge -->
+      <div class="cd-car-header">
+        <span class="car-category-badge" id="car-detail-badge">—</span>
+        <h2 class="cd-car-name" id="car-detail-name">—</h2>
+      </div>
+
+      <!-- About section -->
+      <div class="cd-section">
+        <div class="cd-section-label">
+          <svg width="16" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#C41E2A"/>
+          </svg>
+          <span class="cd-section-label-text" data-i18n="detail.about">About this car</span>
+        </div>
+        <p class="cd-section-body" id="car-description">—</p>
+      </div>
+
+      <!-- Requirements section -->
+      <div class="cd-section">
+        <div class="cd-section-label">
+          <svg width="16" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#C41E2A"/>
+          </svg>
+          <span class="cd-section-label-text" data-i18n="detail.requirements">Requirements</span>
+        </div>
+        <p class="cd-section-body" data-i18n="detail.req.text">
+          A valid driver's license and national ID or passport are required.
+          A refundable security deposit may be requested at pickup.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Similar Cars ──────────────────────────────────────── -->
+  <section style="background:var(--white); padding: 0 0 80px;">
+    <div class="cd-similar">
+      <div class="cd-similar__header">
+        <div class="cd-similar__label-row">
+          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#C41E2A"/>
+          </svg>
+          <span class="cd-similar__label-text" data-i18n="detail.similar">Similar Cars</span>
+        </div>
+        <h2 class="cd-similar__heading" data-i18n="detail.similar.sub">You might also like</h2>
+      </div>
+      <div class="cd-similar__grid" id="similar-cars-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__wrapper">
+      <div class="footer__card">
+
+        <span class="footer__star footer__star--lg" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.18"/>
+          </svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bl" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/>
+          </svg>
+        </span>
+        <span class="footer__star footer__star--sm footer__star--bc" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.14"/>
+          </svg>
+        </span>
+
+        <div class="footer__inner">
+          <div class="footer__cols">
+
+            <div class="footer__col footer__col--brand">
+              <a href="index.html" class="logo-link">
+                <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img footer-logo" style="height:45px; width:auto; object-fit:contain;">
+              </a>
+              <p class="footer__desc" data-i18n="footer.desc">وكالتك الموثوقة لتأجير السيارات في طنجة منذ 2019. أسطول حديث، أسعار ثابتة، خدمة توصيل متاحة.</p>
+            </div>
+
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.legal">قانوني</h3>
+              <ul class="footer__links">
+                <li><a href="#" class="footer__link" data-i18n="footer.terms">الشروط والأحكام</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.privacy">سياسة الخصوصية</a></li>
+                <li><a href="#" class="footer__link" data-i18n="footer.notice">الإشعار القانوني</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__col">
+              <h3 class="footer__col-title" data-i18n="footer.links">روابط سريعة</h3>
+              <ul class="footer__links">
+                <li><a href="index.html"   class="footer__link" data-i18n="footer.home">الرئيسية</a></li>
+                <li><a href="fleet.html"   class="footer__link" data-i18n="footer.fleet">الأسطول</a></li>
+                <li><a href="contact.html" class="footer__link" data-i18n="footer.contact">تواصل معنا</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__col footer__col--contact">
+              <h3 class="footer__col-title" data-i18n="footer.touch">تواصل معنا</h3>
+              <div class="footer__hours">
+                <p data-i18n="footer.hours">مفتوح 24 ساعة، 7 أيام في الأسبوع</p>
+              </div>
+              <p class="footer__phone">+212 6 61 66 12 30</p>
+              <a href="https://wa.me/212661661230"
+                 class="footer__wa-btn"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 data-i18n="footer.whatsapp">تحدث عبر واتساب →</a>
+            </div>
+
+          </div>
+
+          <div class="footer__bottom">
+            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ─────────────────────────────────────────── -->
+  <script src="js/i18n.js"></script>
+  <script src="js/car-detail.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- ── Floating WhatsApp button ── -->
+  <a href="https://wa.me/212661661230"
+     class="wa-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+    </svg>
+  </a>
+
+</body>
+</html>

@@ -6,28 +6,53 @@
 
   const cars = [
     {
+      id: 2,
       name: { ar: 'داسيا سانديرو', fr: 'Dacia Sandero', en: 'Dacia Sandero' },
       cat: { ar: 'اقتصادية', fr: 'Économique', en: 'Economy' },
       catKey: 'Economy', price: '320', doors: 4, passengers: 5,
       img: 'assets/images/cars/sandero.png'
     },
     {
-      name: { ar: 'رونو كليو 5', fr: 'Renault Clio 5', en: 'Renault Clio 5' },
+      id: 4,
+      name: { ar: 'رونو كليو', fr: 'Renault Clio', en: 'Renault Clio' },
       cat: { ar: 'سيدان', fr: 'Berline', en: 'Sedan' },
       catKey: 'Sedan', price: '420', doors: 4, passengers: 5,
       img: 'assets/images/cars/clio5.png'
     },
     {
+      id: 5,
       name: { ar: 'بيجو 208', fr: 'Peugeot 208', en: 'Peugeot 208' },
       cat: { ar: 'سيدان', fr: 'Berline', en: 'Sedan' },
       catKey: 'Sedan', price: '450', doors: 4, passengers: 5,
       img: 'assets/images/cars/p208.png'
     },
     {
-      name: { ar: 'فولكسفاغن تي روك', fr: 'Volkswagen T-Roc', en: 'Volkswagen T-Roc' },
+      id: 7,
+      name: { ar: 'فولكس واجن T-Roc', fr: 'Volkswagen T-Roc', en: 'Volkswagen T-Roc' },
       cat: { ar: 'دفع رباعي', fr: 'SUV', en: 'SUV' },
-      catKey: 'SUV', price: '550', doors: 4, passengers: 5,
+      catKey: 'SUV', price: '600', doors: 4, passengers: 5,
       img: 'assets/images/cars/troc.png'
+    },
+    {
+      id: 3,
+      name: { ar: 'هيونداي i10', fr: 'Hyundai i10', en: 'Hyundai i10' },
+      cat: { ar: 'اقتصادية', fr: 'Économique', en: 'Economy' },
+      catKey: 'Economy', price: '280', doors: 4, passengers: 5,
+      img: 'assets/images/cars/i10.png'
+    },
+    {
+      id: 9,
+      name: { ar: 'فولكسواغن غولف 8R', fr: 'Volkswagen Golf 8R', en: 'Volkswagen Golf 8R' },
+      cat: { ar: 'سيدان', fr: 'Berline', en: 'Sedan' },
+      catKey: 'Sedan', price: '550', doors: 4, passengers: 5,
+      img: 'assets/images/cars/GOLF8R.png'
+    },
+    {
+      id: 10,
+      name: { ar: 'كوبرا فورمنتور', fr: 'Cupra Formentor', en: 'Cupra Formentor' },
+      cat: { ar: 'دفع رباعي', fr: 'SUV', en: 'SUV' },
+      catKey: 'SUV', price: '650', doors: 4, passengers: 5,
+      img: 'assets/images/cars/cupra-formentor.png'
     },
   ];
 
@@ -116,14 +141,17 @@
         </div>
       </div>`;
 
-    card.querySelector('.fc__book-btn').addEventListener('click', function () {
-      var pickup = sessionStorage.getItem('pickup_date') || '';
-      var ret = sessionStorage.getItem('return_date') || '';
-      var carName = car.name.en;
-      var msg = pickup && ret
-        ? 'Hello Bestore Car! I want to book the ' + carName + ' from ' + pickup + ' to ' + ret + '.'
-        : 'Hello Bestore Car! I want to book the ' + carName + '.';
-      window.open('https://wa.me/212661661230?text=' + encodeURIComponent(msg));
+    // Entire card navigates to detail page
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+      // Don't double-fire if they clicked the book button
+      if (e.target.closest('.fc__book-btn')) return;
+      window.location.href = 'car-detail.html?id=' + car.id;
+    });
+
+    card.querySelector('.fc__book-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      window.location.href = 'car-detail.html?id=' + car.id;
     });
     return card;
   }

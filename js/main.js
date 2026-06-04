@@ -4,26 +4,40 @@ window.addEventListener('scroll', () => {
   navbar.classList.toggle('navbar--scrolled', window.scrollY > 10);
 }, { passive: true });
 
-// Mobile hamburger menu
+// Mobile drawer menu
 document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.getElementById('navHamburger');
-  const nav = document.querySelector('.nav');
-  if (!hamburger || !nav) return;
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeBtn   = document.getElementById('mobile-menu-close');
+  if (!hamburger || !mobileMenu) return;
+
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 
   hamburger.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('nav--open');
-    hamburger.classList.toggle('nav-hamburger--open', isOpen);
-    hamburger.setAttribute('aria-expanded', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
   });
 
-  nav.querySelectorAll('.nav__link').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('nav--open');
-      hamburger.classList.remove('nav-hamburger--open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  mobileMenu.addEventListener('click', e => {
+    if (e.target === mobileMenu) closeMenu();
+  });
+
+  // Mark active page link
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPage) link.classList.add('active');
   });
 });
 
@@ -96,6 +110,24 @@ document.addEventListener('DOMContentLoaded', () => {
       cat: { ar: 'سيدان', fr: 'Berline', en: 'Sedan' },
       catKey: 'Sedan', price: '450', doors: 4, passengers: 5,
       img: 'assets/images/cars/p208.png'
+    },
+    {
+      name: { ar: 'هيونداي i10', fr: 'Hyundai i10', en: 'Hyundai i10' },
+      cat: { ar: 'اقتصادية', fr: 'Économique', en: 'Economy' },
+      catKey: 'Economy', price: '280', doors: 4, passengers: 5,
+      img: 'assets/images/cars/i10.png'
+    },
+    {
+      name: { ar: 'فولكسواغن غولف 8R', fr: 'Volkswagen Golf 8R', en: 'Volkswagen Golf 8R' },
+      cat: { ar: 'سيدان', fr: 'Berline', en: 'Sedan' },
+      catKey: 'Sedan', price: '550', doors: 4, passengers: 5,
+      img: 'assets/images/cars/GOLF8R.png'
+    },
+    {
+      name: { ar: 'كوبرا فورمنتور', fr: 'Cupra Formentor', en: 'Cupra Formentor' },
+      cat: { ar: 'دفع رباعي', fr: 'SUV', en: 'SUV' },
+      catKey: 'SUV', price: '650', doors: 4, passengers: 5,
+      img: 'assets/images/cars/cupra-formentor.png'
     },
   ];
 
@@ -173,8 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function goTo(idx) {
+    const rtl = document.documentElement.dir === 'rtl';
     current = Math.max(0, Math.min(idx, maxIndex));
-    track.style.transform = `translateX(-${current * STEP}px)`;
+    track.style.transform = rtl
+      ? `translateX(${current * STEP}px)`
+      : `translateX(-${current * STEP}px)`;
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current >= maxIndex;
   }
