@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cars.forEach(car => {
       const carName = car.name[lang] || car.name.en;
       const carCat  = car.cat[lang]  || car.cat.en;
-      const waUrl = `https://wa.me/212661661230?text=${encodeURIComponent(`Hello, I want to book the ${car.name.en}.`)}`;
+      const waUrl = `https://wa.me/212667367652?text=${encodeURIComponent(`Hello, I want to book the ${car.name.en}.`)}`;
       const card = document.createElement('div');
       card.className = 'fleet__card';
       card.dataset.price = car.price;
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.addEventListener('click', function (e) {
         // Let the WhatsApp reserve button keep its own behavior
         if (e.target.closest('.fleet__reserve-btn')) return;
-        window.location.href = 'car-detail.html?id=' + car.id;
+        window.location.href = 'wijdabir-car-detail.html?id=' + car.id;
       });
 
       track.appendChild(card);
@@ -372,14 +372,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const msg =
-      `Hello Bestore Car! I'd like to book a rental.\n\n` +
+      `Hello Wijdabir Car! I'd like to book a rental.\n\n` +
       `📞 Phone: ${phone}\n` +
       `📍 Pickup Location: ${location}\n` +
       `📅 Pickup Date: ${pickup}\n` +
       `📅 Return Date: ${rtn}`;
 
     window.open(
-      `https://wa.me/212661661230?text=${encodeURIComponent(msg)}`,
+      `https://wa.me/212667367652?text=${encodeURIComponent(msg)}`,
       '_blank',
       'noopener,noreferrer'
     );

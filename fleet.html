@@ -9,6 +9,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Loading skeleton for the fleet grid (shown while Supabase data loads) */
+    .fc__card--skeleton{cursor:default;pointer-events:none}
+    .fc__sk{background:linear-gradient(90deg,#eceff3 25%,#f6f8fa 37%,#eceff3 63%);
+      background-size:400% 100%;animation:fcShimmer 1.3s ease-in-out infinite;border-radius:8px}
+    .fc__sk-img{width:100%;aspect-ratio:16/10;border-radius:12px}
+    .fc__sk-line{height:14px;margin-top:14px}
+    .fc__sk-line--sm{width:40%;height:11px}
+    .fc__sk-line--lg{width:75%;height:18px}
+    .fc__sk-btn{height:40px;margin-top:18px;border-radius:10px}
+    @keyframes fcShimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+    @media (prefers-reduced-motion: reduce){.fc__sk{animation:none}}
+  </style>
 </head>
 <body>
 
@@ -86,36 +99,6 @@
     </div>
   </div>
 
-  <!-- ── Fleet Hero ─────────────────────────────────────── -->
-  <section class="fleet-hero">
-    <div class="fleet-hero__container">
-      <div class="fleet-hero__card">
-
-        <!-- Background image -->
-        <img
-          class="fleet-hero__bg-img"
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1400&q=80"
-          alt="Cars in a showroom"
-          loading="eager"
-        >
-
-        <!-- Dark overlay -->
-        <div class="fleet-hero__overlay"></div>
-
-        <!-- Content -->
-        <div class="fleet-hero__content">
-          <h1 class="fleet-hero__heading" data-i18n="fleet.page.hero">السيارات</h1>
-          <nav class="fleet-hero__breadcrumb" aria-label="Breadcrumb">
-            <a href="index.html" class="fleet-hero__bc-home" data-i18n="fleet.page.bc.home">الرئيسية</a>
-            <span class="fleet-hero__bc-sep" aria-hidden="true">/</span>
-            <span class="fleet-hero__bc-current" data-i18n="fleet.page.bc.cars">السيارات</span>
-          </nav>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ── Fleet Content ────────────────────────────────────── -->
   <section class="fc">
     <div class="fc__container">
@@ -158,6 +141,58 @@
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
                   <input type="checkbox" class="fc__checkbox" value="Luxury"> <span data-i18n="fleet.filter.luxury">فاخرة</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Brands -->
+          <div class="fc__filters-wrap">
+            <h2 class="fc__filters-heading" data-i18n="fleet.page.brands">الماركات</h2>
+            <ul class="fc__filters-list" id="fcBrands">
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Dacia"> <span data-i18n="fleet.brand.dacia">داسيا</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Renault"> <span data-i18n="fleet.brand.renault">رينو</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Peugeot"> <span data-i18n="fleet.brand.peugeot">بيجو</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Volkswagen"> <span data-i18n="fleet.brand.volkswagen">فولكسفاغن</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Hyundai"> <span data-i18n="fleet.brand.hyundai">هيونداي</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Skoda"> <span data-i18n="fleet.brand.skoda">سكودا</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Seat"> <span data-i18n="fleet.brand.seat">سيات</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Toyota"> <span data-i18n="fleet.brand.toyota">تويوتا</span>
+                </label>
+              </li>
+              <li class="fc__filter-item">
+                <label class="fc__filter-label">
+                  <input type="checkbox" class="fc__brand-checkbox" value="Kia"> <span data-i18n="fleet.brand.kia">كيا</span>
                 </label>
               </li>
             </ul>
@@ -240,11 +275,7 @@
                 <p data-i18n="footer.hours">مفتوح 24 ساعة، 7 أيام في الأسبوع</p>
               </div>
               <p class="footer__phone">+212 6 61 66 12 30</p>
-              <a href="https://wa.me/212661661230"
-                 class="footer__wa-btn"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 data-i18n="footer.whatsapp">تحدث عبر واتساب →</a>
+              <p class="footer__address" data-i18n="footer.address">شارع أرار رقم 27، برانص نرجس، طنجة المدينة</p>
             </div>
 
           </div>
@@ -252,6 +283,7 @@
           <!-- Bottom bar -->
           <div class="footer__bottom">
             <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+            <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
 
         </div>
@@ -262,6 +294,20 @@
   <script src="js/main.js"></script>
   <script src="js/fleet.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/bookly-data.js"></script>
+  <script src="js/booking-widget.js"></script>
+
+  <!-- ── Floating Reserve button — opens the 3-step booking widget ── -->
+  <button type="button" class="bw-reserve-float" id="bwReserveFloat" aria-label="Reserve a car">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="white" stroke-width="1.8"/>
+      <path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <span data-i18n="bw.reserve">Reserve</span>
+  </button>
 
   <!-- ── Floating WhatsApp button ── -->
   <a href="https://wa.me/212661661230"

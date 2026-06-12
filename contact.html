@@ -86,36 +86,6 @@
     </div>
   </div>
 
-  <!-- ── Contact Hero ───────────────────────────────────── -->
-  <section class="contact-hero">
-    <div class="contact-hero__container">
-      <div class="contact-hero__card">
-
-        <!-- Background image -->
-        <img
-          class="contact-hero__bg-img"
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1400&q=80"
-          alt="Cars in a showroom"
-          loading="eager"
-        >
-
-        <!-- Dark overlay -->
-        <div class="contact-hero__overlay"></div>
-
-        <!-- Content -->
-        <div class="contact-hero__content">
-          <h1 class="contact-hero__heading" data-i18n="contact.hero">تواصل معنا</h1>
-          <nav class="contact-hero__breadcrumb" aria-label="Breadcrumb">
-            <a href="index.html" class="contact-hero__bc-home" data-i18n="contact.bc.home">الرئيسية</a>
-            <span class="contact-hero__bc-sep" aria-hidden="true">/</span>
-            <span class="contact-hero__bc-current" data-i18n="contact.bc.current">تواصل معنا</span>
-          </nav>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ── Contact Info + Form ───────────────────────────── -->
   <section class="contact-section">
     <div class="contact-section__container">
@@ -196,27 +166,44 @@
           <div class="contact-form-simple">
             <h3 class="contact-form-simple__title" data-i18n="contact.form.title">تواصل معنا مباشرة</h3>
 
-            <a href="https://wa.me/212661661230"
-               class="contact-form__wa-btn"
-               target="_blank"
-               rel="noopener noreferrer"
-               data-i18n="contact.direct.btn">💬 تحدث عبر واتساب</a>
-
-            <p class="contact-form__divider" data-i18n="contact.direct.or">— أو أرسل رسالة سريعة —</p>
-
             <form class="contact-form" id="contactForm" onsubmit="return false">
+              <!-- 1. Nom complet * -->
               <div class="contact-form__field contact-form__field--full">
-                <label class="contact-form__label" for="cf-name" data-i18n="contact.form.name">الاسم الكامل</label>
+                <label class="contact-form__label" for="cf-name">
+                  <span data-i18n="contact.form.name">الاسم الكامل</span> <span class="contact-form__req">*</span>
+                </label>
                 <input class="contact-form__input" type="text" id="cf-name" placeholder="اسمك الكامل" data-i18n-placeholder="contact.form.ph.name" required autocomplete="name">
               </div>
+
+              <!-- 2. Date de départ * -->
               <div class="contact-form__field contact-form__field--full">
-                <label class="contact-form__label" for="cf-phone" data-i18n="contact.form.phone">رقم الواتساب</label>
-                <input class="contact-form__input" type="tel" id="cf-phone" placeholder="رقم واتساب" data-i18n-placeholder="contact.form.ph.phone" required autocomplete="tel">
+                <label class="contact-form__label" for="date-depart">
+                  <span data-i18n="contact.form.dateDepart">تاريخ الذهاب</span> <span class="contact-form__req">*</span>
+                </label>
+                <input class="contact-form__input" type="date" id="date-depart" required>
               </div>
+
+              <!-- 3. Date de retour * -->
               <div class="contact-form__field contact-form__field--full">
-                <label class="contact-form__label" for="cf-message" data-i18n="contact.form.msg">الرسالة</label>
-                <textarea class="contact-form__textarea" id="cf-message" rows="3" placeholder="أود استئجار سيارة من [التاريخ] إلى [التاريخ]..." data-i18n-placeholder="contact.form.ph.msg"></textarea>
+                <label class="contact-form__label" for="date-retour">
+                  <span data-i18n="contact.form.dateRetour">تاريخ العودة</span> <span class="contact-form__req">*</span>
+                </label>
+                <input class="contact-form__input" type="date" id="date-retour" required>
+                <p class="contact-form__error" id="date-error" data-i18n="contact.form.dateError" hidden>يجب أن يكون تاريخ العودة بعد تاريخ الذهاب.</p>
               </div>
+
+              <!-- 4. Lieu de livraison (optional) -->
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-place" data-i18n="contact.form.place">مكان التسليم</label>
+                <input class="contact-form__input" type="text" id="cf-place" placeholder="مثال: مطار طنجة، فندق..." data-i18n-placeholder="contact.form.ph.place">
+              </div>
+
+              <!-- 5. Message complémentaire (optional) -->
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-message" data-i18n="contact.form.extra">ملاحظات إضافية</label>
+                <textarea class="contact-form__textarea" id="cf-message" rows="2" placeholder="معلومات إضافية..." data-i18n-placeholder="contact.form.extraPh"></textarea>
+              </div>
+
               <button class="contact-form__submit" type="button" id="cfSubmit" data-i18n="contact.form.btn">أرسل عبر واتساب →</button>
             </form>
 
@@ -304,11 +291,7 @@
                 <p data-i18n="footer.hours">مفتوح 24 ساعة، 7 أيام في الأسبوع</p>
               </div>
               <p class="footer__phone">+212 6 61 66 12 30</p>
-              <a href="https://wa.me/212661661230"
-                 class="footer__wa-btn"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 data-i18n="footer.whatsapp">تحدث عبر واتساب →</a>
+              <p class="footer__address" data-i18n="footer.address">شارع أرار رقم 27، برانص نرجس، طنجة المدينة</p>
             </div>
 
           </div>
@@ -316,6 +299,7 @@
           <!-- Bottom bar -->
           <div class="footer__bottom">
             <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+            <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
 
         </div>
@@ -325,13 +309,58 @@
 
   <script src="js/main.js"></script>
   <script>
-    document.getElementById('cfSubmit').addEventListener('click', function () {
-      var name    = document.getElementById('cf-name').value.trim() || '—';
-      var phone   = document.getElementById('cf-phone').value.trim() || '—';
-      var message = document.getElementById('cf-message').value.trim();
-      var text = 'Hello Bestore Car!\nName: ' + name + '\nPhone: ' + phone + (message ? '\nMessage: ' + message : '');
-      window.open('https://wa.me/212661661230?text=' + encodeURIComponent(text), '_blank');
-    });
+    (function () {
+      var depart  = document.getElementById('date-depart');
+      var retour  = document.getElementById('date-retour');
+      var errorEl = document.getElementById('date-error');
+
+      // Build ISO from local date parts (avoids UTC off-by-one).
+      function toISO(d) {
+        var m = String(d.getMonth() + 1).padStart(2, '0');
+        var day = String(d.getDate()).padStart(2, '0');
+        return d.getFullYear() + '-' + m + '-' + day;
+      }
+      function addDays(iso, n) {
+        var d = new Date(iso + 'T00:00:00');
+        d.setDate(d.getDate() + n);
+        return toISO(d);
+      }
+      var today = toISO(new Date());
+      depart.min = today;
+      retour.min = addDays(today, 1);
+
+      depart.addEventListener('change', function () {
+        if (depart.value) {
+          retour.min = addDays(depart.value, 1);
+          if (retour.value && retour.value <= depart.value) retour.value = '';
+        }
+      });
+
+      document.getElementById('cfSubmit').addEventListener('click', function () {
+        var form = document.getElementById('contactForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        if (depart.value && retour.value && retour.value <= depart.value) {
+          errorEl.hidden = false;
+          retour.focus();
+          return;
+        }
+        errorEl.hidden = true;
+
+        var nom     = document.getElementById('cf-name').value.trim();
+        var place   = document.getElementById('cf-place').value.trim();
+        var extra   = document.getElementById('cf-message').value.trim();
+
+        var text =
+          'Bonjour, je souhaite réserver une voiture' +
+          ' du ' + depart.value + ' au ' + retour.value + '.' +
+          ' Nom: ' + nom + '.' +
+          (place ? ' Lieu de livraison: ' + place + '.' : '') +
+          (extra ? ' ' + extra : '');
+
+        window.open('https://wa.me/212661661230?text=' + encodeURIComponent(text), '_blank');
+      });
+    })();
   </script>
   <script src="js/i18n.js"></script>
 

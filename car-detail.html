@@ -263,7 +263,21 @@
         </div>
         <h2 class="cd-similar__heading" data-i18n="detail.similar.sub">You might also like</h2>
       </div>
-      <div class="cd-similar__grid" id="similar-cars-grid"></div>
+      <div class="fleet__carousel-wrap">
+        <div class="fleet__track" id="similarTrack"></div>
+      </div>
+      <div class="fleet__nav-row cd-similar__nav-row">
+        <button class="fleet__nav" id="similarPrev" aria-label="Previous slide">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M10 2L4 8L10 14" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="fleet__nav" id="similarNext" aria-label="Next slide">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 2L12 8L6 14" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -322,17 +336,14 @@
                 <p data-i18n="footer.hours">مفتوح 24 ساعة، 7 أيام في الأسبوع</p>
               </div>
               <p class="footer__phone">+212 6 61 66 12 30</p>
-              <a href="https://wa.me/212661661230"
-                 class="footer__wa-btn"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 data-i18n="footer.whatsapp">تحدث عبر واتساب →</a>
+              <p class="footer__address" data-i18n="footer.address">شارع أرار رقم 27، برانص نرجس، طنجة المدينة</p>
             </div>
 
           </div>
 
           <div class="footer__bottom">
             <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+            <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
         </div>
       </div>
@@ -341,8 +352,42 @@
 
   <!-- ── Scripts ─────────────────────────────────────────── -->
   <script src="js/i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/bookly-data.js"></script>
+  <script src="js/booking-widget.js"></script>
   <script src="js/car-detail.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- ── Booking form modal ─────────────────────────────── -->
+  <div class="bk-modal" id="bk-modal" aria-hidden="true">
+    <div class="bk-modal__overlay" id="bk-modal-overlay"></div>
+    <div class="bk-modal__card" role="dialog" aria-modal="true" aria-labelledby="bk-modal-title">
+      <button class="bk-modal__close" id="bk-modal-close" aria-label="Close">&#x2715;</button>
+      <h3 class="bk-modal__title" id="bk-modal-title" data-i18n="detail.form.title">Complete your booking</h3>
+      <p class="bk-modal__car" id="bk-modal-car">—</p>
+
+      <label class="bk-modal__label" for="bk-name" data-i18n="detail.form.name">Full name</label>
+      <input class="bk-modal__input" type="text" id="bk-name" data-i18n-placeholder="detail.form.name.ph" placeholder="Your full name">
+
+      <label class="bk-modal__label" for="bk-pickup" data-i18n="detail.form.pickup">Pickup date</label>
+      <input class="bk-modal__input" type="date" id="bk-pickup">
+
+      <label class="bk-modal__label" for="bk-duration" data-i18n="detail.form.duration">Duration (days)</label>
+      <input class="bk-modal__input" type="number" id="bk-duration" min="1" value="1">
+
+      <p class="bk-modal__error" id="bk-modal-error"></p>
+
+      <button class="btn-primary bk-modal__submit" id="bk-modal-submit" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
+        </svg>
+        <span data-i18n="detail.form.submit">Send on WhatsApp</span>
+      </button>
+    </div>
+  </div>
 
   <!-- ── Floating WhatsApp button ── -->
   <a href="https://wa.me/212661661230"

@@ -129,75 +129,13 @@
     return localStorage.getItem('bsc_lang') || 'ar';
   }
 
-  function getT(key) {
-    var lang = getLang();
-    if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
-      return translations[lang][key];
-    }
-    return null;
-  }
-
-  // Static metadata lookup by ref_id (= the numeric id in the array above).
-  function metaByRef(ref) {
-    return cars.find(function (c) { return String(c.id) === String(ref); }) || null;
-  }
-
-  // Merge a Supabase car (full shape) with its static metadata so the rich
-  // page (description / transmission / fuel / multilingual names) keeps working
-  // while price, photo, category, status and features come live from Supabase.
-  function mergeCar(db) {
-    var meta = (db.ref_id != null && metaByRef(db.ref_id)) || null;
-    var base = meta ? Object.assign({}, meta) : {
-      id: db.id, name: db.name, nameAr: db.name, nameFr: db.name,
-      cat: db.category || '', catAr: db.category || '', catFr: db.category || '',
-      doors: 4, passengers: 5,
-      transmission: '—', transmissionAr: '—', transmissionFr: '—',
-      fuel: '—', fuelAr: '—', fuelFr: '—',
-      img: db.photo_url,
-      desc: { en: db.name, fr: db.name, ar: db.name }
-    };
-    base.id = db.id;                                  // identity = Supabase id
-    base.price = db.price_per_day;                    // live price
-    if (db.photo_url) base.img = db.photo_url;        // live photo
-    base.status = db.status || 'available';
-    base.features = Array.isArray(db.features) ? db.features : [];
-    return base;
-  }
-
-  // Get car ID from URL (Supabase UUID, or a numeric ref_id from similar cars).
+  // Get car ID from URL
   var params = new URLSearchParams(window.location.search);
-  var rawId  = params.get('id');
-  var car    = null;   // resolved asynchronously from Supabase before render
+  var carId  = parseInt(params.get('id'), 10);
+  var car    = cars.find(function(c) { return c.id === carId; });
 
-  function isNumericId(v) { return /^\d+$/.test(String(v || '')); }
-
-  // Resolve the car to display. Falls back to the first car when there is no
-  // id in the URL or the fetch fails, so the page never breaks.
-  async function resolveCar() {
-    var agencyId = window.BESTORE_AGENCY_ID;
-    var db = null;
-    try {
-      if (window.BooklyDB && typeof window.BooklyDB.getCarById === 'function') {
-        if (rawId && !isNumericId(rawId)) {
-          db = await window.BooklyDB.getCarById(rawId);
-        } else if (rawId && typeof window.BooklyDB.getCars === 'function') {
-          // numeric id → treat as ref_id (or local id) within the full list
-          var all = await window.BooklyDB.getCars(agencyId);
-          db = (all || []).filter(function (c) {
-            return String(c.ref_id) === String(rawId) || String(c.id) === String(rawId);
-          })[0] || null;
-        }
-        if (!db && typeof window.BooklyDB.getCars === 'function') {
-          var list = await window.BooklyDB.getCars(agencyId);   // default: first car
-          if (list && list.length) db = list[0];
-        }
-      }
-    } catch (e) {
-      console.warn('[Bestore] car-detail: Supabase load failed, using static fallback.', e);
-    }
-    if (db) return mergeCar(db);
-    // Total fallback: static car matching the id, else the first static car.
-    return metaByRef(rawId) || cars[0];
+  if (!car) {
+    window.location.href = 'wijdabir-fleet.html';
   }
 
   // Thumbnail click handler
@@ -210,57 +148,6 @@
         thumb.classList.add('active');
       });
     });
-  }
-
-  // Live status badge — injected next to the category badge in the car header.
-  var STATUS_KEY = {
-    available:   'fleet.status.available',
-    rented:      'fleet.status.rented',
-    maintenance: 'fleet.status.maintenance'
-  };
-  var STATUS_BG = {
-    available:   'rgba(22,163,74,.95)',
-    rented:      'rgba(217,119,6,.95)',
-    maintenance: 'rgba(107,114,128,.95)'
-  };
-  function renderStatus(c, lang) {
-    var header = document.querySelector('.cd-car-header');
-    if (!header) return;
-    var el = document.getElementById('car-detail-status');
-    if (!el) {
-      el = document.createElement('span');
-      el.id = 'car-detail-status';
-      el.style.cssText = 'display:inline-block;margin-inline-start:10px;color:#fff;' +
-        'font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;vertical-align:middle';
-      var badge = document.getElementById('car-detail-badge');
-      if (badge && badge.parentNode) badge.parentNode.insertBefore(el, badge.nextSibling);
-      else header.appendChild(el);
-    }
-    var status = c.status || 'available';
-    el.textContent = getT(STATUS_KEY[status]) || status;
-    el.style.background = STATUS_BG[status] || STATUS_BG.available;
-  }
-
-  // Live features list (from car.features JSON) — rendered as chips under the
-  // car header. Hidden when the car has no features.
-  function renderFeatures(c) {
-    var header = document.querySelector('.cd-car-header');
-    if (!header) return;
-    var wrap = document.getElementById('car-detail-features');
-    if (!wrap) {
-      wrap = document.createElement('div');
-      wrap.id = 'car-detail-features';
-      wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;margin-top:14px';
-      header.insertAdjacentElement('afterend', wrap);
-    }
-    var feats = Array.isArray(c.features) ? c.features : [];
-    if (!feats.length) { wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
-    wrap.style.display = 'flex';
-    wrap.innerHTML = feats.map(function (f) {
-      return '<span style="background:#f1f3f6;color:#2b2b2b;font-size:13px;font-weight:600;' +
-        'padding:6px 13px;border-radius:999px;border:1px solid #e3e6ea">' +
-        String(f).replace(/</g, '&lt;') + '</span>';
-    }).join('');
   }
 
   // Populate page with car data
@@ -302,24 +189,20 @@
     document.getElementById('car-detail-name').textContent  = displayName;
     document.getElementById('car-detail-badge').textContent = displayCat;
 
-    // Live status badge + features (from Supabase)
-    renderStatus(c, lang);
-    renderFeatures(c);
-
     // Description
     document.getElementById('car-description').textContent = c.desc[lang] || c.desc.en;
 
     // Page title
-    document.title = c.name + ' — Bestore Car';
+    document.title = c.name + ' — Wijdabir Car';
 
     // WhatsApp button
     var pickup = sessionStorage.getItem('pickup_date') || '';
     var ret    = sessionStorage.getItem('return_date') || '';
     var msg = pickup && ret
-      ? 'Hello Bestore Car! I want to book the ' + displayName + ' from ' + pickup + ' to ' + ret + '. Please confirm.'
-      : 'Hello Bestore Car! I am interested in the ' + displayName + '.';
+      ? 'Hello Wijdabir Car! I want to book the ' + displayName + ' from ' + pickup + ' to ' + ret + '. Please confirm.'
+      : 'Hello Wijdabir Car! I am interested in the ' + displayName + '.';
     document.getElementById('whatsapp-book').href =
-      'https://wa.me/212661661230?text=' + encodeURIComponent(msg);
+      'https://wa.me/212667367652?text=' + encodeURIComponent(msg);
 
     // Similar cars
     renderSimilarCars(c, lang);
@@ -357,9 +240,9 @@
     container.innerHTML = similar.map(function(c) {
       var n = lang === 'ar' ? c.nameAr : lang === 'fr' ? c.nameFr : c.name;
       var b = lang === 'ar' ? c.catAr  : lang === 'fr' ? c.catFr  : c.cat;
-      var waUrl = 'https://wa.me/212661661230?text=' +
+      var waUrl = 'https://wa.me/212667367652?text=' +
         encodeURIComponent('Hello, I want to book the ' + c.name + '.');
-      return '<div class="fleet__card" onclick="window.location=\'car-detail.html?id=' + c.id + '\'">' +
+      return '<div class="fleet__card" onclick="window.location=\'wijdabir-car-detail.html?id=' + c.id + '\'">' +
         '<div class="fleet__card-img-wrap">' +
           '<img class="fleet__card-img" src="' + c.img + '" alt="' + n + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + fallback + '\'">' +
           '<span class="fleet__card-badge">' + b + '</span>' +
@@ -444,18 +327,18 @@
   function buildBookingMessage(lang, carName, name, pickup, duration) {
     var d = duration ? duration + (lang === 'ar' ? ' أيام' : lang === 'fr' ? ' jour(s)' : ' day(s)') : '—';
     if (lang === 'ar') {
-      return 'مرحباً بيستور كار! أود حجز ' + carName + '.\n' +
+      return 'مرحباً ويجدابير كار! أود حجز ' + carName + '.\n' +
         '👤 الاسم: ' + (name || '—') + '\n' +
         '📅 تاريخ الاستلام: ' + (pickup || '—') + '\n' +
         '⏱️ المدة: ' + d;
     }
     if (lang === 'fr') {
-      return 'Bonjour Bestore Car ! Je souhaite réserver la ' + carName + '.\n' +
+      return 'Bonjour Wijdabir Car ! Je souhaite réserver la ' + carName + '.\n' +
         '👤 Nom : ' + (name || '—') + '\n' +
         '📅 Date de prise en charge : ' + (pickup || '—') + '\n' +
         '⏱️ Durée : ' + d;
     }
-    return 'Hello Bestore Car! I would like to book the ' + carName + '.\n' +
+    return 'Hello Wijdabir Car! I would like to book the ' + carName + '.\n' +
       '👤 Name: ' + (name || '—') + '\n' +
       '📅 Pickup date: ' + (pickup || '—') + '\n' +
       '⏱️ Duration: ' + d;
@@ -492,21 +375,6 @@
 
     if (openBtn) openBtn.addEventListener('click', function (e) {
       e.preventDefault();
-      // Open the unified 3-step widget pre-selected on this car → jump to summary
-      if (car && typeof window.openBookingWidget === 'function') {
-        window.openBookingWidget({
-          car: {
-            name: { ar: car.nameAr, fr: car.nameFr, en: car.name },
-            price: car.price,
-            img: car.img
-          },
-          prefill: {
-            pickupDate: sessionStorage.getItem('pickup_date') || undefined,
-            returnDate: sessionStorage.getItem('return_date') || undefined
-          }
-        });
-        return;
-      }
       openModal();
     });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
@@ -529,22 +397,19 @@
       }
       errEl.textContent = '';
       var msg = buildBookingMessage(lang, currentDisplayName, name, pickup, duration);
-      window.open('https://wa.me/212661661230?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+      window.open('https://wa.me/212667367652?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
       closeModal();
     });
   }
 
   // Re-populate when language changes (i18n.js fires renderFleetPage — we hook similarly)
   document.addEventListener('DOMContentLoaded', function() {
-    // Resolve the car from Supabase (with static + first-car fallbacks), then render.
-    resolveCar().then(function (resolved) {
-      car = resolved;
-      if (!car) { window.location.href = 'fleet.html'; return; }
+    if (car) {
       populatePage(car);
       initThumbs();
       initSimilarCarousel();
       initModal();
-    });
+    }
 
     // Re-populate dynamic content when language changes
     document.addEventListener('click', function(e) {

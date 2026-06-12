@@ -99,12 +99,16 @@
 
       <!-- Background card -->
       <div class="hero__card">
-        <img
+        <video
           class="hero__bg-img"
-          src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1400&q=80"
-          alt="Luxury car on the road"
-          loading="eager"
-        >
+          src="./vvhero.mp4"
+          poster="assets/images/hero-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        ></video>
         <div class="hero__overlay"></div>
 
         <!-- Main content -->
@@ -119,44 +123,36 @@
             or just need a reliable ride — Bestore Car has the right vehicle for you.
           </p>
 
-          <div class="hero__ctas">
-            <a href="https://wa.me/212661661230"
-               class="btn-primary"
-               target="_blank"
-               rel="noopener noreferrer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              <span data-i18n="hero.cta1">Book on WhatsApp</span>
-            </a>
+          <!-- ── 3-step booking widget — Step 1 launcher ── -->
+          <div class="hero__booking" id="bwHeroBar">
+            <div class="bw-bar">
+              <div class="bw-field">
+                <label for="bwHeroLocation" data-i18n="bw.location">Pickup location</label>
+                <input type="text" id="bwHeroLocation" autocomplete="off">
+              </div>
+              <div class="bw-field">
+                <label for="bwHeroPickup" data-i18n="bw.pickupDate">Pickup date</label>
+                <input type="date" id="bwHeroPickup">
+              </div>
+              <div class="bw-field">
+                <label for="bwHeroReturn" data-i18n="bw.returnDate">Return date</label>
+                <input type="date" id="bwHeroReturn">
+              </div>
+              <div class="bw-field">
+                <label for="bwHeroTime" data-i18n="bw.pickupTime">Pickup time</label>
+                <select id="bwHeroTime"></select>
+              </div>
+              <button type="button" class="bw-bar__btn" id="bwHeroSearch" data-i18n="bw.heroSearch">Find a car</button>
+            </div>
+          </div>
 
-            <a href="fleet.html" class="btn-secondary" data-i18n="hero.cta2">View Our Fleet</a>
+          <div class="hero__ctas">
+            <a href="fleet.html" class="btn-primary hero__cta-primary" data-i18n="hero.cta2">View Our Fleet</a>
+
+            <a href="contact.html" class="hero__cta-ghost" data-i18n="nav.contact">Contact Us</a>
           </div>
 
           <p class="hero__tagline" data-i18n="hero.tagline">Starting from 280 MAD / day — No hidden fees</p>
-
-        </div>
-      </div>
-
-      <!-- Booking bar -->
-      <div class="hero__booking">
-        <div class="booking-bar">
-
-          <div class="booking-bar__field">
-            <label class="booking-bar__label" for="qs-pickup" data-i18n="qs.pickup">Pickup Date</label>
-            <input class="booking-bar__input" type="date" id="qs-pickup" required>
-          </div>
-
-          <div class="booking-bar__sep" aria-hidden="true"></div>
-
-          <div class="booking-bar__field">
-            <label class="booking-bar__label" for="qs-return" data-i18n="qs.return">Return Date</label>
-            <input class="booking-bar__input" type="date" id="qs-return" required>
-          </div>
-
-          <button class="booking-bar__send" id="qs-submit" type="button">
-            <span data-i18n="qs.btn">View Our Fleet →</span>
-          </button>
 
         </div>
       </div>
@@ -193,77 +189,6 @@
       </div>
       <div class="fleet-view-all">
         <a href="fleet.html" class="fleet-view-all-btn" data-i18n="fleet.viewall">View all vehicles</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── About ─────────────────────────────────────────── -->
-  <section class="about" id="about">
-    <div class="about__inner">
-
-      <div class="about__images" id="aboutImages">
-        <span class="about__deco about__deco--asterisk" aria-hidden="true">
-          <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M27 0 31.7 18.9 51.3 10.4 42.8 30 62.4 33 42.8 36 51.3 54.6 31.7 46.1 27 65 22.3 46.1 2.7 54.6 11.2 36-8.4 33 11.2 30 2.7 10.4 22.3 18.9Z" fill="#FF3600"/>
-          </svg>
-        </span>
-        <span class="about__deco about__deco--star" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="#12182B"/>
-          </svg>
-        </span>
-        <div class="about__img-main-wrap">
-          <span class="about__img-border about__img-border--main" aria-hidden="true"></span>
-          <img class="about__img-main" src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800" alt="Bestore Car premium vehicle" loading="lazy">
-        </div>
-        <div class="about__img-overlay-wrap">
-          <span class="about__img-border about__img-border--overlay" aria-hidden="true"></span>
-          <img class="about__img-overlay" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600" alt="Bestore Car fleet" loading="lazy">
-        </div>
-      </div>
-
-      <div class="about__content" id="aboutContent">
-        <div class="about__label-row">
-          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
-          </svg>
-          <span class="about__label-text" data-i18n="about.label">About Us</span>
-        </div>
-        <h2 class="about__heading" data-i18n="about.heading">Your trusted partner for car rental in Tangier</h2>
-        <p class="about__desc" data-i18n="about.desc">Since 2019, Bestore Car has been serving clients with a well-maintained, modern fleet. Based in Tangier-Medina, we offer transparent pricing and reliable service you can count on.</p>
-        <div class="about__features">
-          <div class="about__feature about__feature--bordered">
-            <div class="about__feature-icon-wrap">
-              <span class="about__feature-icon-bg" aria-hidden="true"></span>
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M17 2C8.716 2 2 8.716 2 17c0 3.18.88 6.15 2.416 8.676L2 32l6.468-2.35A14.924 14.924 0 0017 32c8.284 0 15-6.716 15-15S25.284 2 17 2zm0 27.6a12.518 12.518 0 01-6.384-1.75l-.456-.273-4.74 1.537 1.585-4.615-.3-.476A12.537 12.537 0 014.4 17C4.4 9.892 10.093 4.4 17 4.4S29.6 9.892 29.6 17 24.108 29.6 17 29.6zm6.883-9.342c-.378-.189-2.228-1.1-2.574-1.226-.345-.126-.596-.189-.846.189-.251.377-.972 1.226-1.19 1.477-.22.252-.44.283-.818.095-.378-.189-1.59-.585-3.03-1.869-1.12-.996-1.876-2.226-2.095-2.601-.22-.378-.024-.582.165-.771.169-.169.378-.44.567-.66.19-.22.252-.378.378-.63.126-.251.063-.472-.032-.66-.094-.19-.846-2.039-1.158-2.793-.305-.734-.616-.636-.846-.648-.22-.01-.472-.013-.724-.013-.252 0-.66.095-1.007.472-.346.378-1.323 1.29-1.323 3.15 0 1.86 1.354 3.655 1.543 3.906.189.252 2.666 4.068 6.455 5.706.904.39 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#FF3600"/>
-              </svg>
-            </div>
-            <div class="about__feature-body">
-              <h3 class="about__feature-title" data-i18n="about.f1.title">Instant WhatsApp Booking</h3>
-              <p class="about__feature-desc" data-i18n="about.f1.desc">Send us a message and get confirmation within 30 minutes.</p>
-            </div>
-          </div>
-          <div class="about__feature">
-            <div class="about__feature-icon-wrap">
-              <span class="about__feature-icon-bg" aria-hidden="true"></span>
-              <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M36 17h-1v-5.586l-4-4H24V5a2 2 0 00-2-2H4a2 2 0 00-2 2v13H1a1 1 0 000 2h1.05a4 4 0 007.9 0h8.1a4 4 0 007.9 0H36a1 1 0 000-2zm-29 5a2 2 0 110-4 2 2 0 010 4zm17 0a2 2 0 110-4 2 2 0 010 4zM22 17H4V5h16v12zm2-8.586L26.586 11H24V8.414z" fill="#FF3600"/>
-              </svg>
-            </div>
-            <div class="about__feature-body">
-              <h3 class="about__feature-title" data-i18n="about.f2.title">Flexible Pickup &amp; Delivery</h3>
-              <p class="about__feature-desc" data-i18n="about.f2.desc">Agency, airport, hotel or anywhere in Tangier.</p>
-            </div>
-          </div>
-        </div>
-        <div class="about__cta-wrap">
-          <a href="contact.html"
-             class="btn-primary"
-             data-i18n="about.cta">
-            Contact Us
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -317,7 +242,7 @@
         </span>
         <div class="hiw__img-wrap">
           <span class="hiw__img-border" aria-hidden="true"></span>
-          <img class="hiw__img" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800" alt="Happy customer driving a rental car" loading="lazy">
+          <video id="hiwVideo" class="hiw__img" src="video.mp4" autoplay muted loop playsinline></video>
         </div>
         <div class="hiw__badge">
           <p class="hiw__badge-count" data-i18n="how.badge.count">500+</p>
@@ -415,113 +340,123 @@
     </div>
   </section>
 
-  <!-- ── FAQ ──────────────────────────────────────────── -->
-  <section class="faq" id="faq">
-    <div class="faq__wrapper">
-      <div class="faq__bg">
-        <div class="faq__inner">
-          <div class="faq__images" id="faqImages">
-            <img class="faq__collage" src="assets/images/image-1779501686217.webp" alt="Car rental collage" loading="lazy">
-          </div>
-          <div class="faq__content" id="faqContent">
-            <div class="faq__label-row">
-              <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
-              </svg>
-              <span class="faq__label-text" data-i18n="faq.label">Frequently Asked Questions</span>
-            </div>
-            <h2 class="faq__heading" data-i18n="faq.heading">Everything you need to know about renting with us</h2>
-            <div class="faq__accordion" id="faqAccordion">
-              <div class="faq__item faq__item--open">
-                <button class="faq__question" aria-expanded="true">
-                  <span data-i18n="faq.q1">What documents do I need to rent a car?</span>
-                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div class="faq__answer">
-                  <p data-i18n="faq.a1">A valid driver's license and a national ID or passport. A security deposit may apply depending on the vehicle.</p>
-                </div>
-              </div>
-              <div class="faq__item">
-                <button class="faq__question" aria-expanded="false">
-                  <span data-i18n="faq.q2">What is the minimum age to rent a car?</span>
-                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div class="faq__answer">
-                  <p data-i18n="faq.a2">The minimum age is 21 years old with a valid driving license.</p>
-                </div>
-              </div>
-              <div class="faq__item">
-                <button class="faq__question" aria-expanded="false">
-                  <span data-i18n="faq.q3">How do I make a reservation?</span>
-                  <svg class="faq__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M5 8L10 13L15 8" stroke="#040401" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div class="faq__answer">
-                  <p data-i18n="faq.a3">Send us a WhatsApp message with your name, dates and preferred vehicle. We confirm within 30 minutes.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── Testimonials ──────────────────────────────────── -->
   <section class="testimonials" id="testimonials">
     <div class="testimonials__inner">
-      <div class="testimonials__header">
+      <div class="testimonials__header" id="testimonialsHeader">
         <div class="testimonials__label-row">
-          <svg width="20" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M8 0L9.4 5.6L14.9 3.1L12.4 8.6L18 10L12.4 11.4L14.9 16.9L9.4 14.4L8 20L6.6 14.4L1.1 16.9L3.6 11.4L-2 10L3.6 8.6L1.1 3.1L6.6 5.6L8 0Z" fill="#FF3600"/>
-          </svg>
-          <span class="testimonials__label-text" data-i18n="testi.label">Testimonials</span>
+          <span class="testimonials__badge" data-i18n="testi.label">Testimonials</span>
         </div>
         <h2 class="testimonials__heading" data-i18n="testi.heading">What our customers are saying</h2>
+        <p class="testimonials__subtitle" data-i18n="testi.subtitle">See what drivers across Tangier and beyond say about renting with us.</p>
       </div>
-      <div class="testimonials__grid">
-        <div class="testimonials__card">
-          <div class="testimonials__stars">⭐⭐⭐⭐☆</div>
-          <div class="testimonials__review-wrap">
-            <p class="testimonials__review" data-i18n="testi.r1">"Renting with Bestore Car was the best decision for my Tangier trip. Clean car, price exactly as quoted — no surprises at pickup."</p>
-          </div>
-          <div class="testimonials__author">
-            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Karim+El+Fassi&size=60&background=FF3600&color=fff&rounded=true&bold=true" alt="Karim El Fassi">
-            <div class="testimonials__author-info">
-              <span class="testimonials__author-name" data-i18n="testi.r1.name">Karim El Fassi</span>
-              <span class="testimonials__author-role" data-i18n="testi.r1.role">Business Traveler, Casablanca</span>
-            </div>
+
+      <div class="testimonials__columns">
+        <!-- Column 1 -->
+        <div class="testimonials__col">
+          <div class="testimonials__track" style="--duration: 22s;">
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r1">"Renting with Bestore Car was the best decision for my Tangier trip. Clean car, price exactly as quoted — no surprises at pickup."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Karim El Fassi" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r1.name">Karim El Fassi</span>
+                  <span class="tcard__role" data-i18n="testi.r1.role">Business Traveler, Casablanca</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r2">"Needed a car at short notice, WhatsApp reply in under 10 minutes. Delivered to Ibn Battouta airport exactly on time. Highly recommend."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Mitchell" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r2.name">Sarah Mitchell</span>
+                  <span class="tcard__role" data-i18n="testi.r2.role">Tourist, United Kingdom</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r3">"Very professional. Vehicle was clean and exactly as described. Smooth process from first WhatsApp message to returning the keys."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/men/45.jpg" alt="Youssef Bennani" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r3.name">Youssef Bennani</span>
+                  <span class="tcard__role" data-i18n="testi.r3.role">Local Business Owner, Tanger</span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
-        <div class="testimonials__card">
-          <div class="testimonials__stars">⭐⭐⭐⭐⭐</div>
-          <div class="testimonials__review-wrap">
-            <p class="testimonials__review" data-i18n="testi.r2">"Needed a car at short notice, WhatsApp reply in under 10 minutes. Delivered to Ibn Battouta airport exactly on time. Highly recommend."</p>
-          </div>
-          <div class="testimonials__author">
-            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Sarah+M&size=60&background=040401&color=fff&rounded=true&bold=true" alt="Sarah Mitchell">
-            <div class="testimonials__author-info">
-              <span class="testimonials__author-name" data-i18n="testi.r2.name">Sarah Mitchell</span>
-              <span class="testimonials__author-role" data-i18n="testi.r2.role">Tourist, United Kingdom</span>
-            </div>
+
+        <!-- Column 2 (hidden on small screens) -->
+        <div class="testimonials__col testimonials__col--md">
+          <div class="testimonials__track" style="--duration: 28s;">
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r4">"Booked an SUV for a family trip to Chefchaouen. The car was spotless, fuel-efficient, and the deposit was returned the same day we came back."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Fatima Zahra" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r4.name">Fatima Zahra</span>
+                  <span class="tcard__role" data-i18n="testi.r4.role">Family Traveler, Rabat</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r5">"Picked up at the port, dropped at the airport — zero hassle, fair price, and they even waited when my ferry arrived late."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/men/52.jpg" alt="David Bernard" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r5.name">David Bernard</span>
+                  <span class="tcard__role" data-i18n="testi.r5.role">Tourist, France</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r6">"Affordable weekly rate and a brand-new Clio. They explained everything clearly over WhatsApp before I even arrived in the city."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Imane Saidi" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r6.name">Imane Saidi</span>
+                  <span class="tcard__role" data-i18n="testi.r6.role">Student, Tetouan</span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
-        <div class="testimonials__card">
-          <div class="testimonials__stars">⭐⭐⭐⭐⭐</div>
-          <div class="testimonials__review-wrap">
-            <p class="testimonials__review" data-i18n="testi.r3">"Very professional. Vehicle was clean and exactly as described. Smooth process from first WhatsApp message to returning the keys."</p>
-          </div>
-          <div class="testimonials__author">
-            <img class="testimonials__avatar" src="https://ui-avatars.com/api/?name=Youssef+B&size=60&background=FF3600&color=fff&rounded=true&bold=true" alt="Youssef Bennani">
-            <div class="testimonials__author-info">
-              <span class="testimonials__author-name" data-i18n="testi.r3.name">Youssef Bennani</span>
-              <span class="testimonials__author-role" data-i18n="testi.r3.role">Local Business Owner, Tanger</span>
-            </div>
+
+        <!-- Column 3 (hidden below large screens) -->
+        <div class="testimonials__col testimonials__col--lg">
+          <div class="testimonials__track" style="--duration: 25s;">
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r7">"I rent from Bestore every month for work. Always reliable, always on time, and the cars are genuinely well maintained."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Mohammed Tahiri" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r7.name">Mohammed Tahiri</span>
+                  <span class="tcard__role" data-i18n="testi.r7.role">Frequent Renter, Tanger</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r8">"Smooth English communication, transparent pricing, and a comfortable car for our road trip along the coast. Highly recommended."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/women/29.jpg" alt="Laura Schmidt" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r8.name">Laura Schmidt</span>
+                  <span class="tcard__role" data-i18n="testi.r8.role">Tourist, Germany</span>
+                </div>
+              </div>
+            </article>
+            <article class="tcard">
+              <p class="tcard__text" data-i18n="testi.r9">"Needed a premium car for a client meeting. Delivered to my hotel in immaculate condition — it made a great impression."</p>
+              <div class="tcard__author">
+                <img class="tcard__avatar" src="https://randomuser.me/api/portraits/men/41.jpg" alt="Anas Berrada" width="40" height="40" loading="lazy">
+                <div class="tcard__meta">
+                  <span class="tcard__name" data-i18n="testi.r9.name">Anas Berrada</span>
+                  <span class="tcard__role" data-i18n="testi.r9.role">Entrepreneur, Marrakech</span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -531,7 +466,8 @@
   <!-- ── CTA ──────────────────────────────────────────────── -->
   <section class="cta" id="contact">
     <div class="cta__wrapper">
-      <div class="cta__card">
+      <div class="cta__card mag-host">
+        <canvas class="mag-field" aria-hidden="true"></canvas>
         <div class="cta__deco" aria-hidden="true">
           <svg class="cta__deco-svg" viewBox="0 0 1300 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <circle cx="950" cy="220" r="100" stroke="white" stroke-width="1.2" opacity="0.13"/>
@@ -554,7 +490,7 @@
             </a>
           </div>
           <div class="cta__right">
-            <img class="cta__car-img" src="cta-car-img.png" alt="Book a car with Bestore Car" loading="lazy">
+            <img class="cta__car-img" src="assets/images/tiguan footer.png" alt="Book a car with Bestore Car" loading="lazy">
           </div>
         </div>
       </div>
@@ -564,7 +500,8 @@
   <!-- ── Footer ──────────────────────────────────────────── -->
   <footer class="footer">
     <div class="footer__wrapper">
-      <div class="footer__card">
+      <div class="footer__card mag-host">
+        <canvas class="mag-field" aria-hidden="true"></canvas>
         <span class="footer__star footer__star--lg" aria-hidden="true">
           <svg width="32" height="32" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0L13.2 8.8L22 11L13.2 13.2L11 22L8.8 13.2L0 11L8.8 8.8L11 0Z" fill="white" opacity="0.18"/></svg>
         </span>
@@ -604,11 +541,12 @@
                 <p data-i18n="footer.hours">Open 24 hours, 7 days a week</p>
               </div>
               <p class="footer__phone">+212 6 61 66 12 30</p>
-              <a href="https://wa.me/212661661230" class="footer__wa-btn" target="_blank" rel="noopener noreferrer" data-i18n="footer.whatsapp">Chat on WhatsApp →</a>
+              <p class="footer__address" data-i18n="footer.address">Avenue Arrar N°27, Branes Narjiss, Tanger-Médina</p>
             </div>
           </div>
           <div class="footer__bottom">
             <p class="footer__copy" data-i18n="footer.copy">© 2026 Bestore Car — Tangier, Morocco. All rights reserved.</p>
+            <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
         </div>
       </div>
@@ -617,24 +555,14 @@
 
   <script src="js/main.js"></script>
   <script src="js/i18n.js"></script>
-  <script>
-    (function() {
-      var today = new Date().toISOString().split('T')[0];
-      var pickupEl = document.getElementById('qs-pickup');
-      if (pickupEl) pickupEl.setAttribute('min', today);
-
-      document.getElementById('qs-submit').addEventListener('click', function() {
-        var pickup = document.getElementById('qs-pickup').value;
-        var ret = document.getElementById('qs-return').value;
-        if (pickup) sessionStorage.setItem('pickup_date', pickup);
-        if (ret) sessionStorage.setItem('return_date', ret);
-        window.location.href = 'fleet.html';
-      });
-    })();
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/bookly-data.js"></script>
+  <script src="js/booking-widget.js"></script>
+  <script src="js/noise-terrain.js"></script>
   <!-- ── Floating WhatsApp button ── -->
-  <a href="https://wa.me/212661661230" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <a href="https://wa.me/212697366797" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
       <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
