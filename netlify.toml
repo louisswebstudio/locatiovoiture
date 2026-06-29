@@ -26,21 +26,11 @@
   status = 200
 
 # ──────────────────────────────────────────────
-#  Defense in depth: never serve server-only / source files,
-#  even if one slips into the repo. force = true beats static files.
+#  Defense in depth: never serve server-only / source files.
+#  force = true beats static files. NOTE: Netlify's "*" is a TRAILING
+#  splat only — extension globs like /*.sql do NOT work, so each
+#  server-only file is listed by its exact path (or a /dir/* splat).
 # ──────────────────────────────────────────────
-[[redirects]]
-  from = "/.env*"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/*.mjs"
-  to = "/404.html"
-  status = 404
-  force = true
-
 [[redirects]]
   from = "/seed.js"
   to = "/404.html"
@@ -54,13 +44,25 @@
   force = true
 
 [[redirects]]
+  from = "/schema.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/migrate-blacklist.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
   from = "/lib/*"
   to = "/404.html"
   status = 404
   force = true
 
 [[redirects]]
-  from = "/*.sql"
+  from = "/scripts/*"
   to = "/404.html"
   status = 404
   force = true
