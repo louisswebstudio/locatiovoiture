@@ -6,6 +6,8 @@ const translations = {
     "nav.about": "من نحن",
     "nav.contact": "تواصل معنا",
     "nav.cta": "احجز عبر واتساب",
+    "nav.fleetcta": "سياراتنا",
+    "wa.tip": "سؤال؟ راسلنا",
     "nav.phone.label": "+212 6 61 66 12 30",
     "topbar.address": "شارع عرار رقم 27، براني نرجس، طنجة المدينة",
     "topbar.hours": "مفتوح 24 ساعة، 7 أيام في الأسبوع",
@@ -15,7 +17,8 @@ const translations = {
     "hero.sub": "سواء كنت تخطط لرحلة نهاية الأسبوع، أو رحلة عمل، أو تحتاج فقط إلى وسيلة تنقل موثوقة — بيستور كار لديها السيارة المناسبة لك.",
     "hero.cta1": "احجز عبر واتساب",
     "hero.cta2": "عرض أسطولنا",
-    "hero.tagline": "يبدأ من 280 درهم / يوم — بدون رسوم خفية",
+    "hero.cta": "شاهد سياراتنا",
+    "hero.tagline": "ابتداءً من 280 درهم / يوم — بدون رسوم خفية",
     "qs.phone": "مستعد للاستئجار في طنجة؟",
     "qs.location": "موقع الاستلام",
     "qs.location.opt0": "اختر الموقع…",
@@ -192,6 +195,50 @@ const translations = {
     "detail.form.duration":     "المدة (أيام)",
     "detail.form.submit":       "أرسل عبر واتساب",
     "detail.form.error":        "يرجى ملء جميع الحقول.",
+    "cdf.title":                "أكمل حجزك",
+    "cdf.step1":                "التواريخ",
+    "cdf.step2":                "معلوماتك",
+    "cdf.step3":                "ملخص",
+    "cdf.departDate":           "تاريخ الانطلاق",
+    "cdf.returnDate":           "تاريخ العودة",
+    "cdf.pickupTime":           "وقت الاستلام",
+    "cdf.location":             "مكان الاستلام",
+    "cdf.loc.agency":           "الوكالة (شارع عرار رقم 27)",
+    "cdf.loc.airport":          "مطار ابن بطوطة",
+    "cdf.loc.hotel":            "فندق / إقامة (حدد)",
+    "cdf.loc.station":          "محطة قطار طنجة",
+    "cdf.hotelName":            "اسم الفندق",
+    "cdf.hotelName.ph":         "اسم الفندق أو الإقامة",
+    "cdf.fullName":             "الاسم الكامل",
+    "cdf.fullName.ph":          "الاسم الكامل",
+    "cdf.firstName":            "اسمك الأول",
+    "cdf.phone":                "رقم واتساب",
+    "cdf.phone.ph":             "+212 6XX XXX XXX",
+    "cdf.idType":               "نوع بطاقة الهوية",
+    "cdf.id.cin":               "البطاقة الوطنية",
+    "cdf.id.passport":          "جواز السفر",
+    "cdf.message":              "رسالة (اختياري)",
+    "cdf.message.ph":           "طلبات خاصة",
+    "cdf.summary":              "ملخص الحجز",
+    "cdf.sum.car":              "السيارة",
+    "cdf.sum.from":             "من",
+    "cdf.sum.to":               "إلى",
+    "cdf.sum.duration":         "المدة",
+    "cdf.sum.total":            "المجموع التقديري",
+    "cdf.sum.time":             "الوقت",
+    "cdf.sum.location":         "المكان",
+    "cdf.sum.name":             "الاسم",
+    "cdf.sum.phone":            "الهاتف",
+    "cdf.sum.doc":              "الوثيقة",
+    "cdf.days":                 "أيام",
+    "cdf.day":                  "يوم",
+    "cdf.next":                 "التالي",
+    "cdf.back":                 "رجوع",
+    "cdf.confirm":              "تأكيد عبر واتساب",
+    "cdf.redirect":             "بالضغط، سيتم تحويلك إلى واتساب",
+    "cdf.err.date":             "يجب أن يكون تاريخ العودة بعد تاريخ الانطلاق",
+    "cdf.err.name":             "الاسم مطلوب (3 أحرف على الأقل)",
+    "cdf.err.phone":            "رقم هاتف مغربي غير صالح",
     "detail.req.text":          "رخصة قيادة سارية وبطاقة هوية أو جواز سفر مطلوبان. قد يُطلب تأمين قابل للاسترداد عند الاستلام.",
     "detail.spec.transmission": "ناقل الحركة",
     "detail.spec.fuel":         "الوقود",
@@ -230,15 +277,18 @@ const translations = {
     "nav.about": "À propos",
     "nav.contact": "Contact",
     "nav.cta": "Réserver sur WhatsApp",
+    "nav.fleetcta": "Nos voitures",
+    "wa.tip": "Une question ? Écrivez-nous",
     "nav.phone.label": "+212 6 61 66 12 30",
     "topbar.address": "Avenue Arrar N°27, Branes Narjiss, Tanger-Médina",
     "topbar.hours": "Ouvert 24h/24, 7j/7",
     "topbar.phone": "+212 6 61 66 12 30",
     "hero.label": "Bienvenue chez Bestore Car",
-    "hero.heading": "Besoin d'une location de voiture à Tanger ?",
+    "hero.heading": "Besoin d'une voiture à Tanger ?",
     "hero.sub": "Que vous planifiiez un week-end, un voyage d'affaires ou que vous ayez besoin d'un véhicule fiable — Bestore Car a la voiture qu'il vous faut.",
     "hero.cta1": "Réserver sur WhatsApp",
     "hero.cta2": "Voir notre flotte",
+    "hero.cta": "Voir nos voitures",
     "hero.tagline": "À partir de 280 MAD / jour — Sans frais cachés",
     "qs.phone": "Prêt à louer à Tanger ?",
     "qs.location": "Lieu de prise en charge",
@@ -416,6 +466,50 @@ const translations = {
     "detail.form.duration":     "Durée (jours)",
     "detail.form.submit":       "Envoyer sur WhatsApp",
     "detail.form.error":        "Veuillez remplir tous les champs.",
+    "cdf.title":                "Finalisez votre réservation",
+    "cdf.step1":                "Dates",
+    "cdf.step2":                "Infos",
+    "cdf.step3":                "Résumé",
+    "cdf.departDate":           "Date de départ",
+    "cdf.returnDate":           "Date de retour",
+    "cdf.pickupTime":           "Heure de prise en charge",
+    "cdf.location":             "Lieu de prise en charge",
+    "cdf.loc.agency":           "Agence (Avenue Arrar N°27)",
+    "cdf.loc.airport":          "Aéroport Ibn Batouta",
+    "cdf.loc.hotel":            "Hôtel / Résidence (préciser)",
+    "cdf.loc.station":          "Gare de Tanger",
+    "cdf.hotelName":            "Nom de l'hôtel",
+    "cdf.hotelName.ph":         "Nom de l'hôtel ou résidence",
+    "cdf.fullName":             "Prénom et Nom",
+    "cdf.fullName.ph":          "Votre prénom et nom",
+    "cdf.firstName":            "Votre prénom",
+    "cdf.phone":                "Numéro WhatsApp",
+    "cdf.phone.ph":             "+212 6XX XXX XXX",
+    "cdf.idType":               "Type de pièce d'identité",
+    "cdf.id.cin":               "CIN",
+    "cdf.id.passport":          "Passeport",
+    "cdf.message":              "Message (optionnel)",
+    "cdf.message.ph":           "Demandes spéciales",
+    "cdf.summary":              "Récapitulatif",
+    "cdf.sum.car":              "Voiture",
+    "cdf.sum.from":             "Du",
+    "cdf.sum.to":               "Au",
+    "cdf.sum.duration":         "Durée",
+    "cdf.sum.total":            "Total estimé",
+    "cdf.sum.time":             "Heure",
+    "cdf.sum.location":         "Lieu",
+    "cdf.sum.name":             "Nom",
+    "cdf.sum.phone":            "Tél",
+    "cdf.sum.doc":              "Document",
+    "cdf.days":                 "jours",
+    "cdf.day":                  "jour",
+    "cdf.next":                 "Suivant",
+    "cdf.back":                 "Retour",
+    "cdf.confirm":              "Confirmer sur WhatsApp",
+    "cdf.redirect":             "En cliquant, vous serez redirigé vers WhatsApp",
+    "cdf.err.date":             "La date de retour doit être après la date de départ",
+    "cdf.err.name":             "Le nom est requis (min. 3 caractères)",
+    "cdf.err.phone":            "Numéro de téléphone marocain invalide",
     "detail.req.text":          "Un permis de conduire valide et une pièce d'identité sont requis. Un dépôt de garantie remboursable peut être demandé.",
     "detail.spec.transmission": "Transmission",
     "detail.spec.fuel":         "Carburant",
@@ -454,6 +548,8 @@ const translations = {
     "nav.about": "About",
     "nav.contact": "Contact Us",
     "nav.cta": "Book on WhatsApp",
+    "nav.fleetcta": "Our Cars",
+    "wa.tip": "A question? Write to us",
     "nav.phone.label": "+212 6 61 66 12 30",
     "topbar.address": "Avenue Arrar N°27, Branes Narjiss, Tanger-Médina",
     "topbar.hours": "Open 24 hours, 7 days a week",
@@ -463,6 +559,7 @@ const translations = {
     "hero.sub": "Whether you're planning a weekend trip, a business journey, or just need a reliable ride — Bestore Car has the right vehicle for you.",
     "hero.cta1": "Book on WhatsApp",
     "hero.cta2": "View Our Fleet",
+    "hero.cta": "View our cars",
     "hero.tagline": "Starting from 280 MAD / day — No hidden fees",
     "qs.phone": "Ready to rent in Tangier?",
     "qs.location": "Pickup Location",
@@ -640,6 +737,50 @@ const translations = {
     "detail.form.duration":     "Duration (days)",
     "detail.form.submit":       "Send on WhatsApp",
     "detail.form.error":        "Please fill in all fields.",
+    "cdf.title":                "Complete your booking",
+    "cdf.step1":                "Dates",
+    "cdf.step2":                "Info",
+    "cdf.step3":                "Summary",
+    "cdf.departDate":           "Pickup date",
+    "cdf.returnDate":           "Return date",
+    "cdf.pickupTime":           "Pickup time",
+    "cdf.location":             "Pickup location",
+    "cdf.loc.agency":           "Agency (Avenue Arrar N°27)",
+    "cdf.loc.airport":          "Ibn Batouta Airport",
+    "cdf.loc.hotel":            "Hotel / Residence (specify)",
+    "cdf.loc.station":          "Tangier Train Station",
+    "cdf.hotelName":            "Hotel name",
+    "cdf.hotelName.ph":         "Hotel or residence name",
+    "cdf.fullName":             "Full name",
+    "cdf.fullName.ph":          "Your full name",
+    "cdf.firstName":            "Your first name",
+    "cdf.phone":                "WhatsApp number",
+    "cdf.phone.ph":             "+212 6XX XXX XXX",
+    "cdf.idType":               "ID type",
+    "cdf.id.cin":               "National ID (CIN)",
+    "cdf.id.passport":          "Passport",
+    "cdf.message":              "Message (optional)",
+    "cdf.message.ph":           "Special requests",
+    "cdf.summary":              "Summary",
+    "cdf.sum.car":              "Car",
+    "cdf.sum.from":             "From",
+    "cdf.sum.to":               "To",
+    "cdf.sum.duration":         "Duration",
+    "cdf.sum.total":            "Estimated total",
+    "cdf.sum.time":             "Time",
+    "cdf.sum.location":         "Location",
+    "cdf.sum.name":             "Name",
+    "cdf.sum.phone":            "Phone",
+    "cdf.sum.doc":              "Document",
+    "cdf.days":                 "days",
+    "cdf.day":                  "day",
+    "cdf.next":                 "Next",
+    "cdf.back":                 "Back",
+    "cdf.confirm":              "Confirm on WhatsApp",
+    "cdf.redirect":             "By clicking, you'll be redirected to WhatsApp",
+    "cdf.err.date":             "Return date must be after the pickup date",
+    "cdf.err.name":             "Name is required (min. 3 characters)",
+    "cdf.err.phone":            "Invalid Moroccan phone number",
     "detail.req.text":          "A valid driver's license and national ID or passport are required. A refundable security deposit may be requested at pickup.",
     "detail.spec.transmission": "Transmission",
     "detail.spec.fuel":         "Fuel",
@@ -672,8 +813,15 @@ const translations = {
   }
 };
 
-// Default language is Arabic
-let currentLang = localStorage.getItem('bsc_lang') || 'ar';
+// Default language is French
+let currentLang = localStorage.getItem('bsc_lang') || 'fr';
+
+// Flag-dropdown switcher metadata (flagcdn.com — free, no key)
+const LANG_META = {
+  ar: { code: 'AR', flag: 'https://flagcdn.com/w40/ma.png' },
+  fr: { code: 'FR', flag: 'https://flagcdn.com/w40/fr.png' },
+  en: { code: 'EN', flag: 'https://flagcdn.com/w40/gb.png' },
+};
 
 function applyLanguage(lang) {
   currentLang = lang;
@@ -712,6 +860,20 @@ function applyLanguage(lang) {
     btn.classList.toggle('lang-switcher__btn--active', btn.getAttribute('data-lang') === lang);
   });
 
+  // Update flag-dropdown switcher (trigger + active option)
+  const meta = LANG_META[lang];
+  document.querySelectorAll('.lang-dd').forEach(dd => {
+    if (meta) {
+      const codeEl = dd.querySelector('.lang-dd__code');
+      const flagImg = dd.querySelector('.lang-dd__flag-img');
+      if (codeEl) codeEl.textContent = meta.code;
+      if (flagImg) flagImg.src = meta.flag;
+    }
+    dd.querySelectorAll('.lang-dd__opt').forEach(opt => {
+      opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+    });
+  });
+
   // Re-render fleet cards if the function exists
   if (typeof window.renderFleetCards === 'function') {
     window.renderFleetCards();
@@ -722,10 +884,48 @@ function applyLanguage(lang) {
 }
 
 document.addEventListener('click', e => {
-  const btn = e.target.closest('.lang-btn') || e.target.closest('.lang-switcher__btn');
+  // Toggle the flag dropdown open/closed
+  const trigger = e.target.closest('.lang-dd__btn');
+  if (trigger) {
+    const dd = trigger.closest('.lang-dd');
+    const isOpen = dd.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.querySelectorAll('.lang-dd.open').forEach(o => { if (o !== dd) o.classList.remove('open'); });
+    return;
+  }
+
+  // Language selection (works for old buttons and new dropdown options)
+  const btn = e.target.closest('.lang-btn')
+    || e.target.closest('.lang-switcher__btn')
+    || e.target.closest('.lang-dd__opt');
   if (btn) {
     const lang = btn.getAttribute('data-lang');
     if (lang) applyLanguage(lang);
+    document.querySelectorAll('.lang-dd.open').forEach(dd => {
+      dd.classList.remove('open');
+      const t = dd.querySelector('.lang-dd__btn');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+    return;
+  }
+
+  // Click outside closes any open dropdown
+  if (!e.target.closest('.lang-dd')) {
+    document.querySelectorAll('.lang-dd.open').forEach(dd => {
+      dd.classList.remove('open');
+      const t = dd.querySelector('.lang-dd__btn');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.lang-dd.open').forEach(dd => {
+      dd.classList.remove('open');
+      const t = dd.querySelector('.lang-dd__btn');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
   }
 });
 

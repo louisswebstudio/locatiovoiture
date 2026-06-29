@@ -58,7 +58,7 @@
         carId: r.car_id, pickup: r.pickup_date, return: r.return_date,
         time: r.pickup_time || '', days: r.total_days, total: r.total_price,
         deposit: r.deposit, status: uiStatus(r.status), notes: r.notes || '',
-        source: r.source || 'dashboard', _car: car,
+        source: r.source || 'dashboard', created: r.created_at || null, _car: car,
       };
     }
 
@@ -162,8 +162,9 @@
 
       // Public website widget → pending lead. anon key + RLS allow this insert.
       async createBookingFromWebsite(d) {
-        var carId = null;
-        if (d.car_ref != null) {
+        // Prefer an explicit Supabase car id (car-detail page); fall back to ref_id.
+        var carId = d.car_id || null;
+        if (!carId && d.car_ref != null) {
           var cres = await sb.from('cars').select('id, price_per_day')
             .eq('agency_id', d.agency_id).eq('ref_id', d.car_ref).maybeSingle();
           if (!cres.error && cres.data) {
@@ -179,6 +180,9 @@
         var days = daysBetween(d.pickup_date, d.return_date);
         var noteBits = ['Demande via WhatsApp'];
         if (!carId && d.car_name) noteBits.push(d.car_name);
+        if (d.pickup_location) noteBits.push('Lieu : ' + d.pickup_location);
+        if (d.id_type)         noteBits.push('Pièce : ' + d.id_type);
+        if (d.notes)           noteBits.push('Message : ' + d.notes);
         var res = await sb.from('bookings').insert({
           agency_id: d.agency_id,
           client_id: client ? client.id : null,
@@ -201,11 +205,62 @@
         if (res.error) throw res.error;
       },
 
+      // Edit booking details (car / dates / notes). Never touches status,
+      // client_id, agency_id, source or created_at.
+      async updateBooking(id, patch) {
+        var upd = {};
+        if (patch.car_id !== undefined) upd.car_id = patch.car_id;
+        if (patch.pickup_date !== undefined) upd.pickup_date = patch.pickup_date;
+        if (patch.return_date !== undefined) upd.return_date = patch.return_date;
+        if (patch.total_days !== undefined) upd.total_days = patch.total_days;
+        if (patch.total_price !== undefined) upd.total_price = patch.total_price;
+        if (patch.notes !== undefined) upd.notes = patch.notes;
+        var res = await sb.from('bookings').update(upd).eq('id', id);
+        if (res.error) throw res.error;
+      },
+
       async updateCar(id, patch) {
         var upd = {};
         if (patch.price != null) upd.price_per_day = patch.price;
         if (patch.status != null) upd.status = patch.status;
+        if (patch.name != null) upd.name = patch.name;
+        if (patch.cat != null) upd.category = patch.cat;
+        if (patch.img != null) upd.photo_url = patch.img || null;
         var res = await sb.from('cars').update(upd).eq('id', id);
+        if (res.error) throw res.error;
+      },
+
+      async createCar(agencyId, car) {
+        var res = await sb.from('cars').insert({
+          agency_id: agencyId,
+          name: car.name,
+          category: car.cat || null,
+          price_per_day: car.price,
+          plate: car.plate || null,
+          photo_url: car.img || null,
+          status: car.status || 'available',
+        }).select().single();
+        if (res.error) throw res.error;
+        return mapCar(res.data);
+      },
+
+      async deleteCar(id) {
+        var res = await sb.from('cars').delete().eq('id', id);
+        if (res.error) throw res.error;
+      },
+
+      async getClientsUI(agencyId) {
+        var res = await sb.from('clients').select('*').eq('agency_id', agencyId);
+        if (res.error) throw res.error;
+        return res.data || [];
+      },
+
+      async updateClient(id, patch) {
+        var upd = {};
+        if (patch.notes !== undefined) upd.notes = patch.notes;
+        if (patch.blacklisted !== undefined) upd.blacklisted = patch.blacklisted;
+        if (patch.blacklist_reason !== undefined) upd.blacklist_reason = patch.blacklist_reason;
+        var res = await sb.from('clients').update(upd).eq('id', id);
         if (res.error) throw res.error;
       },
 
@@ -332,16 +387,23 @@
         var cars = load(K.cars, SEED_CARS);
         var car = null;
         if (d.car_ref != null) car = cars.filter(function (c) { return String(c.id) === String(d.car_ref); })[0];
+        if (!car && d.car_id != null) car = cars.filter(function (c) { return String(c.id) === String(d.car_id); })[0];
         var list = load(K.bookings, seedBookings());
         var days = daysBetween(d.pickup_date, d.return_date);
         var id = Math.max.apply(null, [1000].concat(list.map(function (b) { return Number(b.id) || 0; }))) + 1;
         var price = d.price_per_day || (car ? car.price : 0);
+        var noteBits = ['Demande via WhatsApp'];
+        if (!car && d.car_name) noteBits.push(d.car_name);
+        if (d.pickup_location) noteBits.push('Lieu : ' + d.pickup_location);
+        if (d.id_type)         noteBits.push('Pièce : ' + d.id_type);
+        if (d.notes)           noteBits.push('Message : ' + d.notes);
         var row = {
           id: id, client: d.client_name || 'Lead — site web', phone: d.client_phone || '', email: '',
-          carId: car ? car.id : (d.car_ref != null ? d.car_ref : null),
+          carId: car ? car.id : (d.car_id != null ? d.car_id : (d.car_ref != null ? d.car_ref : null)),
           pickup: d.pickup_date, return: d.return_date, time: d.pickup_time || '10:00',
           days: days, total: price * days, deposit: 0, status: 'pending', source: 'website',
-          notes: 'Demande via WhatsApp' + (!car && d.car_name ? ' · ' + d.car_name : ''),
+          created: new Date().toISOString(),
+          notes: noteBits.join(' · '),
         };
         list.push(row); save(K.bookings, list); announce({ eventType: 'INSERT' });
         return row;
@@ -351,14 +413,63 @@
         var b = list.filter(function (x) { return String(x.id) === String(id); })[0];
         if (b) { b.status = status; save(K.bookings, list); announce({ eventType: 'UPDATE' }); }
       },
+      async updateBooking(id, patch) {
+        var list = load(K.bookings, seedBookings());
+        var b = list.filter(function (x) { return String(x.id) === String(id); })[0];
+        if (b) {
+          if (patch.car_id !== undefined) b.carId = isNaN(Number(patch.car_id)) ? patch.car_id : Number(patch.car_id);
+          if (patch.pickup_date !== undefined) b.pickup = patch.pickup_date;
+          if (patch.return_date !== undefined) b.return = patch.return_date;
+          if (patch.total_days !== undefined) b.days = patch.total_days;
+          if (patch.total_price !== undefined) b.total = patch.total_price;
+          if (patch.notes !== undefined) b.notes = patch.notes;
+          save(K.bookings, list); announce({ eventType: 'UPDATE' });
+        }
+      },
       async updateCar(id, patch) {
         var cars = load(K.cars, SEED_CARS);
         var c = cars.filter(function (x) { return String(x.id) === String(id); })[0];
         if (c) {
           if (patch.price != null) c.price = patch.price;
           if (patch.status != null) c.status = patch.status;
+          if (patch.name != null) c.name = patch.name;
+          if (patch.cat != null) c.cat = patch.cat;
+          if (patch.img != null) c.img = patch.img || FB_IMG;
           save(K.cars, cars); announce({ eventType: 'UPDATE' });
         }
+      },
+      async createCar(agencyId, car) {
+        var cars = load(K.cars, SEED_CARS);
+        var id = Math.max.apply(null, [0].concat(cars.map(function (c) { return Number(c.id) || 0; }))) + 1;
+        var row = {
+          id: id, name: car.name, cat: car.cat || '', price: car.price,
+          img: car.img || FB_IMG, plate: car.plate || '', status: car.status || 'available',
+        };
+        cars.push(row); save(K.cars, cars); announce({ eventType: 'UPDATE' });
+        return Object.assign({}, row);
+      },
+      async deleteCar(id) {
+        var cars = load(K.cars, SEED_CARS).filter(function (c) { return String(c.id) !== String(id); });
+        save(K.cars, cars); announce({ eventType: 'UPDATE' });
+      },
+      async getClientsUI() {
+        try {
+          var stored = JSON.parse(localStorage.getItem('bookly_client_meta') || '{}');
+          return Object.keys(stored).map(function(phone) {
+            var m = stored[phone];
+            return { id: phone, phone: phone, full_name: '', notes: m.notes || '', blacklisted: m.blacklisted || false, blacklist_reason: m.blacklist_reason || '' };
+          });
+        } catch(e) { return []; }
+      },
+      async updateClient(id, patch) {
+        try {
+          var stored = JSON.parse(localStorage.getItem('bookly_client_meta') || '{}');
+          if (!stored[id]) stored[id] = {};
+          if (patch.notes !== undefined) stored[id].notes = patch.notes;
+          if (patch.blacklisted !== undefined) stored[id].blacklisted = patch.blacklisted;
+          if (patch.blacklist_reason !== undefined) stored[id].blacklist_reason = patch.blacklist_reason;
+          localStorage.setItem('bookly_client_meta', JSON.stringify(stored));
+        } catch(e) {}
       },
       subscribeBookings(agencyId, cb) {
         if (!bc) return function () {};

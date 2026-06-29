@@ -46,6 +46,8 @@ create table if not exists clients (
   email text,
   cin text,                           -- Moroccan ID number
   notes text,
+  blacklisted        BOOLEAN DEFAULT FALSE,
+  blacklist_reason   TEXT,
   created_at timestamptz default now()
 );
 -- needed for the upsert "onConflict: phone,agency_id" used in db.js

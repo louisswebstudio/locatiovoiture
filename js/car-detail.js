@@ -157,6 +157,7 @@
       desc: { en: db.name, fr: db.name, ar: db.name }
     };
     base.id = db.id;                                  // identity = Supabase id
+    base.ref_id = (db.ref_id != null) ? db.ref_id : null; // stable ref for lead save
     base.price = db.price_per_day;                    // live price
     if (db.photo_url) base.img = db.photo_url;        // live photo
     base.status = db.status || 'available';
@@ -200,12 +201,25 @@
     return metaByRef(rawId) || cars[0];
   }
 
-  // Thumbnail click handler
+  // Thumbnail click handler — swaps the main image with a smooth fade and
+  // moves the active (highlighted) state to the clicked thumbnail.
   function initThumbs() {
     var mainImg = document.getElementById('gallery-main-img');
     document.querySelectorAll('.thumb').forEach(function(thumb) {
       thumb.addEventListener('click', function() {
-        mainImg.src = thumb.src;
+        if (thumb.classList.contains('active')) return;
+        var next = thumb.getAttribute('src');
+        mainImg.classList.add('is-fading');
+        var swap = function () {
+          mainImg.removeEventListener('transitionend', swap);
+          mainImg.src = next;
+          mainImg.alt = thumb.alt || '';
+          mainImg.classList.remove('is-fading');
+        };
+        mainImg.addEventListener('transitionend', swap);
+        // Fallback in case transitionend doesn't fire.
+        setTimeout(swap, 320);
+
         document.querySelectorAll('.thumb').forEach(function(t) { t.classList.remove('active'); });
         thumb.classList.add('active');
       });
@@ -271,11 +285,6 @@
     var displayCat  = lang === 'ar' ? c.catAr  : lang === 'fr' ? c.catFr  : c.cat;
     currentDisplayName = displayName;
 
-    // Hero
-    document.getElementById('hero-bg').style.backgroundImage = 'url(' + c.img + ')';
-    document.getElementById('hero-car-name').textContent = displayName;
-    document.getElementById('breadcrumb-car').textContent = displayName;
-
     // Sidebar price
     document.getElementById('car-price').textContent = c.price + ' MAD';
 
@@ -287,15 +296,25 @@
     document.getElementById('spec-fuel').textContent =
       lang === 'ar' ? c.fuelAr : lang === 'fr' ? c.fuelFr : c.fuel;
 
-    // Gallery
+    // Gallery — 3 photos (hero / front / side) from CAR_IMAGES, with the live
+    // Supabase photo_url as fallback when no mapping exists for this car.
     var fallback = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800';
-    document.getElementById('gallery-main-img').src = c.img;
-    document.getElementById('gallery-main-img').alt = displayName;
-    ['thumb-0', 'thumb-1', 'thumb-2'].forEach(function(id) {
+    var imgs = (typeof getCarImages === 'function') ? getCarImages(c) : null;
+    var photos = imgs
+      ? [imgs.hero, imgs.front, imgs.side]
+      : [c.img, c.img, c.img];
+
+    var mainImg = document.getElementById('gallery-main-img');
+    mainImg.classList.remove('is-fading');
+    mainImg.src = photos[0] || c.img || fallback;
+    mainImg.alt = displayName;
+
+    ['thumb-0', 'thumb-1', 'thumb-2'].forEach(function(id, i) {
       var el = document.getElementById(id);
-      el.src = c.img;
+      el.src = photos[i] || c.img || fallback;
       el.alt = displayName;
-      el.onerror = function() { el.src = fallback; };
+      el.classList.toggle('active', i === 0);
+      el.onerror = function() { el.onerror = null; el.src = fallback; };
     });
 
     // Car name + badge
@@ -357,8 +376,6 @@
     container.innerHTML = similar.map(function(c) {
       var n = lang === 'ar' ? c.nameAr : lang === 'fr' ? c.nameFr : c.name;
       var b = lang === 'ar' ? c.catAr  : lang === 'fr' ? c.catFr  : c.cat;
-      var waUrl = 'https://wa.me/212661661230?text=' +
-        encodeURIComponent('Hello, I want to book the ' + c.name + '.');
       return '<div class="fleet__card" onclick="window.location=\'car-detail.html?id=' + c.id + '\'">' +
         '<div class="fleet__card-img-wrap">' +
           '<img class="fleet__card-img" src="' + c.img + '" alt="' + n + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + fallback + '\'">' +
@@ -382,12 +399,25 @@
               '<span class="fleet__price-unit">' + perDay + '</span>' +
             '</div>' +
           '</div>' +
-          '<a href="' + waUrl + '" class="fleet__reserve-btn" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" aria-label="Book ' + c.name + ' on WhatsApp">' +
+          '<button type="button" class="fleet__reserve-btn cd-sim-reserve" data-ref="' + c.id + '" aria-label="Book ' + c.name + '">' +
             arrowSvg + '<span>' + reserveLabel + '</span>' +
-          '</a>' +
+          '</button>' +
         '</div>' +
       '</div>';
     }).join('');
+
+    // Similar-car "Reserve" buttons open the same smart booking modal,
+    // pre-filled with that car (no navigation to a new page).
+    container.querySelectorAll('.cd-sim-reserve').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var ref = btn.getAttribute('data-ref');
+        var picked = cars.find(function (x) { return String(x.id) === String(ref); });
+        if (picked && typeof window.openCarBooking === 'function') {
+          window.openCarBooking(carBookingData(picked));
+        }
+      });
+    });
 
     refreshSimilarCarousel();
   }
@@ -441,96 +471,25 @@
   // ── Booking form modal ──
   var currentDisplayName = '';
 
-  function buildBookingMessage(lang, carName, name, pickup, duration) {
-    var d = duration ? duration + (lang === 'ar' ? ' أيام' : lang === 'fr' ? ' jour(s)' : ' day(s)') : '—';
-    if (lang === 'ar') {
-      return 'مرحباً بيستور كار! أود حجز ' + carName + '.\n' +
-        '👤 الاسم: ' + (name || '—') + '\n' +
-        '📅 تاريخ الاستلام: ' + (pickup || '—') + '\n' +
-        '⏱️ المدة: ' + d;
-    }
-    if (lang === 'fr') {
-      return 'Bonjour Bestore Car ! Je souhaite réserver la ' + carName + '.\n' +
-        '👤 Nom : ' + (name || '—') + '\n' +
-        '📅 Date de prise en charge : ' + (pickup || '—') + '\n' +
-        '⏱️ Durée : ' + d;
-    }
-    return 'Hello Bestore Car! I would like to book the ' + carName + '.\n' +
-      '👤 Name: ' + (name || '—') + '\n' +
-      '📅 Pickup date: ' + (pickup || '—') + '\n' +
-      '⏱️ Duration: ' + d;
-  }
-
-  function openModal() {
-    var modal = document.getElementById('bk-modal');
-    if (!modal) return;
-    document.getElementById('bk-modal-car').textContent = currentDisplayName;
-    // Pre-fill pickup with today (or value carried from the homepage search)
-    var pickupEl = document.getElementById('bk-pickup');
-    var today = new Date().toISOString().split('T')[0];
-    pickupEl.min = today;
-    pickupEl.value = sessionStorage.getItem('pickup_date') || today;
-    document.getElementById('bk-modal-error').textContent = '';
-    modal.classList.add('bk-modal--open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    var modal = document.getElementById('bk-modal');
-    if (!modal) return;
-    modal.classList.remove('bk-modal--open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+  // Build the carData payload consumed by the smart booking modal.
+  function carBookingData(c) {
+    return {
+      name: { ar: c.nameAr, fr: c.nameFr, en: c.name },
+      cat:  { ar: c.catAr,  fr: c.catFr,  en: c.cat },
+      price: c.price,
+      img:   c.img,
+      carId: c.id && !/^\d+$/.test(String(c.id)) ? c.id : null,  // Supabase UUID only
+      ref:   (c.ref_id != null) ? c.ref_id : (/^\d+$/.test(String(c.id)) ? c.id : null)
+    };
   }
 
   function initModal() {
     var openBtn = document.getElementById('whatsapp-book');
-    var closeBtn = document.getElementById('bk-modal-close');
-    var overlay = document.getElementById('bk-modal-overlay');
-    var submit = document.getElementById('bk-modal-submit');
-
     if (openBtn) openBtn.addEventListener('click', function (e) {
       e.preventDefault();
-      // Open the unified 3-step widget pre-selected on this car → jump to summary
-      if (car && typeof window.openBookingWidget === 'function') {
-        window.openBookingWidget({
-          car: {
-            name: { ar: car.nameAr, fr: car.nameFr, en: car.name },
-            price: car.price,
-            img: car.img
-          },
-          prefill: {
-            pickupDate: sessionStorage.getItem('pickup_date') || undefined,
-            returnDate: sessionStorage.getItem('return_date') || undefined
-          }
-        });
-        return;
+      if (car && typeof window.openCarBooking === 'function') {
+        window.openCarBooking(carBookingData(car));
       }
-      openModal();
-    });
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (overlay) overlay.addEventListener('click', closeModal);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    if (submit) submit.addEventListener('click', function () {
-      var lang = getLang();
-      var name = document.getElementById('bk-name').value.trim();
-      var pickup = document.getElementById('bk-pickup').value;
-      var duration = document.getElementById('bk-duration').value;
-      var errEl = document.getElementById('bk-modal-error');
-
-      var t = (typeof translations !== 'undefined') ? translations[lang] : null;
-      if (!name || !pickup || !duration || parseInt(duration, 10) < 1) {
-        errEl.textContent = t ? t['detail.form.error'] : 'Please fill in all fields.';
-        return;
-      }
-      errEl.textContent = '';
-      var msg = buildBookingMessage(lang, currentDisplayName, name, pickup, duration);
-      window.open('https://wa.me/212661661230?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
-      closeModal();
     });
   }
 

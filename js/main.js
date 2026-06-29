@@ -52,35 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// About: GSAP ScrollTrigger fade-in animations
+// Register ScrollTrigger (used by the section reveals below)
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
-
-    gsap.from('#aboutImages', {
-      opacity: 0,
-      x: -60,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.about',
-        start: 'top 78%',
-        once: true,
-      },
-    });
-
-    gsap.from('#aboutContent > *', {
-      opacity: 0,
-      y: 30,
-      duration: 0.7,
-      ease: 'power2.out',
-      stagger: 0.12,
-      scrollTrigger: {
-        trigger: '.about',
-        start: 'top 78%',
-        once: true,
-      },
-    });
   }
 });
 
@@ -180,12 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const doorsLabel = t ? t['fleet.doors'] : 'Doors';
     const passLabel  = t ? t['fleet.pass']  : 'Passengers';
     const perDay     = t ? t['fleet.perday'] : '/ day';
-    const reserveLabel = t ? t['fleet.reserve'] : 'Réserver';
+    const detailsLabel = t ? (t['fleet.details'] || t['fleet.reserve']) : 'View details';
 
     cars.forEach(car => {
       const carName = car.name[lang] || car.name.en;
       const carCat  = car.cat[lang]  || car.cat.en;
-      const waUrl = `https://wa.me/212661661230?text=${encodeURIComponent(`Hello, I want to book the ${car.name.en}.`)}`;
+      const detailUrl = `car-detail.html?id=${encodeURIComponent(car.id)}`;
       const card = document.createElement('div');
       card.className = 'fleet__card';
       card.dataset.price = car.price;
@@ -213,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="fleet__price-unit">${perDay}</span>
             </div>
           </div>
-          <a href="${waUrl}" class="fleet__reserve-btn" target="_blank" rel="noopener noreferrer" aria-label="Book ${car.name.en} on WhatsApp">
-            ${arrowSvg}<span>${reserveLabel}</span>
+          <a href="${detailUrl}" class="fleet__reserve-btn" aria-label="View details for ${car.name.en}">
+            ${arrowSvg}<span>${detailsLabel}</span>
           </a>
         </div>`;
 
@@ -386,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// FAQ: accordion toggle + GSAP scroll reveal
+// FAQ: accordion toggle
 document.addEventListener('DOMContentLoaded', () => {
   const faqItems = document.querySelectorAll('.faq__item');
   faqItems.forEach(item => {
@@ -403,24 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.from('#faqImages', {
-      opacity: 0,
-      x: -60,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: '.faq', start: 'top 78%', once: true },
-    });
-    gsap.from('#faqContent > *', {
-      opacity: 0,
-      y: 30,
-      duration: 0.7,
-      ease: 'power2.out',
-      stagger: 0.12,
-      scrollTrigger: { trigger: '.faq', start: 'top 78%', once: true },
-    });
-  }
 });
 
 // Why Choose Us: GSAP staggered ScrollTrigger reveal

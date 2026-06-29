@@ -273,7 +273,7 @@
       btn.className = 'fc__page-btn' + (i === currentPage ? ' fc__page-btn--active' : '');
       btn.textContent = i;
       btn.setAttribute('aria-label', 'Page ' + i);
-      btn.addEventListener('click', () => { currentPage = i; render(); });
+      btn.addEventListener('click', () => { currentPage = i; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
       pagination.appendChild(btn);
     }
   }

@@ -3,3 +3,7 @@ node_modules/
 .env*.local
 .DS_Store
 npm-debug.log*
+
+# Local-only admin tooling — must NEVER be deployed (these read the
+# service-role key from .env.local and some hold credentials in plaintext)
+*.mjs

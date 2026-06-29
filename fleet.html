@@ -43,21 +43,26 @@
 
       <div class="nav-right">
         <!-- Language switcher -->
-        <div class="lang-switcher" id="langSwitcher">
-          <button class="lang-switcher__btn" data-lang="ar">ع</button>
-          <button class="lang-switcher__btn" data-lang="fr">FR</button>
-          <button class="lang-switcher__btn" data-lang="en">EN</button>
+        <div class="lang-dd" id="langSwitcher">
+          <button type="button" class="lang-dd__btn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+            <span class="lang-dd__flag"><img class="lang-dd__flag-img" src="https://flagcdn.com/w40/ma.png" alt="" width="40" height="30"></span>
+            <span class="lang-dd__code">AR</span>
+            <span class="lang-dd__chev"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="lang-dd__menu" role="menu">
+            <div class="lang-dd__opt" role="menuitem" data-lang="ar"><span class="lang-dd__opt-flag"><img src="https://flagcdn.com/w40/ma.png" alt="" width="40" height="30" loading="lazy"></span><span class="lang-dd__opt-label">العربية</span></div>
+            <div class="lang-dd__divider"></div>
+            <div class="lang-dd__opt" role="menuitem" data-lang="fr"><span class="lang-dd__opt-flag"><img src="https://flagcdn.com/w40/fr.png" alt="" width="40" height="30" loading="lazy"></span><span class="lang-dd__opt-label">Français</span></div>
+            <div class="lang-dd__divider"></div>
+            <div class="lang-dd__opt" role="menuitem" data-lang="en"><span class="lang-dd__opt-flag"><img src="https://flagcdn.com/w40/gb.png" alt="" width="40" height="30" loading="lazy"></span><span class="lang-dd__opt-label">English</span></div>
+          </div>
         </div>
 
-        <a href="https://wa.me/212661661230"
+        <a href="fleet.html"
            class="btn-primary nav-cta"
-           target="_blank"
-           rel="noopener noreferrer"
-           data-i18n="nav.cta">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          <span data-i18n="nav.cta">احجز عبر واتساب</span>
+           data-i18n="nav.fleetcta">
+          <span data-i18n="nav.fleetcta">سياراتنا</span>
+          <span class="btn-arrow">→</span>
         </a>
       </div>
 
@@ -86,15 +91,10 @@
         <button class="lang-btn" data-lang="fr">FR</button>
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
-      <a href="https://wa.me/212661661230"
+      <a href="fleet.html"
          class="btn-primary mobile-cta"
-         target="_blank"
-         rel="noopener noreferrer"
-         data-i18n="nav.cta">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        احجز عبر واتساب
+         data-i18n="nav.fleetcta">
+        سياراتنا →
       </a>
     </div>
   </div>
@@ -125,22 +125,48 @@
             <ul class="fc__filters-list" id="fcFilters">
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__checkbox" value="Economy"> <span data-i18n="fleet.filter.economy">اقتصادية</span>
+                  <input type="checkbox" class="fc__checkbox" value="Economy">
+                  <svg class="fc__type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m21 8-2 2-1.5-3.7A2 2 0 0 0 15.6 5H8.4a2 2 0 0 0-1.9 1.3L5 10 3 8"/>
+                    <rect x="3" y="10" width="18" height="7" rx="2"/>
+                    <path d="M7 14h.01M17 14h.01M6 17v2M18 17v2"/>
+                  </svg>
+                  <span data-i18n="fleet.filter.economy">اقتصادية</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__checkbox" value="Sedan"> <span data-i18n="fleet.filter.sedan">سيدان</span>
+                  <input type="checkbox" class="fc__checkbox" value="Sedan">
+                  <svg class="fc__type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.6-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C1.4 11.4 1 12.1 1 13v3c0 .6.4 1 1 1h2"/>
+                    <circle cx="7" cy="17" r="2"/>
+                    <circle cx="17" cy="17" r="2"/>
+                  </svg>
+                  <span data-i18n="fleet.filter.sedan">سيدان</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__checkbox" value="SUV"> <span data-i18n="fleet.filter.suv">دفع رباعي</span>
+                  <input type="checkbox" class="fc__checkbox" value="SUV">
+                  <svg class="fc__type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 16v-3.2c0-.4.1-.7.3-1L5 8.5C5.4 7.6 6.2 7 7.2 7h9.6c1 0 1.8.6 2.2 1.5l1.7 3.3c.2.3.3.6.3 1V16"/>
+                    <path d="M2 16h20"/>
+                    <path d="M6.5 7V4.8h11V7"/>
+                    <circle cx="8" cy="16.5" r="2"/>
+                    <circle cx="16" cy="16.5" r="2"/>
+                  </svg>
+                  <span data-i18n="fleet.filter.suv">دفع رباعي</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__checkbox" value="Luxury"> <span data-i18n="fleet.filter.luxury">فاخرة</span>
+                  <input type="checkbox" class="fc__checkbox" value="Luxury">
+                  <svg class="fc__type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 3h12l4 6-10 12L2 9z"/>
+                    <path d="M11 3 8 9l4 12 4-12-3-6"/>
+                    <path d="M2 9h20"/>
+                  </svg>
+                  <span data-i18n="fleet.filter.luxury">فاخرة</span>
                 </label>
               </li>
             </ul>
@@ -152,47 +178,65 @@
             <ul class="fc__filters-list" id="fcBrands">
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Dacia"> <span data-i18n="fleet.brand.dacia">داسيا</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Dacia">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/dacia" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.dacia">داسيا</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Renault"> <span data-i18n="fleet.brand.renault">رينو</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Renault">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/renault" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.renault">رينو</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Peugeot"> <span data-i18n="fleet.brand.peugeot">بيجو</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Peugeot">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/peugeot" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.peugeot">بيجو</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Volkswagen"> <span data-i18n="fleet.brand.volkswagen">فولكسفاغن</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Volkswagen">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/volkswagen" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.volkswagen">فولكسفاغن</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Hyundai"> <span data-i18n="fleet.brand.hyundai">هيونداي</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Hyundai">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/hyundai" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.hyundai">هيونداي</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Skoda"> <span data-i18n="fleet.brand.skoda">سكودا</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Skoda">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/skoda" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.skoda">سكودا</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Seat"> <span data-i18n="fleet.brand.seat">سيات</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Seat">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/seat" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.seat">سيات</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Toyota"> <span data-i18n="fleet.brand.toyota">تويوتا</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Toyota">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/toyota" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.toyota">تويوتا</span>
                 </label>
               </li>
               <li class="fc__filter-item">
                 <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Kia"> <span data-i18n="fleet.brand.kia">كيا</span>
+                  <input type="checkbox" class="fc__brand-checkbox" value="Kia">
+                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/kia" alt="" loading="lazy" onerror="this.style.display='none'">
+                  <span data-i18n="fleet.brand.kia">كيا</span>
                 </label>
               </li>
             </ul>
@@ -298,27 +342,19 @@
   <script src="js/supabase-config.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/bookly-data.js"></script>
-  <script src="js/booking-widget.js"></script>
 
-  <!-- ── Floating Reserve button — opens the 3-step booking widget ── -->
-  <button type="button" class="bw-reserve-float" id="bwReserveFloat" aria-label="Reserve a car">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="white" stroke-width="1.8"/>
-      <path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-    <span data-i18n="bw.reserve">Reserve</span>
-  </button>
-
-  <!-- ── Floating WhatsApp button ── -->
+  <!-- ── Floating WhatsApp button (general contact only) ── -->
   <a href="https://wa.me/212661661230"
      class="wa-float"
      target="_blank"
      rel="noopener noreferrer"
      aria-label="Chat on WhatsApp">
+    <span class="wa-float__tip" data-i18n="wa.tip">A question? Write to us</span>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
       <path d="M11.93 2a9.93 9.93 0 00-8.485 15.095L2 22l5.047-1.418A9.93 9.93 0 1011.93 2z"/>
     </svg>
   </a>
+  <script src="js/chatbot.js"></script>
 </body>
 </html>
