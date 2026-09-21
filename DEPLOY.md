@@ -23,7 +23,7 @@ Vercel serves the static files and applies the routes in `vercel.json`.
 | `yourdomain.com/dashboard`| `dashboard.html`|
 
 The dashboard lives at **`yourdomain.com/dashboard`** and is intentionally **not
-linked from the public nav** — admin only. (It's protected by Supabase Auth, so
+linked from the public nav** - admin only. (It's protected by Supabase Auth, so
 the URL being guessable is fine.)
 
 ## Environment variables (Vercel dashboard → Project → Settings → Env Vars)
@@ -39,7 +39,7 @@ Add:
 > ⚠️ **Important nuance for this static setup.** The *browser* reads the Supabase
 > URL + publishable key from **`js/supabase-config.js`** (committed), because a
 > static page can't read `process.env` at runtime. So the `NEXT_PUBLIC_*` env
-> vars above don't change what the deployed browser uses — they exist for the
+> vars above don't change what the deployed browser uses - they exist for the
 > Node scripts (`seed.js`, `create-agency-user.js`) and for the day you move to a
 > bundler/Next.js. **To change the live site's keys, edit
 > `js/supabase-config.js`.**

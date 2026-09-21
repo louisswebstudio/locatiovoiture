@@ -1,0 +1,388 @@
+/* ============================================================
+   dashboard-mobile.css - Espace agence sur mobile
+   Chargé APRÈS le <style> interne de dashboard.html.
+   Le desktop n'est jamais touché : tout est sous media query.
+   ============================================================ */
+
+:root {
+  --db-safe-b: env(safe-area-inset-bottom, 0px);
+  --db-tap: 44px;
+}
+
+/* ── 1. Connexion ───────────────────────────────────────── */
+
+@media (max-width: 560px) {
+  .login-card {
+    width: 100%;
+    max-width: none;
+    margin: 0 16px;
+    padding: 28px 22px;
+  }
+
+  .login-btn {
+    min-height: 48px;
+  }
+}
+
+/* ============================================================
+   2. Fondations mobile (≤ 900px : le sidebar est déjà en drawer)
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.1);
+  }
+
+  /* iOS zoome dès qu'un champ est sous 16px. Les champs du
+     dashboard étaient à 13px. */
+  input,
+  select,
+  textarea,
+  .login-input {
+    font-size: 16px !important;
+  }
+
+  /* Le drawer ne doit pas entraîner la page derrière lui. */
+  .sidebar,
+  .modal {
+    overscroll-behavior: contain;
+  }
+
+  /* Drawer plus large sur petit écran, et scrollable. */
+  .sidebar {
+    width: min(84vw, 300px);
+  }
+
+  .sidebar__nav {
+    padding-bottom: calc(12px + var(--db-safe-b));
+  }
+
+  /* ── Cibles tactiles ── */
+
+  .hamburger {
+    min-width: var(--db-tap);
+    min-height: var(--db-tap);
+  }
+
+  .nav-item {
+    min-height: var(--db-tap);
+  }
+
+  .icon-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logout-btn {
+    min-height: var(--db-tap);
+  }
+
+  .icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn {
+    height: 42px;
+    padding: 0 16px;
+  }
+
+  .chip,
+  .cat-pill,
+  .fleet-tab {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .modal__close {
+    width: var(--db-tap);
+    height: var(--db-tap);
+  }
+
+  /* ── Respiration ── */
+
+  .content {
+    padding: 16px 16px calc(40px + var(--db-safe-b));
+  }
+
+  .topbar {
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .topbar__title {
+    font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Les graphiques respirent mal en 260px de haut sur mobile. */
+  .chart-box {
+    height: 220px;
+  }
+}
+
+/* ============================================================
+   3. Tableaux → cartes empilées (≤ 620px)
+   5 tableaux jusqu'à 10 colonnes : le scroll horizontal est
+   impraticable au pouce. Chaque ligne devient une carte, et
+   l'intitulé de colonne est repris depuis le <th> par
+   js/dashboard-mobile.js (attribut data-label).
+   ============================================================ */
+
+@media (max-width: 620px) {
+
+  .table-wrap {
+    overflow-x: visible;          /* plus de scroll latéral */
+    border-radius: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .table-wrap table,
+  .table-wrap tbody,
+  .table-wrap tr,
+  .table-wrap td {
+    display: block;
+    width: 100%;
+  }
+
+  /* L'en-tête ne sert plus : les intitulés passent dans chaque cellule. */
+  .table-wrap thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .table-wrap tbody tr {
+    margin-bottom: 10px;
+    padding: 4px 14px;
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+
+  .table-wrap tbody tr:hover {
+    background: #fff;             /* le survol n'a pas de sens au doigt */
+  }
+
+  .table-wrap tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid #F4F4F5;
+    white-space: normal;          /* était nowrap : le texte peut respirer */
+    text-align: right;
+    font-size: 13.5px;
+    min-height: 38px;
+  }
+
+  .table-wrap tbody tr td:last-child,
+  .table-wrap tbody tr:last-child td:last-child {
+    border-bottom: none;
+  }
+
+  /* Intitulé de colonne, injecté par le JS. */
+  .table-wrap tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-align: left;
+  }
+
+  /* Une cellule sans intitulé (colonne vide) ne garde pas l'espace. */
+  .table-wrap tbody td[data-label=""]::before {
+    display: none;
+  }
+
+  /* La cellule d'actions passe en pleine largeur, boutons à droite. */
+  .table-wrap tbody td.is-actions {
+    justify-content: flex-end;
+    padding-top: 11px;
+  }
+
+  .table-wrap tbody td.is-actions .row-actions {
+    gap: 8px;
+  }
+
+  /* Première cellule (#id / nom) mise en avant comme titre de carte. */
+  .table-wrap tbody td.t-id,
+  .table-wrap tbody td.t-client {
+    font-weight: 600;
+  }
+
+  .table-wrap tbody td.t-total {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Ligne « aucun résultat » : pas de mise en carte. */
+  .table-wrap tbody td.empty,
+  .table-wrap tbody td[colspan] {
+    display: block;
+    text-align: center;
+    border-bottom: none;
+  }
+
+  .table-wrap tbody td[colspan]::before {
+    display: none;
+  }
+}
+
+/* ============================================================
+   4. Modales → feuilles montantes (≤ 620px)
+   Une modale centrée à 480px sur un écran de 375px laisse peu
+   de place et pousse les champs sous le clavier.
+   ============================================================ */
+
+@media (max-width: 620px) {
+
+  .overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal,
+  .modal-lg {
+    width: 100%;
+    max-width: none;
+    max-height: 92vh;
+    border-radius: 18px 18px 0 0;
+    border-bottom: none;
+    animation: db-sheet-up 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes db-sheet-up {
+    from { transform: translateY(6%); opacity: 0.6; }
+    to   { transform: translateY(0);  opacity: 1; }
+  }
+
+  /* Poignée visuelle en haut de la feuille. */
+  .modal__head {
+    padding: 18px 18px 14px;
+  }
+
+  .modal__head::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38px;
+    height: 4px;
+    border-radius: 100px;
+    background: var(--card-border);
+  }
+
+  .modal__body {
+    padding: 18px;
+    padding-bottom: calc(18px + var(--db-safe-b));
+  }
+
+  .modal__foot {
+    padding-bottom: calc(14px + var(--db-safe-b));
+  }
+
+  /* Un formulaire à deux colonnes est illisible à 375px. */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Les boutons d'action de modale prennent toute la largeur. */
+  .modal__foot .btn,
+  .modal__body > .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal-lg {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   5. Calendrier - défilement horizontal assumé
+   Une grille 7 colonnes à 375px donne des cases de 50px.
+   On garde la grille lisible et on laisse glisser.
+   ============================================================ */
+
+@media (max-width: 620px) {
+
+  .cal-wrap,
+  .cal-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cal-grid {
+    min-width: 560px;             /* en-dessous, les cases deviennent illisibles */
+  }
+
+  .cal-cell {
+    min-height: 56px;
+  }
+
+  .cal-leg-item {
+    font-size: 11.5px;
+  }
+}
+
+/* ============================================================
+   6. Barres d'outils et filtres
+   ============================================================ */
+
+@media (max-width: 620px) {
+
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .toolbar .search,
+  .search {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  /* Rangées de filtres : défilement latéral plutôt que retour à la ligne. */
+  .fleet-cats,
+  .fleet-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+    padding-bottom: 2px;
+  }
+
+  .fleet-cats::-webkit-scrollbar,
+  .fleet-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fleet-cats > *,
+  .fleet-tabs > * {
+    flex-shrink: 0;
+  }
+}

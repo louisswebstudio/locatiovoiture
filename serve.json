@@ -1,0 +1,9 @@
+{
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/fleet",      "destination": "/fleet.html" },
+    { "source": "/contact",    "destination": "/contact.html" },
+    { "source": "/dashboard",  "destination": "/dashboard.html" },
+    { "source": "/car-detail", "destination": "/car-detail.html" }
+  ]
+}

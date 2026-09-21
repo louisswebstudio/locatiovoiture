@@ -1,0 +1,574 @@
+/* ============================================================
+   mobile.css - Optimisations mobile (≤768px)
+   Chargé APRÈS style.css. Tout ce qui est ici est scopé mobile,
+   le desktop n'est jamais touché.
+   ============================================================ */
+
+/* ── 1. Fondations ──────────────────────────────────────── */
+
+:root {
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --tap: 44px;              /* cible tactile minimum */
+  --m-gutter: 18px;         /* marge latérale mobile */
+}
+
+@media (max-width: 768px) {
+
+  html {
+    -webkit-text-size-adjust: 100%;   /* pas de resize auto en rotation */
+  }
+
+  body {
+    /* coupe tout débordement horizontal accidentel */
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: rgba(196, 30, 42, 0.12);
+  }
+
+  /* iOS zoome le viewport si un champ fait moins de 16px. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Le scroll d'un panneau ne doit pas entraîner la page derrière. */
+  .fc__aside,
+  .mobile-menu,
+  .bw-modal__card {
+    overscroll-behavior: contain;
+  }
+
+  /* ── 2. Cibles tactiles ≥ 44px ────────────────────────── */
+
+  .hamburger,
+  .nav-hamburger,
+  .mobile-menu-close {
+    min-width: var(--tap);
+    min-height: var(--tap);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lang-dd__btn,
+  .lang-btn,
+  .lang-switcher__btn {
+    min-height: var(--tap);
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-link,
+  .footer__link,
+  .footer__agency-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+
+  /* Le logo est un badge circulaire : style.css ne forçait que la hauteur,
+     ce qui l'étirait. On impose les deux dimensions pour le garder rond. */
+  .logo-img {
+    height: 46px !important;
+    width: 46px !important;
+  }
+
+  .footer-logo {
+    height: 56px !important;
+    width: 56px !important;
+  }
+
+  .contact-info__social {
+    min-width: var(--tap);
+    min-height: var(--tap);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Les cases à cocher des filtres étaient à 13–16px. */
+  .fc__checkbox,
+  .fc__brand-checkbox {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .fc__filter-label,
+  .fc__brand-label {
+    min-height: var(--tap);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ── 3. Rythme vertical resserré ──────────────────────── */
+  /* La home faisait 7,5 écrans. On compacte sans rien supprimer. */
+
+  .hiw__step {
+    padding: 18px 0;
+    gap: 16px;
+  }
+
+  .hiw__step-num {
+    font-size: 32px;
+    min-width: 44px;
+  }
+
+  .hiw__step-content {
+    padding-top: 2px;
+    gap: 6px;
+  }
+
+  .wcu__feature {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .footer__col {
+    margin-bottom: 4px;
+  }
+
+  /* ── 4. Cartes véhicule compactes ─────────────────────── */
+  /* 513px par carte, soit une carte par écran. On descend à ~400px. */
+
+  .fleet__card,
+  .fc__card {
+    padding: 14px;
+    border-radius: 18px;
+    gap: 14px;                 /* était 25px entre l'image et le corps */
+  }
+
+  .fleet__card-name,
+  .fc__card-name {
+    font-size: 19px;
+    line-height: 1.25;
+  }
+
+  /* Lignes de caractéristiques : 27px chacune + 26px de marge basse. */
+  .fleet__spec-row,
+  .fc__spec {
+    font-size: 14.5px;
+  }
+
+  .fleet__card-specs,
+  .fc__card-specs {
+    padding-bottom: 14px;
+  }
+
+  .fleet__price-amount,
+  .fc__price-num {
+    font-size: 23px;
+  }
+
+  .fc__card-img-wrap,
+  .fleet__card-img-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  /* Le bouton reste confortable même si la carte maigrit. */
+  .fleet__reserve-btn,
+  .fc__book-btn,
+  .fc__reserve-btn {
+    min-height: 46px;
+    margin-top: 12px;          /* était 16px */
+  }
+
+  /* ── 5. Carrousel : on laisse deviner la carte suivante ── */
+
+  .fleet__track {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--m-gutter);
+  }
+
+  .fleet__card {
+    scroll-snap-align: start;
+  }
+}
+
+/* ── 6. Très petits écrans (≤ 380px) ────────────────────── */
+
+@media (max-width: 380px) {
+  .fleet__card,
+  .fc__card {
+    padding: 12px;
+  }
+
+  .fc__price-num,
+  .fleet__price-amount {
+    font-size: 21px;
+  }
+
+  .fleet__card-name,
+  .fc__card-name {
+    font-size: 18px;
+  }
+
+  .hiw__step-num {
+    font-size: 28px;
+    min-width: 38px;
+  }
+}
+
+/* ============================================================
+   7. FLOTTE - filtres en panneau coulissant
+   Le sidebar faisait 4523px empilés au-dessus de la grille :
+   l'utilisateur devait scroller 5 écrans avant de voir une voiture.
+   ============================================================ */
+
+/* Barre déclencheuse + panneau : masqués en desktop. */
+.fc__filterbar,
+.fc__sheet-head,
+.fc__sheet-backdrop,
+.fc__sheet-done {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  /* 7a. Barre collante "Filtres" */
+  .fc__filterbar {
+    display: flex;
+    position: sticky;
+    top: 69px;          /* juste sous la navbar sticky (70px), 1px de chevauchement */
+    z-index: 40;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 10px var(--m-gutter);
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .fc__filterbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--tap);
+    padding: 0 18px;
+    border: 1.5px solid var(--primary);
+    border-radius: 100px;
+    background: var(--white);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+  .fc__filterbar-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  /* Pastille du nombre de filtres actifs */
+  .fc__filterbar-count {
+    display: none;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 6px;
+    border-radius: 100px;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 21px;
+    text-align: center;
+  }
+
+  .fc__filterbar-count.is-on {
+    display: inline-block;
+  }
+
+  .fc__filterbar-results {
+    margin-left: auto;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  [dir="rtl"] .fc__filterbar-results {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  /* 7b. Le sidebar devient une feuille qui monte du bas */
+  .fc__sidebar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 10050;
+    width: 100%;
+    max-height: 82vh;
+    padding: 0;
+    background: var(--white);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.22);
+    transform: translateY(101%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+  }
+
+  .fc__sidebar.is-open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  /* En-tête de la feuille (titre + fermer) */
+  .fc__sheet-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 6px 16px 12px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* Poignée visuelle */
+  .fc__sheet-head::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    border-radius: 100px;
+    background: var(--divider);
+  }
+
+  .fc__sheet-title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--primary);
+    margin: 10px 0 0;
+  }
+
+  .fc__sheet-close {
+    width: var(--tap);
+    height: var(--tap);
+    margin-top: 8px;
+    border: none;
+    border-radius: 50%;
+    background: var(--secondary);
+    color: var(--primary);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  /* Corps scrollable */
+  .fc__aside {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--white);
+    border-radius: 0;
+    padding: 18px 16px 18px;
+    gap: 22px;
+  }
+
+  /* Types de véhicules en grille 2 colonnes : 4 lignes → 2 */
+  #fcFilters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+  }
+
+  /* Marques en 2 colonnes aussi : ~20 marques → 10 lignes */
+  #fcBrands {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 12px;
+  }
+
+  .fc__filters-heading {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  /* Marques : sur ordinateur c'est un menu déroulant ; dans la feuille,
+     le bouton redevient un simple titre de section. */
+  .fc__brands-sum {
+    min-height: var(--tap);
+    margin-bottom: 4px;
+  }
+  .fc__brands-sum .fc__filters-heading { margin-bottom: 0; }
+  .fc__brands-chev { margin-inline-start: auto; }
+
+  /* 7c. Pied de feuille : bouton de validation */
+  .fc__sheet-done {
+    display: block;
+    flex-shrink: 0;
+    width: calc(100% - 32px);
+    margin: 0 16px;
+    margin-bottom: calc(14px + var(--safe-b));
+    min-height: 50px;
+    border: none;
+    border-radius: 100px;
+    background: var(--accent);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Le bouton "effacer" reste dans la feuille mais discret */
+  .fc__clear-btn {
+    min-height: var(--tap);
+  }
+
+  /* 7d. Voile */
+  .fc__sheet-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 10040;
+    background: rgba(13, 13, 26, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+
+  .fc__sheet-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 7e. La grille récupère toute la largeur */
+  .fc {
+    padding: 0 0 60px;
+  }
+
+  .fc__container {
+    padding: 0;
+  }
+
+  .fc__main {
+    padding: 0 var(--m-gutter);
+    width: 100%;
+  }
+
+  /* Bloque le scroll de la page quand la feuille est ouverte */
+  body.fc-sheet-open {
+    overflow: hidden;
+  }
+}
+
+/* ============================================================
+   8. FICHE VÉHICULE - barre de réservation collante
+   Le CTA était à ~750px de haut, puis plus rien sur 3 écrans.
+   ============================================================ */
+
+.cd-stickybar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .cd-stickybar {
+    display: flex;
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 9000;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    padding-bottom: calc(9px + var(--safe-b));
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--divider);
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(110%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cd-stickybar.is-visible {
+    transform: translateY(0);
+  }
+
+  .cd-stickybar__price {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    flex-shrink: 0;
+  }
+
+  .cd-stickybar__amount {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--primary);
+  }
+
+  .cd-stickybar__label {
+    font-size: 11.5px;
+    color: var(--text);
+  }
+
+  .cd-stickybar__btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 100px;
+    background: var(--accent);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  /* Sous 360px le libellé complet ne tient pas : on garde "Réserver". */
+  @media (max-width: 359px) {
+    .cd-stickybar__btn { font-size: 14px; }
+    .cd-stickybar__amount { font-size: 17px; }
+  }
+
+  .cd-stickybar__btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Laisse respirer le bas de page pour ne rien masquer. */
+  body.has-stickybar .footer {
+    padding-bottom: calc(70px + var(--safe-b));
+  }
+
+  /* Le bouton WhatsApp flottant remonte au-dessus de la barre. */
+  body.has-stickybar .wa-float,
+  body.has-stickybar .whatsapp-float,
+  body.has-stickybar #chatbot-toggle,
+  body.has-stickybar .chatbot-toggle {
+    bottom: calc(80px + var(--safe-b));
+  }
+}
+
+/* ── 9. Respect des préférences système ─────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .fc__sidebar,
+  .fc__sheet-backdrop,
+  .cd-stickybar {
+    transition: none;
+  }
+}

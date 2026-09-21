@@ -49,8 +49,8 @@ const SRC_EXT = ['.jpg', '.jpeg', '.png'];
           + '  (' + (before / 1024).toFixed(0) + 'KB → ' + (after / 1024).toFixed(0) + 'KB)');
       } catch (err) {
         failed++;
-        failures.push(rel + '/' + file + ' — ' + err.message);
-        console.error('✗ failed: ' + rel + '/' + file + ' — ' + err.message);
+        failures.push(rel + '/' + file + ' - ' + err.message);
+        console.error('✗ failed: ' + rel + '/' + file + ' - ' + err.message);
       }
     }
   }

@@ -63,6 +63,130 @@
       hero:  'assets/images/34/kia sportage.webp',
       front: 'assets/images/cars/kia-sportage.webp',
       side:  'assets/images/side view/kia sportage.webp'
+    },
+
+    /* Ajouts : photos studio fournies par l'agence. Un angle absent
+       (modèle différent dans le dossier source, ou photo manquante) est
+       simplement omis : la fiche retombe sur la photo principale. */
+    'opel-corsa': {
+      ref: 20,
+      hero:  'assets/images/34/opel-corsa.webp',
+      front: 'assets/images/cars/opel-corsa.webp',
+      side:  'assets/images/side view/opel-corsa.webp'
+    },
+    'dacia-logan': {
+      ref: 22,
+      hero:  'assets/images/34/dacia-logan.webp',
+      front: 'assets/images/cars/dacia-logan.webp',
+      side:  'assets/images/side view/dacia-logan.webp'
+    },
+    'hyundai-accent': {
+      ref: 24,
+      hero:  'assets/images/34/hyundai-accent.webp',
+      front: 'assets/images/cars/hyundai-accent.webp',
+      side:  'assets/images/side view/hyundai-accent.webp'
+    },
+    'seat-leon': {
+      ref: 27,
+      hero:  'assets/images/34/seat-leon.webp',
+      front: 'assets/images/cars/seat-leon.webp',
+      side:  'assets/images/side view/seat-leon.webp'
+    },
+    'cupra-leon': {
+      ref: 28,
+      hero:  'assets/images/34/cupra-leon.webp',
+      front: 'assets/images/cars/cupra-leon.webp',
+      side:  'assets/images/side view/cupra-leon.webp'
+    },
+    'vw-golf-85': {
+      ref: 29,
+      hero:  'assets/images/34/vw-golf-85.webp',
+      front: 'assets/images/cars/vw-golf-85.webp',
+      side:  'assets/images/side view/vw-golf-85.webp'
+    },
+    'audi-a3': {
+      ref: 30,
+      hero:  'assets/images/34/audi-a3.webp',
+      front: 'assets/images/cars/audi-a3.webp',
+      side:  'assets/images/side view/audi-a3.webp'
+    },
+    'mercedes-classe-a': {
+      ref: 31,
+      hero:  'assets/images/34/mercedes-classe-a.webp',
+      front: 'assets/images/cars/mercedes-classe-a.webp',
+      side:  'assets/images/side view/mercedes-classe-a.webp'
+    },
+    'bmw-serie-1': {
+      ref: 32,
+      hero:  'assets/images/34/bmw-serie-1.webp',
+      front: 'assets/images/cars/bmw-serie-1.webp',
+      side:  'assets/images/side view/bmw-serie-1.webp'
+    },
+    'hyundai-tucson': {
+      ref: 33,
+      hero:  'assets/images/34/hyundai-tucson.webp',
+      front: 'assets/images/cars/hyundai-tucson.webp',
+      side:  'assets/images/side view/hyundai-tucson.webp'
+    },
+    'vw-tiguan': {
+      ref: 36,
+      hero:  'assets/images/34/vw-tiguan.webp',
+      front: 'assets/images/cars/vw-tiguan.webp',
+      side:  'assets/images/side view/vw-tiguan.webp'
+    },
+    'audi-rs3': {
+      ref: 39,
+      hero:  'assets/images/34/audi-rs3.webp',
+      front: 'assets/images/cars/audi-rs3.webp',
+      side:  'assets/images/side view/audi-rs3.webp'
+    },
+    'porsche-macan': {
+      ref: 40,
+      hero:  'assets/images/34/porsche-macan.webp',
+      front: 'assets/images/cars/porsche-macan.webp',
+      side:  'assets/images/side view/porsche-macan.webp'
+    },
+    'range-rover-sport': {
+      ref: 41,
+      hero:  'assets/images/34/range-rover-sport.webp',
+      front: 'assets/images/cars/range-rover-sport.webp',
+      side:  'assets/images/side view/range-rover-sport.webp'
+    },
+    'audi-q3': {
+      ref: 37,
+      hero:  'assets/images/34/audi-q3.webp',
+      front: 'assets/images/cars/audi-q3.webp',
+      side:  'assets/images/side view/audi-q3.webp'
+    },
+    'vw-touareg': {
+      ref: 42,
+      hero:  'assets/images/34/vw-touareg.webp',
+      front: 'assets/images/cars/vw-touareg.webp',
+      side:  'assets/images/side view/vw-touareg.webp'
+    },
+    'hyundai-i10': {
+      ref: 21,
+      hero:  'assets/images/34/i10.webp',
+      front: 'assets/images/cars/i10.webp',
+      side:  'assets/images/side view/i10.webp'
+    },
+    'cupra-formentor': {
+      ref: 38,
+      hero:  'assets/images/34/cupra-formentor.webp',
+      front: 'assets/images/cars/cupra-formentor.webp',
+      side:  'assets/images/side view/cupra-formentor.webp'
+    },
+    'seat-ibiza': {
+      ref: 26,
+      hero:  'assets/images/34/seat-ibiza.webp',
+      front: 'assets/images/cars/seat-ibiza.webp',
+      side:  'assets/images/side view/seat-ibiza.webp'
+    },
+    'dacia-duster': {
+      ref: 34,
+      hero:  'assets/images/34/duster.webp',
+      front: 'assets/images/cars/duster.webp',
+      side:  'assets/images/side view/duster.webp'
     }
   };
 
@@ -76,7 +200,44 @@
     'volkswagen t-roc': 'volkswagen-troc',
     'vw t-roc':         'volkswagen-troc',
     'hyundai i20':      'hyundai-i20',
-    'kia sportage':     'kia-sportage'
+    'kia sportage':     'kia-sportage',
+    // Mêmes voitures que ci-dessus sous un autre nom (et un autre ref_id) en base.
+    'renault clio 5 2025':       'renault-clio',
+    'peugeot 208 hybride':       'peugeot-208',
+    'audi q3 2026':              'audi-q3',
+    'audi q3':                   'audi-q3',
+    'volkswagen touareg 2025':   'vw-touareg',
+    'vw touareg':                'vw-touareg',
+    'hyundai i10':               'hyundai-i10',
+    'cupra formentor 2025':      'cupra-formentor',
+    'cupra formentor':           'cupra-formentor',
+    'seat ibiza fr':             'seat-ibiza',
+    'seat ibiza':                'seat-ibiza',
+    'dacia duster':              'dacia-duster',
+    'dacia duster automatique':  'dacia-duster',
+    'opel corsa':                'opel-corsa',
+    'dacia logan':               'dacia-logan',
+    'hyundai accent 2025':       'hyundai-accent',
+    'hyundai accent':            'hyundai-accent',
+    'seat leon fr':              'seat-leon',
+    'seat leon':                 'seat-leon',
+    'cupra leon 2025':           'cupra-leon',
+    'cupra leon':                'cupra-leon',
+    'volkswagen golf 8.5 2026':  'vw-golf-85',
+    'vw golf 8.5':               'vw-golf-85',
+    'audi a3 2025':              'audi-a3',
+    'audi a3':                   'audi-a3',
+    'mercedes classe a':         'mercedes-classe-a',
+    'bmw série 1 2026':          'bmw-serie-1',
+    'bmw serie 1 2026':          'bmw-serie-1',
+    'hyundai tucson':            'hyundai-tucson',
+    'volkswagen tiguan 2025':    'vw-tiguan',
+    'vw tiguan':                 'vw-tiguan',
+    'audi rs3 2026':             'audi-rs3',
+    'audi rs3':                  'audi-rs3',
+    'porsche macan':             'porsche-macan',
+    'range rover sport 2025':    'range-rover-sport',
+    'range rover sport':         'range-rover-sport'
   };
 
   // Build a ref_id → entry index for the primary lookup.

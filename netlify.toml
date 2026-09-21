@@ -1,7 +1,7 @@
-# Netlify config — Bestore Car
+# Netlify config - Bestore Car
 # Static site (plain HTML/CSS/JS, no build step). The browser talks directly
 # to Supabase using the public keys in js/supabase-config.js, so there is no
-# server-side backend to deploy here — Netlify just serves these files.
+# server-side backend to deploy here - Netlify just serves these files.
 
 [build]
   publish = "."
@@ -25,10 +25,16 @@
   to = "/contact.html"
   status = 200
 
+# La fiche voiture lit ?id= dans l'adresse : une réécriture 200 la conserve.
+[[redirects]]
+  from = "/car-detail"
+  to = "/car-detail.html"
+  status = 200
+
 # ──────────────────────────────────────────────
 #  Defense in depth: never serve server-only / source files.
 #  force = true beats static files. NOTE: Netlify's "*" is a TRAILING
-#  splat only — extension globs like /*.sql do NOT work, so each
+#  splat only - extension globs like /*.sql do NOT work, so each
 #  server-only file is listed by its exact path (or a /dir/* splat).
 # ──────────────────────────────────────────────
 [[redirects]]
@@ -51,6 +57,18 @@
 
 [[redirects]]
   from = "/migrate-blacklist.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/migrate-contracts.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/migrate-contracts-remote.sql"
   to = "/404.html"
   status = 404
   force = true

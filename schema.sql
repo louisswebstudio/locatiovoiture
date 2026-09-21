@@ -1,5 +1,5 @@
 -- ════════════════════════════════════════════════════════════════════
---  BESTORE CAR — Supabase schema
+--  BESTORE CAR - Supabase schema
 --  Run this in the Supabase SQL editor (Dashboard → SQL Editor → New query).
 --  Safe to re-run: uses "if not exists" / "drop policy if exists".
 -- ════════════════════════════════════════════════════════════════════
@@ -110,7 +110,7 @@ create policy "Public can upsert clients"
 -- Supabase with the *anon* key (there is no Supabase Auth yet). The policies
 -- below let that anon key fully manage data, scoped per agency. This is fine
 -- for a demo / single-operator setup but is NOT secure multi-tenant isolation
--- — any anon visitor could read/write any agency's rows.
+-- any anon visitor could read/write any agency's rows.
 --
 -- FOR PRODUCTION: migrate the dashboard login to Supabase Auth (each agency
 -- owner signs in; store their agency_id in app_metadata), DROP the four demo
@@ -135,10 +135,10 @@ create policy "Demo anon manage bookings"
   on bookings for all using (true) with check (true);
 
 -- ════════════════════════════════════════════════════════════════════
---  PRODUCTION (Supabase Auth) POLICIES — keep commented until you add Auth
+--  PRODUCTION (Supabase Auth) POLICIES - keep commented until you add Auth
 -- ════════════════════════════════════════════════════════════════════
 -- create-agency-user.js stores agency_id in user_metadata. The helper below
--- reads agency_id from EITHER app_metadata (preferred — users can't edit it) or
+-- reads agency_id from EITHER app_metadata (preferred - users can't edit it) or
 -- user_metadata (what the onboarding script currently sets), so the policies
 -- work with the current setup. For stronger security, move agency_id to
 -- app_metadata (set via the admin API) and drop the user_metadata fallback.

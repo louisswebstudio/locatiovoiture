@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────
-   Noise Terrain — topographic contour canvas background.
+   Noise Terrain - topographic contour canvas background.
    Vanilla adaptation of the "Noise Terrain" hero spec.
 
    Usage: place a <canvas class="mag-field" aria-hidden="true"></canvas>

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const CARS_PER_PAGE = 6;
+  const CARS_PER_PAGE = 12;
   const fallbackImg = 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600';
 
   // ── Static metadata (multilingual names, brand, specs) ─────────────────
@@ -85,6 +85,70 @@
   const META_BY_REF = {};
   FALLBACK_CARS.forEach(function (c) { META_BY_REF[c.id] = c; });
 
+  // Price shown on a card: "sur demande" until the agency sets one.
+  function priceHTML(price, perDay) {
+    var n = Number(price);
+    if (n > 0) return '<span class="fc__price-num">' + n + ' MAD</span><span class="fc__price-per">' + perDay + '</span>';
+    var lang = (typeof getCurrentLang === 'function' && getCurrentLang()) ||
+               (localStorage.getItem('bsc_lang') || 'fr');
+    var ask = { fr: 'Prix sur demande', en: 'Price on request', ar: 'السعر عند الطلب' };
+    return '<span class="fc__price-ask">' + (ask[lang] || ask.fr) + '</span>';
+  }
+
+  // Brand of a car, from its name. Multi-word brands need their own entry.
+  var MULTI_WORD_BRANDS = ['Range Rover', 'Land Rover', 'Alfa Romeo'];
+  function brandOf(name) {
+    var n = String(name || '').trim();
+    for (var i = 0; i < MULTI_WORD_BRANDS.length; i++) {
+      if (n.toLowerCase().indexOf(MULTI_WORD_BRANDS[i].toLowerCase()) === 0) return MULTI_WORD_BRANDS[i];
+    }
+    return n.split(' ')[0];
+  }
+
+  // simpleicons.org slug for the brand logo shown in the filter list.
+  var BRAND_ICON = {
+    'dacia': 'dacia', 'renault': 'renault', 'peugeot': 'peugeot', 'volkswagen': 'volkswagen',
+    'hyundai': 'hyundai', 'seat': 'seat', 'audi': 'audi', 'bmw': 'bmw',
+    'opel': 'opel', 'porsche': 'porsche', 'skoda': 'skoda', 'toyota': 'toyota',
+    'kia': 'kia', 'ford': 'ford', 'fiat': 'fiat', 'nissan': 'nissan', 'citroen': 'citroen',
+  };
+
+  // Marques absentes de Simple Icons (retirées à la demande des constructeurs) :
+  // logos simplifiés hébergés dans le projet.
+  var BRAND_ICON_LOCAL = {
+    'cupra': 'assets/images/brands/cupra.svg',
+    'mercedes': 'assets/images/brands/mercedes.svg',
+    'mercedes-benz': 'assets/images/brands/mercedes.svg',
+    'range rover': 'assets/images/brands/land-rover.svg',
+    'land rover': 'assets/images/brands/land-rover.svg',
+  };
+
+  function brandIconSrc(brand) {
+    var k = String(brand || '').toLowerCase();
+    if (BRAND_ICON_LOCAL[k]) return BRAND_ICON_LOCAL[k];
+    return BRAND_ICON[k] ? 'https://cdn.simpleicons.org/' + BRAND_ICON[k] : null;
+  }
+
+  // The sidebar brand list follows the cars actually published, so it never
+  // shows a brand the agency no longer rents.
+  function renderBrandFilters(list) {
+    var box = document.getElementById('fcBrands');
+    if (!box) return;
+    var checked = {};
+    box.querySelectorAll('.fc__brand-checkbox:checked').forEach(function (cb) { checked[cb.value] = true; });
+    var brands = [];
+    list.forEach(function (c) { if (c.brand && brands.indexOf(c.brand) === -1) brands.push(c.brand); });
+    brands.sort(function (a, b) { return a.localeCompare(b, 'fr'); });
+    box.innerHTML = brands.map(function (b) {
+      var icon = brandIconSrc(b);
+      return '<li class="fc__filter-item"><label class="fc__filter-label">' +
+        '<input type="checkbox" class="fc__brand-checkbox" value="' + b.replace(/"/g, '&quot;') + '"' + (checked[b] ? ' checked' : '') + '>' +
+        (icon ? '<img class="fc__brand-logo" src="' + icon + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' : '') +
+        '<span>' + b + '</span></label></li>';
+    }).join('');
+    box.querySelectorAll('.fc__brand-checkbox').forEach(function (cb) { cb.addEventListener('change', applyFilters); });
+  }
+
   // Map a Supabase category label → the catKey used by the sidebar filters.
   function catKeyOf(category, fallbackKey) {
     var s = String(category || '').toLowerCase();
@@ -130,7 +194,7 @@
       name: name,
       cat: cat,
       catKey: catKey,
-      brand: meta ? meta.brand : String(db.name || '').split(' ')[0],
+      brand: meta ? meta.brand : brandOf(db.name),
       price: String(db.price_per_day),
       doors: meta ? meta.doors : 4,
       passengers: meta ? meta.passengers : 5,
@@ -179,13 +243,22 @@
     return Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
   }
 
+  // Pastille sur le bouton « Marques » : nombre de marques cochées.
+  function updateBrandsCount(n) {
+    var el = document.getElementById('fcBrandsCount');
+    if (!el) return;
+    el.textContent = n;
+    el.hidden = n === 0;
+  }
+
   function getCheckedBrands() {
-    return Array.from(brandBoxes).filter(cb => cb.checked).map(cb => cb.value);
+    return Array.from(document.querySelectorAll('.fc__brand-checkbox')).filter(cb => cb.checked).map(cb => cb.value);
   }
 
   function applyFilters() {
     const checked  = getChecked();
     const brands   = getCheckedBrands();
+    updateBrandsCount(brands.length);
     const query    = searchInput.value.trim().toLowerCase();
     const lang = getLang();
     filtered = cars.filter(car => {
@@ -246,10 +319,7 @@
           </div>
         </div>
         <div class="fc__card-footer">
-          <div class="fc__card-price">
-            <span class="fc__price-num">${car.price} MAD</span>
-            <span class="fc__price-per">${perDay}</span>
-          </div>
+          <div class="fc__card-price">${priceHTML(car.price, perDay)}</div>
         </div>
         <button class="fc__reserve-btn" aria-label="${detailsLabel} ${car.name.en}">
           ${ARROW_ICON}<span>${detailsLabel}</span>
@@ -303,9 +373,13 @@
     const totalPages = Math.max(1, Math.ceil(filtered.length / CARS_PER_PAGE));
     const start = (currentPage - 1) * CARS_PER_PAGE;
     const slice = filtered.slice(start, start + CARS_PER_PAGE);
+    // Total filtré (toutes pages) : lu par le compteur « N résultats » de mobile.js.
+    grid.dataset.total = filtered.length;
 
     if (slice.length === 0) {
-      grid.innerHTML = '<p class="fc__empty">No cars match your search.</p>';
+      grid.innerHTML = cars.length
+        ? '<p class="fc__empty" data-i18n="fleet.noMatch">Aucune voiture ne correspond à votre recherche.</p>'
+        : '<p class="fc__empty">Notre flotte est en cours de mise à jour. Contactez-nous sur WhatsApp pour connaître les véhicules disponibles.</p>';
     } else {
       slice.forEach(car => grid.appendChild(buildCard(car)));
     }
@@ -332,29 +406,47 @@
         throw new Error('BooklyDB unavailable');
       }
       var rows = await window.BooklyDB.getCars(window.BESTORE_AGENCY_ID);
-      if (rows && rows.length) {
-        cars = rows.map(fromDb);
-      } else {
-        cars = FALLBACK_CARS.map(fromFallback);   // empty result → static fleet
-      }
+      // An empty result is a real answer (no car published yet), not a failure:
+      // showing the old static demo fleet would advertise cars the agency
+      // doesn't rent. Only a load error falls back to the static list.
+      cars = (rows || []).map(fromDb);
     } catch (e) {
-      console.warn('[Bestore] fleet: Supabase load failed, using static fallback.', e);
-      cars = FALLBACK_CARS.map(fromFallback);
+      // Never fall back to the old demo list: it would advertise cars the
+      // agency does not rent. An outage shows the 'fleet being updated' note.
+      console.warn('[Bestore] fleet: Supabase load failed.', e);
+      cars = [];
     }
+    renderBrandFilters(cars);
     applyFilters();
   }
 
   checkboxes.forEach(cb => cb.addEventListener('change', applyFilters));
-  brandBoxes.forEach(cb => cb.addEventListener('change', applyFilters));
+  brandBoxes.forEach(cb => cb.addEventListener('change', applyFilters));   // static markup, replaced after load
   searchInput.addEventListener('input', applyFilters);
   searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') applyFilters(); });
 
   if (clearBtn) {
     clearBtn.addEventListener('click', function () {
       checkboxes.forEach(cb => { cb.checked = false; });
-      brandBoxes.forEach(cb => { cb.checked = false; });
+      document.querySelectorAll('.fc__brand-checkbox').forEach(cb => { cb.checked = false; });
       searchInput.value = '';
       applyFilters();
+    });
+  }
+
+  // Menu déroulant des marques (ordinateur) : se referme au clic à
+  // l'extérieur ou avec Échap. Dans la feuille mobile il reste ouvert.
+  var brandsDd = document.getElementById('fcBrandsDd');
+  if (brandsDd) {
+    document.addEventListener('click', function (e) {
+      if (brandsDd.open && !brandsDd.contains(e.target) && !window.matchMedia('(max-width: 768px)').matches) {
+        brandsDd.open = false;
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && brandsDd.open && !window.matchMedia('(max-width: 768px)').matches) {
+        brandsDd.open = false;
+      }
     });
   }
 

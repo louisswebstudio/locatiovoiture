@@ -1,4 +1,4 @@
-// seed.js — populate Supabase with Bestore Car sample data.
+// seed.js - populate Supabase with Bestore Car sample data.
 //
 //   1. npm install
 //   2. fill in .env.local (needs SUPABASE_SERVICE_ROLE_KEY to bypass RLS)
@@ -25,7 +25,7 @@ if (!URL || !SERVICE_KEY) {
   process.exit(1)
 }
 
-// Service-role client — bypasses RLS. Server-side only, never ship to browser.
+// Service-role client - bypasses RLS. Server-side only, never ship to browser.
 const supabase = createClient(URL, SERVICE_KEY, {
   auth: { persistSession: false },
 })
@@ -58,14 +58,32 @@ const AGENCY = {
 }
 
 const CARS = [
-  { ref_id: 2,  name: 'Dacia Sandero',   category: 'Économique', price_per_day: 320, photo_url: 'assets/images/cars/sandero.webp',        plate: '12345-أ-90', features: ['Clim', '5 places', 'Manuelle'] },
-  { ref_id: 4,  name: 'Renault Clio',    category: 'Confort',    price_per_day: 420, photo_url: 'assets/images/cars/clio5.webp',          plate: '23451-ب-87', features: ['Clim', 'GPS', '5 places'] },
-  { ref_id: 5,  name: 'Peugeot 208',     category: 'Confort',    price_per_day: 450, photo_url: 'assets/images/cars/p208.webp',           plate: '34512-أ-12', features: ['Clim', 'GPS', 'Bluetooth'] },
-  { ref_id: 7,  name: 'Volkswagen T-Roc', category: 'SUV',       price_per_day: 600, photo_url: 'assets/images/cars/troc.webp',           plate: '45612-د-44', features: ['Clim', 'GPS', 'SUV', '5 places'] },
-  { ref_id: 11, name: 'Hyundai i20',     category: 'Économique', price_per_day: 300, photo_url: 'assets/images/cars/i20.webp',            plate: '56712-ب-21', features: ['Clim', '5 places'] },
-  { ref_id: 12, name: 'Skoda Octavia',   category: 'Confort',    price_per_day: 500, photo_url: 'assets/images/cars/skoda-octavia.webp',  plate: '67812-أ-65', features: ['Clim', 'GPS', 'Cuir'] },
-  { ref_id: 14, name: 'Toyota Yaris',    category: 'Économique', price_per_day: 330, photo_url: 'assets/images/cars/toyota-yaris.webp',   plate: '78912-ج-33', features: ['Clim', '5 places', 'Économe'] },
-  { ref_id: 15, name: 'Kia Sportage',    category: 'Luxe',       price_per_day: 700, photo_url: 'assets/images/cars/kia-sportage.webp',   plate: '89112-د-77', features: ['Clim', 'GPS', 'Cuir', 'SUV'] },
+  { ref_id: 20, name: 'Opel Corsa', category: 'Économique', price_per_day: 300, photo_url: 'assets/images/cars/opel-corsa.webp', features: ['Manuelle', 'Clim', '5 places'] },
+  { ref_id: 21, name: 'Hyundai i10', category: 'Économique', price_per_day: 0, photo_url: 'assets/images/cars/i10.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 11, name: 'Hyundai i20', category: 'Économique', price_per_day: 0, photo_url: 'assets/images/cars/i20.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 22, name: 'Dacia Logan', category: 'Économique', price_per_day: 0, photo_url: 'assets/images/cars/dacia-logan.webp', features: ['Manuelle', 'Clim', '5 places'] },
+  { ref_id: 23, name: 'Renault Clio 5 2025', category: 'Économique', price_per_day: 0, photo_url: 'assets/images/cars/clio5.webp', features: ['Clim', '5 places'] },
+  { ref_id: 5, name: 'Peugeot 208', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/p208.webp', features: ['Manuelle', 'Clim', '5 places'] },
+  { ref_id: 25, name: 'Peugeot 208 Hybride', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/p208.webp', features: ['Automatique', 'Hybride', 'Clim'] },
+  { ref_id: 24, name: 'Hyundai Accent 2025', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/hyundai-accent.webp', features: ['Clim', '5 places'] },
+  { ref_id: 26, name: 'Seat Ibiza FR', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/seat-ibiza.webp', features: ['Clim', '5 places'] },
+  { ref_id: 27, name: 'Seat Leon FR', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/seat-leon.webp', features: ['Clim', '5 places'] },
+  { ref_id: 28, name: 'Cupra Leon 2025', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/cupra-leon.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 29, name: 'Volkswagen Golf 8.5 2026', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/vw-golf-85.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 30, name: 'Audi A3 2025', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/audi-a3.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 31, name: 'Mercedes Classe A', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/mercedes-classe-a.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 32, name: 'BMW Série 1 2026', category: 'Confort', price_per_day: 0, photo_url: 'assets/images/cars/bmw-serie-1.webp', features: ['Automatique', 'Clim', '5 places'] },
+  { ref_id: 33, name: 'Hyundai Tucson', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/hyundai-tucson.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 34, name: 'Dacia Duster', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/duster.webp', features: ['Manuelle', 'Clim', 'SUV'] },
+  { ref_id: 35, name: 'Dacia Duster Automatique', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/duster.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 7, name: 'Volkswagen T-Roc', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/troc.webp', features: ['Clim', 'SUV', '5 places'] },
+  { ref_id: 36, name: 'Volkswagen Tiguan 2025', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/34/vw-tiguan.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 37, name: 'Audi Q3 2026', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/audi-q3.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 38, name: 'Cupra Formentor 2025', category: 'SUV', price_per_day: 0, photo_url: 'assets/images/cars/cupra-formentor.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 39, name: 'Audi RS3 2026', category: 'Luxe', price_per_day: 0, photo_url: 'assets/images/cars/audi-rs3.webp', features: ['Automatique', 'Clim', 'Sport'] },
+  { ref_id: 40, name: 'Porsche Macan', category: 'Luxe', price_per_day: 0, photo_url: 'assets/images/cars/porsche-macan.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 41, name: 'Range Rover Sport 2025', category: 'Luxe', price_per_day: 0, photo_url: 'assets/images/cars/range-rover-sport.webp', features: ['Automatique', 'Clim', 'SUV'] },
+  { ref_id: 42, name: 'Volkswagen Touareg 2025', category: 'Luxe', price_per_day: 0, photo_url: 'assets/images/cars/vw-touareg.webp', features: ['Automatique', 'Clim', 'SUV'] },
 ]
 
 const CLIENTS = [

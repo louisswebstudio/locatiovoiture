@@ -1,5 +1,5 @@
 /* ============================================================
-   Bestore Car — Rule-based Chatbot "Karim"
+   Bestore Car - Rule-based Chatbot "Karim"
    Pure vanilla JS · No API · 100% offline
    ============================================================ */
 (function () {
@@ -87,7 +87,7 @@
     },
     cars_eco: function () {
       return {
-        text: "Nos véhicules Économique :<br>🚗 Toyota Yaris — 330 MAD/jour<br>🚗 Renault Clio — 350 MAD/jour<br>🚗 Dacia Sandero — 320 MAD/jour<br>Climatisation incluse. Kilométrage illimité.<br>Souhaitez-vous réserver ?",
+        text: "Nos véhicules Économique :<br>🚗 Toyota Yaris : 330 MAD/jour<br>🚗 Renault Clio : 350 MAD/jour<br>🚗 Dacia Sandero : 320 MAD/jour<br>Climatisation incluse. Kilométrage illimité.<br>Souhaitez-vous réserver ?",
         chips: [
           { label: 'Oui, réserver',            action: 'reserver' },
           { label: "Voir d'autres catégories", action: 'cars' }
@@ -96,7 +96,7 @@
     },
     cars_confort: function () {
       return {
-        text: "Nos véhicules Confort :<br>🚙 Peugeot 208 — 420 MAD/jour<br>🚙 Volkswagen T-Roc — 500 MAD/jour<br>🚙 Skoda Octavia — 480 MAD/jour<br>GPS et Bluetooth inclus.<br>Souhaitez-vous réserver ?",
+        text: "Nos véhicules Confort :<br>🚙 Peugeot 208 : 420 MAD/jour<br>🚙 Volkswagen T-Roc : 500 MAD/jour<br>🚙 Skoda Octavia : 480 MAD/jour<br>GPS et Bluetooth inclus.<br>Souhaitez-vous réserver ?",
         chips: [
           { label: 'Oui, réserver',            action: 'reserver' },
           { label: "Voir d'autres catégories", action: 'cars' }
@@ -105,7 +105,7 @@
     },
     cars_suv: function () {
       return {
-        text: "Nos véhicules SUV :<br>🚙 Kia Sportage — 600 MAD/jour<br>🚙 Hyundai i20 — 550 MAD/jour<br>Idéal pour les longs trajets et famille.<br>Souhaitez-vous réserver ?",
+        text: "Nos véhicules SUV :<br>🚙 Kia Sportage : 600 MAD/jour<br>🚙 Hyundai i20 : 550 MAD/jour<br>Idéal pour les longs trajets et famille.<br>Souhaitez-vous réserver ?",
         chips: [
           { label: 'Oui, réserver',            action: 'reserver' },
           { label: "Voir d'autres catégories", action: 'cars' }
@@ -319,7 +319,7 @@
       '<div id="bsc-head">' +
         '<div id="bsc-avatar">' + ICON_CAR + '</div>' +
         '<div>' +
-          '<div class="bsc-name">Karim — Bestore Car</div>' +
+          '<div class="bsc-name">Karim · Bestore Car</div>' +
           '<div class="bsc-status"><span class="bsc-dot"></span>' + UI.online + '</div>' +
         '</div>' +
         '<button id="bsc-close" aria-label="' + UI.close + '">&times;</button>' +

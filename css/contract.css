@@ -1,0 +1,174 @@
+/* css/contract.css - contrat de location, calqué sur la liasse papier de l'agence
+   (fiche A4 deux colonnes, en-têtes bleus, lignes pointillées à remplir).
+   Partagé par dashboard.html et sign.html. */
+
+.contract{
+  --ct-ink:#1B3FAE;              /* bleu des en-têtes et des cadres */
+  --ct-ink-soft:#4A6BC8;
+  --ct-text:#111;
+  font-family:var(--font-main,'Plus Jakarta Sans',sans-serif);
+  color:var(--ct-text);background:#fff;
+  font-size:11px;line-height:1.35;
+}
+
+/* ── En-tête ── */
+.ct-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:10px}
+.ct-top__brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.ct-top__logo{height:52px;width:52px;object-fit:contain;flex-shrink:0}
+.ct-top__names{line-height:1.25}
+.ct-top__name{font-size:15px;font-weight:800;color:var(--ct-ink);letter-spacing:.01em}
+.ct-top__tag{font-size:11px;font-weight:600;color:var(--ct-ink-soft)}
+.ct-top__ar{font-size:11px;color:var(--ct-ink-soft);direction:rtl}
+.ct-top__title{margin-left:auto;text-align:right;display:flex;align-items:baseline;gap:8px}
+.ct-top__word{font-size:24px;font-weight:800;color:var(--ct-ink)}
+.ct-top__no{font-size:15px;font-weight:700;color:var(--ct-text);letter-spacing:.06em}
+.ct-top__no small{font-size:11px;font-weight:600;color:var(--ct-ink-soft);margin-right:3px}
+
+/* ── Grille deux colonnes ── */
+.ct-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+.ct-col{display:flex;flex-direction:column;gap:8px}
+
+/* ── Bloc encadré à en-tête bleu ── */
+.ct-box{border:1.5px solid var(--ct-ink);border-radius:9px;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
+.ct-box__head{background:var(--ct-ink);color:#fff;font-size:11px;font-weight:700;text-align:center;padding:4px 8px;letter-spacing:.01em}
+.ct-box__body{padding:7px 9px}
+
+/* ── Ligne « libellé ..... valeur » ── */
+.ct-line{display:flex;align-items:baseline;gap:5px;padding:2.5px 0;font-size:10.5px}
+.ct-line__l{color:var(--ct-text);font-weight:600;font-style:italic;white-space:nowrap;flex-shrink:0}
+.ct-line__v{flex:1;min-width:0;border-bottom:1px dotted #9AA6C9;padding-bottom:1px;font-weight:600;color:#14225C;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-height:13px}
+.ct-line__v--empty{color:transparent}
+.ct-line--split{gap:5px}
+.ct-line--split .ct-line__v{flex:1 1 0}
+
+/* Adresse sur plusieurs lignes vides, comme la liasse */
+.ct-fill{border-bottom:1px dotted #9AA6C9;height:13px;margin-top:3px}
+
+/* ── Carburant : deux options ── */
+.ct-fuel{display:flex;align-items:center;justify-content:space-around;gap:8px;font-size:10.5px;font-weight:700;
+  color:var(--ct-ink);padding:4px 0;line-height:1.4}
+.ct-fuel span{padding:2px 7px;border-radius:4px;white-space:nowrap}
+.ct-fuel span.on{background:var(--ct-ink);color:#fff}
+
+/* ── Jauge + schéma du véhicule ── */
+.ct-visual{display:flex;align-items:center;gap:8px;padding:4px 0;justify-content:space-between}
+.ct-gauge{flex:0 0 auto;text-align:center}
+.ct-gauge svg{display:block}
+.ct-gauge__cap{font-size:8.5px;font-weight:700;color:var(--ct-text);margin-bottom:1px}
+.ct-damage{flex:1;text-align:center;min-width:0}
+.ct-damage__cap{font-size:8.5px;font-weight:700;color:var(--ct-text);margin-bottom:2px}
+.ct-damage svg{display:block;width:100%;max-width:190px;margin:0 auto;height:auto}
+
+/* ── Oui / Non ── */
+.ct-opts{display:flex;gap:6px;padding:3px 0;font-size:9.5px}
+.ct-opt{flex:1;text-align:center;border-left:1px solid #C9D2EA;padding:0 2px}
+.ct-opt:first-child{border-left:none}
+.ct-opt__l{font-weight:700;color:var(--ct-text);display:block;margin-bottom:2px}
+.ct-opt__yn b{display:inline-block;padding:1px 6px;border:1px solid var(--ct-ink);border-radius:4px;margin:0 2px;
+  font-size:9px;font-weight:700;color:var(--ct-ink)}
+.ct-opt__yn b.on{background:var(--ct-ink);color:#fff}
+
+/* ── Acceptation + signature client ── */
+.ct-accept{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;align-items:stretch}
+.ct-accept__txt{border:1.5px solid var(--ct-ink);border-radius:9px;padding:9px 11px;font-size:10px;font-weight:600;
+  font-style:italic;color:var(--ct-text);display:flex;align-items:center}
+
+/* ── Zone de signature ── */
+.ct-sign{border:1.5px solid var(--ct-ink);border-radius:9px;overflow:hidden;break-inside:avoid;page-break-inside:avoid;
+  display:flex;flex-direction:column}
+.ct-sign__head{background:var(--ct-ink);color:#fff;font-size:10.5px;font-weight:700;text-align:center;padding:4px 8px}
+.ct-sign__area{flex:1;min-height:76px;display:flex;align-items:center;justify-content:center;padding:5px}
+.ct-sign__area img{max-height:70px;max-width:100%;object-fit:contain}
+.ct-sign__meta{font-size:8.5px;color:#7A7A7A;text-align:center;padding:0 0 4px}
+
+/* Visa de la direction : le cachet s'affiche s'il existe */
+.ct-sigs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+/* Visa : le cachet occupe la case, la signature se superpose dessus. */
+.ct-visa{position:relative}
+.ct-visa__stamp{max-height:78px;max-width:92%;object-fit:contain}
+.ct-visa__sig{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-3deg);
+  max-height:62px;max-width:78%;object-fit:contain;pointer-events:none}
+.ct-visa__fallback{text-align:center;font-size:9.5px;line-height:1.5;color:var(--ct-ink);font-weight:700}
+.ct-visa__fallback small{display:block;font-weight:600;font-size:8.5px}
+
+/* ── Pied de page légal ── */
+.ct-foot{margin-top:10px;padding-top:6px;border-top:1.5px solid var(--ct-ink);text-align:center;
+  font-size:9.5px;font-weight:700;color:var(--ct-ink);line-height:1.5}
+.ct-foot__legal{font-weight:600;color:#3A4A78;font-size:9px}
+
+/* ── Conditions générales (page 2) ── */
+.ct-terms{margin-top:14px;break-before:page;page-break-before:always}
+.ct-terms h4{font-size:11px;font-weight:800;color:var(--ct-ink);text-transform:uppercase;letter-spacing:.05em;
+  border-bottom:1.5px solid var(--ct-ink);padding-bottom:4px;margin-bottom:7px}
+.ct-terms ol{padding-left:15px;margin:0;font-size:9.5px;line-height:1.5;color:#333}
+.ct-terms li{margin-bottom:4px;break-inside:avoid;page-break-inside:avoid}
+
+/* Badge d'état (brouillon / signé / clôturé) - repris de l'ancienne feuille */
+.contract__stamp{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700}
+.contract__stamp.draft{background:#FEF3C7;color:#92400E}
+.contract__stamp.signed{background:#DCFCE7;color:#166534}
+.contract__stamp.closed{background:#E4E4E7;color:#3F3F46}
+
+/* ── Écran étroit : une seule colonne ── */
+@media(max-width:620px){
+  .ct-cols,.ct-accept,.ct-sigs{grid-template-columns:1fr}
+  .ct-top{flex-wrap:wrap;gap:10px}
+  .ct-top__title{margin-left:0;width:100%;text-align:left;justify-content:flex-start}
+  .ct-visual{flex-direction:column;align-items:stretch;gap:6px}
+  .ct-damage svg{max-width:240px}
+}
+
+/* ── Impression ── */
+@media print{
+  .contract{font-size:10.5px}
+  .ct-box,.ct-sign,.ct-accept{break-inside:avoid;page-break-inside:avoid}
+  .ct-box__head,.ct-sign__head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* ── tap-to-sign box ── */
+.sig-slot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-height:150px;border:2px dashed #D4D4D8;border-radius:12px;background:#FAFAFA;cursor:pointer;transition:border-color .15s,background .15s;padding:12px;user-select:none;-webkit-tap-highlight-color:transparent}
+.sig-slot:hover,.sig-slot:focus-visible{border-color:var(--accent,#E11D48);background:#fff;outline:none}
+.sig-slot__pen{font-size:26px;line-height:1;color:#A1A1AA}
+.sig-slot__ph{font-size:14px;font-weight:600;color:#52525B}
+.sig-slot.filled{border-style:solid;border-color:#BBF7D0;background:#fff}
+.sig-slot img{max-width:100%;max-height:120px;object-fit:contain}
+.sig-slot__edit{position:absolute;top:8px;right:10px;font-size:12px;font-weight:600;color:var(--accent,#E11D48)}
+
+/* ── full-screen signing sheet ── */
+html.sigcap-lock,html.sigcap-lock body{overflow:hidden;overscroll-behavior:none}
+.sigcap{position:fixed;inset:0;z-index:1000;background:rgba(9,9,11,.6);display:none;align-items:center;justify-content:center;padding:16px}
+.sigcap.show{display:flex}
+.sigcap:fullscreen{padding:0;background:#fff}
+.sigcap__box{background:#fff;border-radius:16px;width:100%;max-width:900px;height:min(620px,100%);display:flex;flex-direction:column;overflow:hidden;font-family:var(--font-main,'Plus Jakarta Sans',sans-serif)}
+.sigcap:fullscreen .sigcap__box{max-width:none;height:100%;border-radius:0}
+.sigcap__head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 18px 8px}
+.sigcap__title{font-size:16px;font-weight:700;color:#18181B}
+.sigcap__sub{font-size:12.5px;color:#71717A;margin-top:2px}
+.sigcap__x{width:38px;height:38px;border-radius:10px;border:1px solid #E4E4E7;background:#fff;font-size:22px;line-height:1;color:#52525B;cursor:pointer;flex-shrink:0}
+.sigcap__tabs{display:flex;gap:4px;margin:0 18px 8px;background:#F4F4F5;border-radius:10px;padding:4px;width:max-content}
+.sigcap__tabs button{border:none;background:none;font:inherit;font-size:13px;font-weight:600;color:#71717A;padding:7px 14px;border-radius:7px;cursor:pointer}
+.sigcap__tabs button.on{background:#fff;color:#18181B;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.sigcap__rotate{display:none;margin:0 18px 8px;font-size:12.5px;color:#92400E;background:#FEF3C7;border-radius:8px;padding:7px 10px}
+@media (orientation:portrait) and (max-width:600px){.sigcap__rotate{display:block}}
+.sigcap__area{position:relative;flex:1;margin:0 18px;border:1.5px solid #E4E4E7;border-radius:12px;background:#fff;min-height:0;overflow:hidden}
+.sigcap__area canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;z-index:2}
+.sigcap__line{position:absolute;left:6%;right:6%;bottom:26%;border-bottom:1.5px solid #D4D4D8;z-index:1;pointer-events:none}
+.sigcap__line span{position:absolute;left:-2px;bottom:4px;font-size:18px;color:#A1A1AA}
+.sigcap__ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(22px,5vw,38px);color:#E4E4E7;font-weight:600;pointer-events:none;z-index:1;letter-spacing:.02em}
+.sigcap__area--type{display:flex;flex-direction:column;padding:16px;gap:14px}
+.sigcap__area--type[hidden],.sigcap__area[hidden]{display:none}
+.sigcap__name{height:48px;border:1px solid #E4E4E7;border-radius:10px;padding:0 14px;font:inherit;font-size:16px;outline:none}
+.sigcap__name:focus{border-color:var(--accent,#E11D48)}
+.sigcap__preview{flex:1;display:flex;align-items:center;justify-content:center;font-family:'Great Vibes',cursive;font-size:clamp(40px,9vw,76px);color:#1E3A8A;border-bottom:1.5px solid #D4D4D8;margin:0 6%;min-height:90px;text-align:center;overflow:hidden;white-space:nowrap}
+.sigcap__preview.empty{color:#E4E4E7}
+.sigcap__foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px calc(12px + env(safe-area-inset-bottom))}
+.sigcap__tools{display:flex;gap:6px}
+.sigcap__tool,.sigcap__ok{white-space:nowrap}
+.sigcap__tool{height:42px;padding:0 14px;border-radius:10px;border:1px solid #E4E4E7;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#3F3F46;cursor:pointer}
+.sigcap__ok{height:42px;padding:0 22px;border-radius:10px;border:none;background:var(--accent,#E11D48);color:#fff;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.sigcap__tool:disabled,.sigcap__ok:disabled{opacity:.4;cursor:default}
+/* portrait phone: a wide signature strip centred on screen, not a tall column */
+@media (orientation:portrait) and (max-width:600px){.sigcap__area[data-pane="draw"]{flex:0 0 auto;height:min(42vh,320px);margin-top:auto;margin-bottom:auto}.sigcap__line{bottom:22%}}
+@media (max-width:560px){.sigcap{padding:0}.sigcap__box{border-radius:0;height:100%}.sigcap__tool{padding:0 10px;font-size:12px}.sigcap__ok{padding:0 16px}}
+@media (max-height:460px){.sigcap__head{padding:8px 14px 4px}.sigcap__sub,.sigcap__rotate{display:none!important}.sigcap__tabs{margin-bottom:4px}.sigcap__foot{padding:8px 14px}}

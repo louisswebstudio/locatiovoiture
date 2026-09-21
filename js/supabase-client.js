@@ -2,7 +2,7 @@
    Creates the browser Supabase client from the CDN UMD build (@supabase/
    supabase-js exposes `window.supabase`) using js/supabase-config.js.
 
-   Result: window.sbClient — a configured client, or null when the config
+   Result: window.sbClient - a configured client, or null when the config
    still holds placeholders (in which case the data layer uses its localStorage
    fallback driver). */
 (function () {
@@ -20,7 +20,7 @@
   if (!configured) {
     window.sbClient = null;
     console.info(
-      '[Bestore] Supabase not configured — using local demo data. ' +
+      '[Bestore] Supabase not configured, using local demo data. ' +
         'Fill in js/supabase-config.js to go live.'
     );
     return;

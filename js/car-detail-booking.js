@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────
-   Bestore Car — Simple booking modal (car-detail page)
+   Bestore Car - Simple booking modal (car-detail page)
    ONE screen · 3 fields only: départ date · retour date · prénom
    - Live price total (price/day × days, min 1 day)
    - Multilingual labels (AR/FR/EN) via the shared i18n `translations`
@@ -15,7 +15,7 @@
 
   var WA_PHONE = '212661661230';
   // French label used in the WhatsApp message / saved lead (no field shown).
-  var PICKUP_LOCATION = 'Agence Bestore Car — Avenue Arrar N°27, Tanger';
+  var PICKUP_LOCATION = 'Agence Bestore Car, Avenue Arrar N°27, Tanger';
 
   // ── i18n helpers ─────────────────────────────────────────
   function getLang() {
@@ -99,7 +99,9 @@
       '<img class="cdbk__car-img" src="' + esc(img) + '" alt="" onerror="this.style.display=\'none\'">' +
       '<div class="cdbk__car-info">' +
         '<span class="cdbk__car-name">' + esc(carName(getLang())) + '</span>' +
-        '<span class="cdbk__car-price">' + (state.car.price || 0) + ' MAD <small>' + esc(t('fleet.perday')) + '</small></span>' +
+        '<span class="cdbk__car-price">' + (Number(state.car.price) > 0
+            ? state.car.price + ' MAD <small>' + esc(t('fleet.perday')) + '</small>'
+            : esc(t('fleet.priceOnRequest') || 'Prix sur demande')) + '</span>' +
       '</div>' +
     '</div>';
   }
@@ -144,11 +146,11 @@
     var name = carName('fr');
     var cat = carCat('fr') ? ' (' + carCat('fr') + ')' : '';
     var lines = [
-      '🚗 Réservation — ' + name + cat,
+      '🚗 Réservation : ' + name + cat,
       '📅 Du ' + fmtDate(state.pickupDate) + ' au ' + fmtDate(state.returnDate) +
         ' (' + n + ' ' + (n > 1 ? 'jours' : 'jour') + ')',
       '💰 Total: ' + fmtNum(totalPrice()) + ' MAD',
-      '👤 ' + (state.name || '—'),
+      '👤 ' + (state.name || '-'),
       '',
       'Bonjour, je souhaite réserver ce véhicule.'
     ];

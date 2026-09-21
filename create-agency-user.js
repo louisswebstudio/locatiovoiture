@@ -1,4 +1,4 @@
-// create-agency-user.js — run once per client you onboard.
+// create-agency-user.js - run once per client you onboard.
 //
 // Creates a Supabase Auth user (the agency owner's dashboard login) and stamps
 // their agency_id into user_metadata, so the dashboard auto-loads the right
@@ -7,7 +7,7 @@
 // Usage:
 //   node create-agency-user.js <email> <password> <agency_id>
 //
-// Example (Bestore Car — agency_id matches seed.js / supabase-config.js):
+// Example (Bestore Car - agency_id matches seed.js / supabase-config.js):
 //   node create-agency-user.js owner@bestore-car.ma "StrongPass123!" 11111111-1111-1111-1111-111111111111
 //
 // Needs SUPABASE_SERVICE_ROLE_KEY in .env.local (admin API, server-only).
@@ -42,7 +42,7 @@ async function main() {
   const { data, error } = await supabase.auth.admin.createUser({
     email,
     password,
-    email_confirm: true, // skip the confirmation email — they can log in immediately
+    email_confirm: true, // skip the confirmation email - they can log in immediately
     user_metadata: { agency_id: agencyId },
   })
   if (error) {

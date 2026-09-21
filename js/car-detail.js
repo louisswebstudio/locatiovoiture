@@ -14,7 +14,7 @@
         ar: 'داسيا سانديرو هي الخيار الاقتصادي الأكثر شعبية لدينا. مدمجة وموفرة للوقود وسهلة الركن في طنجة.'
       }
     },
-    { id:4, name:'Renault Clio', nameAr:'رينو كليو', nameFr:'Renault Clio',
+    { id:4, name:'Renault Clio 5', nameAr:'رونو كليو 5', nameFr:'Renault Clio 5',
       cat:'Sedan', catAr:'سيدان', catFr:'Berline',
       price:420, doors:4, passengers:5, transmission:'Manual',
       transmissionAr:'يدوي', transmissionFr:'Manuelle',
@@ -38,16 +38,18 @@
         ar: 'بيجو 208 سيارة مدمجة راقية بناقل حركة أوتوماتيكي توفر تجربة قيادة سلسة ومريحة.'
       }
     },
-    { id:7, name:'Dacia Duster', nameAr:'داسيا داستر', nameFr:'Dacia Duster',
+    // ref 7 = Volkswagen T-Roc, comme dans la base, fleet.js et car-images.js.
+    // (Cette entrée était un doublon du Duster, qui a déjà la ref 16.)
+    { id:7, name:'Volkswagen T-Roc', nameAr:'فولكس واجن T-Roc', nameFr:'Volkswagen T-Roc',
       cat:'SUV', catAr:'دفع رباعي', catFr:'SUV',
-      price:600, doors:4, passengers:5, transmission:'Manual',
-      transmissionAr:'يدوي', transmissionFr:'Manuelle',
-      fuel:'Diesel', fuelAr:'ديزل', fuelFr:'Diesel',
-      img:'assets/images/cars/duster.webp',
+      price:600, doors:4, passengers:5, transmission:'-',
+      transmissionAr:'-', transmissionFr:'-',
+      fuel:'-', fuelAr:'-', fuelFr:'-',
+      img:'assets/images/cars/troc.webp',
       desc: {
-        en: 'The Dacia Duster is a rugged SUV perfect for exploring Morocco\'s diverse landscapes. Equally at home on city streets and mountain roads.',
-        fr: 'Le Dacia Duster est un SUV robuste parfait pour explorer les paysages variés du Maroc.',
-        ar: 'داسيا داستر سيارة SUV قوية مثالية لاستكشاف تضاريس المغرب المتنوعة.'
+        en: 'The Volkswagen T-Roc is a compact SUV with a raised driving position, a comfortable ride and a practical boot. At ease in the city and on longer trips.',
+        fr: 'Le Volkswagen T-Roc est un SUV compact avec une position de conduite surélevée, un confort de route agréable et un coffre pratique. À l\'aise en ville comme sur les longs trajets.',
+        ar: 'فولكس واجن T-Roc سيارة SUV مدمجة بوضعية قيادة مرتفعة وراحة في القيادة وصندوق عملي، مناسبة للمدينة وللرحلات الطويلة.'
       }
     },
     { id:11, name:'Hyundai i20', nameAr:'هيونداي i20', nameFr:'Hyundai i20',
@@ -93,7 +95,7 @@
       fuel:'Hybrid', fuelAr:'هجين', fuelFr:'Hybride',
       img:'assets/images/cars/toyota-yaris.webp',
       desc: {
-        en: 'The Toyota Yaris Hybrid combines outstanding fuel economy with Toyota reliability. Compact, quiet and effortless to drive — perfect for budget-conscious travelers in the city.',
+        en: 'The Toyota Yaris Hybrid combines outstanding fuel economy with Toyota reliability. Compact, quiet and effortless to drive, perfect for budget-conscious travelers in the city.',
         fr: 'La Toyota Yaris Hybride allie une consommation exemplaire à la fiabilité Toyota. Compacte, silencieuse et facile à conduire, idéale en ville.',
         ar: 'تويوتا يارِس هجين تجمع بين اقتصاد ممتاز في الوقود وموثوقية تويوتا. مدمجة وهادئة وسهلة القيادة، مثالية للمسافرين الموفرين في المدينة.'
       }
@@ -151,8 +153,8 @@
       id: db.id, name: db.name, nameAr: db.name, nameFr: db.name,
       cat: db.category || '', catAr: db.category || '', catFr: db.category || '',
       doors: 4, passengers: 5,
-      transmission: '—', transmissionAr: '—', transmissionFr: '—',
-      fuel: '—', fuelAr: '—', fuelFr: '—',
+      transmission: '-', transmissionAr: '-', transmissionFr: '-',
+      fuel: '-', fuelAr: '-', fuelFr: '-',
       img: db.photo_url,
       desc: { en: db.name, fr: db.name, ar: db.name }
     };
@@ -162,6 +164,16 @@
     if (db.photo_url) base.img = db.photo_url;        // live photo
     base.status = db.status || 'available';
     base.features = Array.isArray(db.features) ? db.features : [];
+    // the fleet list stores the gearbox (and hybrid) as features
+    var feats = base.features.map(function (f) { return String(f).toLowerCase(); });
+    if (feats.indexOf('automatique') !== -1) {
+      base.transmission = 'Automatic'; base.transmissionFr = 'Automatique'; base.transmissionAr = 'أوتوماتيك';
+    } else if (feats.indexOf('manuelle') !== -1) {
+      base.transmission = 'Manual'; base.transmissionFr = 'Manuelle'; base.transmissionAr = 'يدوي';
+    }
+    if (feats.indexOf('hybride') !== -1) {
+      base.fuel = 'Hybrid'; base.fuelFr = 'Hybride'; base.fuelAr = 'هجين';
+    }
     return base;
   }
 
@@ -172,9 +184,12 @@
 
   function isNumericId(v) { return /^\d+$/.test(String(v || '')); }
 
-  // Resolve the car to display. Falls back to the first car when there is no
-  // id in the URL or the fetch fails, so the page never breaks.
+  // Resolve the car to display. Never guesses: with no id, or an id that
+  // matches no car, it returns null and the page sends the visitor back to
+  // the fleet. (It used to show the first car, which hid broken links behind
+  // the wrong vehicle.)
   async function resolveCar() {
+    if (!rawId) return null;
     var agencyId = window.BESTORE_AGENCY_ID;
     var db = null;
     try {
@@ -188,20 +203,16 @@
             return String(c.ref_id) === String(rawId) || String(c.id) === String(rawId);
           })[0] || null;
         }
-        if (!db && typeof window.BooklyDB.getCars === 'function') {
-          var list = await window.BooklyDB.getCars(agencyId);   // default: first car
-          if (list && list.length) db = list[0];
-        }
       }
     } catch (e) {
       console.warn('[Bestore] car-detail: Supabase load failed, using static fallback.', e);
     }
     if (db) return mergeCar(db);
-    // Total fallback: static car matching the id, else the first static car.
-    return metaByRef(rawId) || cars[0];
+    // Supabase unreachable: static data, but only for the car that was asked for.
+    return metaByRef(rawId) || null;
   }
 
-  // Thumbnail click handler — swaps the main image with a smooth fade and
+  // Thumbnail click handler - swaps the main image with a smooth fade and
   // moves the active (highlighted) state to the clicked thumbnail.
   function initThumbs() {
     var mainImg = document.getElementById('gallery-main-img');
@@ -226,7 +237,7 @@
     });
   }
 
-  // Live status badge — injected next to the category badge in the car header.
+  // Live status badge - injected next to the category badge in the car header.
   var STATUS_KEY = {
     available:   'fleet.status.available',
     rented:      'fleet.status.rented',
@@ -255,7 +266,7 @@
     el.style.background = STATUS_BG[status] || STATUS_BG.available;
   }
 
-  // Live features list (from car.features JSON) — rendered as chips under the
+  // Live features list (from car.features JSON) - rendered as chips under the
   // car header. Hidden when the car has no features.
   function renderFeatures(c) {
     var header = document.querySelector('.cd-car-header');
@@ -286,7 +297,14 @@
     currentDisplayName = displayName;
 
     // Sidebar price
-    document.getElementById('car-price').textContent = c.price + ' MAD';
+    var priceEl = document.getElementById('car-price');
+    if (Number(c.price) > 0) {
+      priceEl.textContent = c.price + ' MAD';
+    } else {
+      var lang0 = localStorage.getItem('bsc_lang') || 'fr';
+      priceEl.textContent = { fr: 'Sur demande', en: 'On request', ar: 'عند الطلب' }[lang0] || 'Sur demande';
+      priceEl.classList.add('cd-price-amount--ask');
+    }
 
     // Specs
     document.getElementById('spec-passengers').textContent  = c.passengers;
@@ -296,12 +314,12 @@
     document.getElementById('spec-fuel').textContent =
       lang === 'ar' ? c.fuelAr : lang === 'fr' ? c.fuelFr : c.fuel;
 
-    // Gallery — 3 photos (hero / front / side) from CAR_IMAGES, with the live
+    // Gallery - 3 photos (front / rear / side) from CAR_IMAGES, with the live
     // Supabase photo_url as fallback when no mapping exists for this car.
     var fallback = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800';
     var imgs = (typeof getCarImages === 'function') ? getCarImages(c) : null;
     var photos = imgs
-      ? [imgs.hero, imgs.front, imgs.side]
+      ? [imgs.front, imgs.hero, imgs.side]   // 3/4 avant d'abord, comme la vignette des cartes
       : [c.img, c.img, c.img];
 
     var mainImg = document.getElementById('gallery-main-img');
@@ -329,7 +347,7 @@
     document.getElementById('car-description').textContent = c.desc[lang] || c.desc.en;
 
     // Page title
-    document.title = c.name + ' — Bestore Car';
+    document.title = c.name + ' | Bestore Car';
 
     // WhatsApp button
     var pickup = sessionStorage.getItem('pickup_date') || '';
@@ -395,8 +413,12 @@
           '</div>' +
           '<div class="fleet__card-footer">' +
             '<div class="fleet__card-price">' +
-              '<span class="fleet__price-amount">' + c.price + ' MAD</span>' +
-              '<span class="fleet__price-unit">' + perDay + '</span>' +
+              (Number(c.price) > 0
+                ? '<span class="fleet__price-amount">' + c.price + ' MAD</span>' +
+                  '<span class="fleet__price-unit">' + perDay + '</span>'
+                : '<span class="fleet__price-unit">' +
+                  ({ fr: 'Prix sur demande', en: 'Price on request', ar: 'السعر عند الطلب' }[localStorage.getItem('bsc_lang') || 'fr'] || 'Prix sur demande') +
+                  '</span>') +
             '</div>' +
           '</div>' +
           '<button type="button" class="fleet__reserve-btn cd-sim-reserve" data-ref="' + c.id + '" aria-label="Book ' + c.name + '">' +
@@ -493,12 +515,13 @@
     });
   }
 
-  // Re-populate when language changes (i18n.js fires renderFleetPage — we hook similarly)
+  // Re-populate when language changes (i18n.js fires renderFleetPage - we hook similarly)
   document.addEventListener('DOMContentLoaded', function() {
     // Resolve the car from Supabase (with static + first-car fallbacks), then render.
     resolveCar().then(function (resolved) {
       car = resolved;
-      if (!car) { window.location.href = 'fleet.html'; return; }
+      // replace(): the broken URL leaves the history, so "Back" doesn't loop here.
+      if (!car) { window.location.replace('fleet.html'); return; }
       populatePage(car);
       initThumbs();
       initSimilarCarousel();

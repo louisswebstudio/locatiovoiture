@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Car Detail — Bestore Car</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/images/logo-aym-64.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/images/logo-aym-192.png">
+  <title>Car Detail | Bestore Car</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Epilogue:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
 
@@ -17,7 +20,7 @@
     <div class="container navbar__inner">
 
       <a href="index.html" class="logo-link">
-        <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img" style="height:150px; width:auto; object-fit:contain;">
+        <img src="assets/images/logo-aym.webp" alt="AYM Rent Car" class="logo-img" width="68" height="68" style="height:68px; width:68px; object-fit:contain;">
       </a>
 
       <nav class="nav" aria-label="Main navigation">
@@ -71,7 +74,7 @@
 
       <!-- Price -->
       <div class="cd-price-block">
-        <span class="cd-price-amount" id="car-price">— MAD</span>
+        <span class="cd-price-amount" id="car-price">- MAD</span>
         <span class="cd-price-label" data-i18n="fleet.perday">/ يوم</span>
       </div>
 
@@ -89,7 +92,7 @@
             </svg>
           </span>
           <span class="spec-label" data-i18n="fleet.pass">ركاب</span>
-          <span class="spec-value" id="spec-passengers">—</span>
+          <span class="spec-value" id="spec-passengers">-</span>
         </div>
 
         <div class="spec-row">
@@ -101,7 +104,7 @@
             </svg>
           </span>
           <span class="spec-label" data-i18n="fleet.doors">أبواب</span>
-          <span class="spec-value" id="spec-doors">—</span>
+          <span class="spec-value" id="spec-doors">-</span>
         </div>
 
         <div class="spec-row">
@@ -115,7 +118,7 @@
             </svg>
           </span>
           <span class="spec-label" data-i18n="detail.spec.transmission">Transmission</span>
-          <span class="spec-value" id="spec-transmission">—</span>
+          <span class="spec-value" id="spec-transmission">-</span>
         </div>
 
         <div class="spec-row">
@@ -127,7 +130,7 @@
             </svg>
           </span>
           <span class="spec-label" data-i18n="detail.spec.fuel">Fuel</span>
-          <span class="spec-value" id="spec-fuel">—</span>
+          <span class="spec-value" id="spec-fuel">-</span>
         </div>
 
         <div class="spec-row">
@@ -159,7 +162,7 @@
         </div>
         <div class="include-item">
           <span class="check">✓</span>
-          <span data-i18n="detail.inc.pickup">Agency pickup — free</span>
+          <span data-i18n="detail.inc.pickup">Agency pickup (free)</span>
         </div>
         <div class="include-item">
           <span class="check">✓</span>
@@ -186,22 +189,22 @@
 
       <!-- Image gallery -->
       <div class="gallery-main">
-        <img id="gallery-main-img" src="" alt="" width="800" height="500" loading="eager"
+        <img id="gallery-main-img" alt="" width="800" height="500" loading="eager"
              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800'">
       </div>
       <div class="gallery-thumbs">
-        <img class="thumb active" id="thumb-0" src="" alt="" width="120" height="80" loading="lazy"
+        <img class="thumb active" id="thumb-0" alt="" width="120" height="80" loading="lazy"
              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=240'">
-        <img class="thumb" id="thumb-1" src="" alt="" width="120" height="80" loading="lazy"
+        <img class="thumb" id="thumb-1" alt="" width="120" height="80" loading="lazy"
              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=240'">
-        <img class="thumb" id="thumb-2" src="" alt="" width="120" height="80" loading="lazy"
+        <img class="thumb" id="thumb-2" alt="" width="120" height="80" loading="lazy"
              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=240'">
       </div>
 
       <!-- Car name + badge -->
       <div class="cd-car-header">
-        <span class="car-category-badge" id="car-detail-badge">—</span>
-        <h2 class="cd-car-name" id="car-detail-name">—</h2>
+        <span class="car-category-badge" id="car-detail-badge">-</span>
+        <h2 class="cd-car-name" id="car-detail-name">-</h2>
       </div>
 
       <!-- About section -->
@@ -212,7 +215,7 @@
           </svg>
           <span class="cd-section-label-text" data-i18n="detail.about">About this car</span>
         </div>
-        <p class="cd-section-body" id="car-description">—</p>
+        <p class="cd-section-body" id="car-description">-</p>
       </div>
 
       <!-- Requirements section -->
@@ -288,7 +291,7 @@
 
             <div class="footer__col footer__col--brand">
               <a href="index.html" class="logo-link">
-                <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img footer-logo" style="height:45px; width:auto; object-fit:contain;">
+                <img src="assets/images/logo-aym.webp" alt="AYM Rent Car" class="logo-img footer-logo" width="72" height="72" style="height:72px; width:72px; object-fit:contain;">
               </a>
               <p class="footer__desc" data-i18n="footer.desc">وكالتك الموثوقة لتأجير السيارات في طنجة منذ 2019. أسطول حديث، أسعار ثابتة، خدمة توصيل متاحة.</p>
             </div>
@@ -323,7 +326,7 @@
           </div>
 
           <div class="footer__bottom">
-            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار · طنجة، المغرب. جميع الحقوق محفوظة.</p>
             <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
         </div>
@@ -342,6 +345,20 @@
   <script src="js/car-detail.js"></script>
   <script src="js/main.js"></script>
 
+  <!-- ── Barre de réservation collante (mobile uniquement) ── -->
+  <div class="cd-stickybar" id="cdStickybar">
+    <span class="cd-stickybar__price">
+      <span class="cd-stickybar__amount" id="cdStickyPrice">- MAD</span>
+      <span class="cd-stickybar__label" data-i18n="fleet.perday">/ يوم</span>
+    </span>
+    <a href="#" class="cd-stickybar__btn" id="cdStickyBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span data-i18n="detail.book">Book on WhatsApp</span>
+    </a>
+  </div>
+
   <!-- ── Floating WhatsApp button (general contact only) ── -->
   <a href="https://wa.me/212661661230"
      class="wa-float"
@@ -355,5 +372,6 @@
     </svg>
   </a>
   <script src="js/chatbot.js"></script>
+  <script src="js/mobile.js"></script>
 </body>
 </html>

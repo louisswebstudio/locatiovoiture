@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Fleet — Bestore Car</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/images/logo-aym-64.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/images/logo-aym-192.png">
+  <title>Our Fleet | Bestore Car</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Epilogue:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
   <style>
     /* Loading skeleton for the fleet grid (shown while Supabase data loads) */
     .fc__card--skeleton{cursor:default;pointer-events:none}
@@ -30,7 +33,7 @@
     <div class="container navbar__inner">
 
       <a href="index.html" class="logo-link">
-        <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img" style="height:150px; width:auto; object-fit:contain;">
+        <img src="assets/images/logo-aym.webp" alt="AYM Rent Car" class="logo-img" width="68" height="68" style="height:68px; width:68px; object-fit:contain;">
       </a>
 
       <nav class="nav" aria-label="Main navigation">
@@ -101,10 +104,35 @@
 
   <!-- ── Fleet Content ────────────────────────────────────── -->
   <section class="fc">
+
+    <!-- Barre de filtres (mobile uniquement, masquée en desktop) -->
+    <div class="fc__filterbar">
+      <button class="fc__filterbar-btn" id="fcFilterOpen" type="button" aria-expanded="false" aria-controls="fcSidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 6h16M7 12h10M10 18h4"/>
+        </svg>
+        <span data-i18n="fleet.page.filters">الفلاتر</span>
+        <span class="fc__filterbar-count" id="fcFilterCount">0</span>
+      </button>
+      <span class="fc__filterbar-results">
+        <span id="fcFilterResults" data-tpl="{n}"></span>
+        <span data-i18n="fleet.page.results">نتائج</span>
+      </span>
+    </div>
+
+    <div class="fc__sheet-backdrop" id="fcSheetBackdrop"></div>
+
     <div class="fc__container">
 
       <!-- Sidebar -->
-      <aside class="fc__sidebar">
+      <aside class="fc__sidebar" id="fcSidebar">
+
+        <!-- En-tête de la feuille coulissante (mobile uniquement) -->
+        <div class="fc__sheet-head">
+          <h2 class="fc__sheet-title" data-i18n="fleet.page.filters">الفلاتر</h2>
+          <button class="fc__sheet-close" id="fcSheetClose" type="button" aria-label="Close">&#x2715;</button>
+        </div>
+
         <div class="fc__aside">
 
           <!-- Search input -->
@@ -172,80 +200,27 @@
             </ul>
           </div>
 
-          <!-- Brands -->
-          <div class="fc__filters-wrap">
-            <h2 class="fc__filters-heading" data-i18n="fleet.page.brands">الماركات</h2>
-            <ul class="fc__filters-list" id="fcBrands">
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Dacia">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/dacia" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.dacia">داسيا</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Renault">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/renault" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.renault">رينو</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Peugeot">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/peugeot" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.peugeot">بيجو</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Volkswagen">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/volkswagen" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.volkswagen">فولكسفاغن</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Hyundai">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/hyundai" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.hyundai">هيونداي</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Skoda">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/skoda" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.skoda">سكودا</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Seat">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/seat" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.seat">سيات</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Toyota">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/toyota" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.toyota">تويوتا</span>
-                </label>
-              </li>
-              <li class="fc__filter-item">
-                <label class="fc__filter-label">
-                  <input type="checkbox" class="fc__brand-checkbox" value="Kia">
-                  <img class="fc__brand-logo" src="https://cdn.simpleicons.org/kia" alt="" loading="lazy" onerror="this.style.display='none'">
-                  <span data-i18n="fleet.brand.kia">كيا</span>
-                </label>
-              </li>
-            </ul>
+          <!-- Brands : menu déroulant sur ordinateur, section ouverte dans la feuille mobile -->
+          <div class="fc__filters-wrap fc__filters-wrap--brands">
+            <details class="fc__brands-dd" id="fcBrandsDd">
+              <summary class="fc__brands-sum">
+                <span class="fc__filters-heading" data-i18n="fleet.page.brands">الماركات</span>
+                <span class="fc__brands-count" id="fcBrandsCount" hidden></span>
+                <svg class="fc__brands-chev" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </summary>
+              <ul class="fc__filters-list" id="fcBrands">
+                <!-- filled by js/fleet.js from the cars actually published -->
+              </ul>
+            </details>
           </div>
 
           <!-- Clear Filters button -->
           <button class="fc__search-btn fc__clear-btn" id="fcClearBtn" type="button" data-i18n="fleet.page.clear">مسح الفلاتر</button>
 
         </div>
+
+        <!-- Validation de la feuille (mobile uniquement) -->
+        <button class="fc__sheet-done" id="fcSheetDone" type="button" data-i18n="fleet.page.apply">عرض النتائج</button>
       </aside>
 
       <!-- Car grid -->
@@ -287,7 +262,7 @@
             <!-- Column 1: Brand -->
             <div class="footer__col footer__col--brand">
               <a href="index.html" class="logo-link">
-                <img src="assets/images/logo.png.png" alt="Bestore Car" class="logo-img footer-logo" style="height:150px; width:auto; object-fit:contain;">
+                <img src="assets/images/logo-aym.webp" alt="AYM Rent Car" class="logo-img footer-logo" width="72" height="72" style="height:72px; width:72px; object-fit:contain;">
               </a>
               <p class="footer__desc" data-i18n="footer.desc">وكالتك الموثوقة لتأجير السيارات في طنجة منذ 2019. أسطول حديث، أسعار ثابتة، خدمة توصيل متاحة.</p>
             </div>
@@ -326,7 +301,7 @@
 
           <!-- Bottom bar -->
           <div class="footer__bottom">
-            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار — طنجة، المغرب. جميع الحقوق محفوظة.</p>
+            <p class="footer__copy" data-i18n="footer.copy">© 2026 بيستور كار · طنجة، المغرب. جميع الحقوق محفوظة.</p>
             <a href="dashboard.html" class="footer__agency-link" style="color:rgba(255,255,255,.35);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Espace agence</a>
           </div>
 
@@ -341,6 +316,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/car-images.js"></script>
   <script src="js/bookly-data.js"></script>
 
   <!-- ── Floating WhatsApp button (general contact only) ── -->
@@ -356,5 +332,6 @@
     </svg>
   </a>
   <script src="js/chatbot.js"></script>
+  <script src="js/mobile.js"></script>
 </body>
 </html>

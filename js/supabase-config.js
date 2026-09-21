@@ -10,7 +10,7 @@ window.SUPABASE_CONFIG = {
   anonKey: 'sb_publishable_uEQ2K1BwZS1LL3gWjrTEZQ_tYz1Hbr-',
 };
 
-/* Bestore Car's agency id — must match AGENCY_ID in seed.js. */
+/* Bestore Car's agency id - must match AGENCY_ID in seed.js. */
 window.BESTORE_AGENCY_ID = '11111111-1111-1111-1111-111111111111';
 
 /* Bestore Car's slug, used as the fallback when no subdomain is present

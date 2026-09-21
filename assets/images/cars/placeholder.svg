@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="Photo à venir">
+  <rect width="600" height="400" fill="#F4F4F5"/>
+  <g fill="none" stroke="#C4C4C8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M150 232l22-62a30 30 0 0128-20h100a30 30 0 0128 20l22 62"/>
+    <path d="M132 232h336a18 18 0 0118 18v40a12 12 0 01-12 12h-24"/>
+    <path d="M132 232a18 18 0 00-18 18v40a12 12 0 0012 12h24"/>
+    <path d="M186 302h228"/>
+    <circle cx="186" cy="302" r="26"/>
+    <circle cx="414" cy="302" r="26"/>
+  </g>
+  <text x="300" y="360" text-anchor="middle" font-family="'Plus Jakarta Sans',system-ui,sans-serif" font-size="20" font-weight="600" fill="#A1A1AA">Photo à venir</text>
+</svg>

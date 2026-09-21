@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
+<title>Votre contrat de location</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/images/logo-aym-64.png">
+<link rel="apple-touch-icon" sizes="192x192" href="assets/images/logo-aym-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/bookly-data.js"></script>
+<script src="js/contract-doc.js"></script>
+<link rel="stylesheet" href="css/contract.css">
+<style>
+:root{
+  --accent:#E11D48;--accent-hover:#BE123C;--card-border:#E4E4E7;
+  --text-primary:#18181B;--text-secondary:#52525B;--muted:#71717A;
+  --bg:#F4F4F5;--font-main:'Plus Jakarta Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-main);background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased;padding:24px 16px 120px}
+.wrap{max-width:820px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.top h1{font-size:18px;font-weight:700}
+.top p{font-size:13px;color:var(--muted);margin-top:2px}
+.card{background:#fff;border:1px solid var(--card-border);border-radius:14px;padding:28px}
+.state{text-align:center;padding:56px 24px}
+.state .ico{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;font-size:26px}
+.state h2{font-size:18px;margin-bottom:8px}
+.state p{color:var(--text-secondary);font-size:14px;line-height:1.6;max-width:420px;margin:0 auto}
+.ico.ok{background:#DCFCE7;color:#166534}.ico.err{background:#FEE2E2;color:#B91C1C}.ico.wait{background:#F4F4F5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 20px;border-radius:10px;border:none;font:inherit;font-weight:600;font-size:14px;cursor:pointer;transition:background .15s}
+.btn svg{width:17px;height:17px;stroke:currentColor;fill:none}
+.btn-primary{background:var(--accent);color:#fff;width:100%}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-ghost{background:#fff;color:var(--text-primary);border:1px solid var(--card-border)}
+.btn:disabled{opacity:.6;cursor:wait}
+.sign{margin-top:18px}
+.sign h3{font-size:16px;margin-bottom:4px}
+.sign .hint{font-size:13px;color:var(--muted);margin-bottom:12px}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text-secondary);margin:16px 0;line-height:1.45;cursor:pointer}
+.agree input{width:20px;height:20px;accent-color:var(--accent);flex-shrink:0;margin-top:1px}
+.err-msg{color:#B91C1C;font-size:13px;margin-top:10px;min-height:18px;text-align:center}
+.banner{border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:14px;line-height:1.5}
+.banner.ok{background:#F0FDF4;border:1px solid #BBF7D0;color:#166534}
+.banner.info{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF}
+.jump{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);border-top:1px solid var(--card-border);display:none}
+.jump.show{display:block}
+.jump .btn{max-width:820px;margin:0 auto;display:flex}
+.foot{text-align:center;font-size:12px;color:var(--muted);margin-top:18px}
+@media(max-width:560px){.card{padding:18px}body{padding:14px 10px 110px}.top h1{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1 id="agencyName">Contrat de location</h1><p id="subtitle">Chargement…</p></div>
+    <button class="btn btn-ghost" id="pdfBtn" style="display:none">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>PDF
+    </button>
+  </div>
+  <div id="banner"></div>
+  <div class="card" id="main">
+    <div class="state"><div class="ico wait">⏳</div><h2>Chargement du contrat…</h2></div>
+  </div>
+  <div class="card sign" id="signCard" style="display:none">
+    <h3>Votre signature</h3>
+    <p class="hint">Touchez le cadre pour signer : dessinez avec votre doigt, ou écrivez simplement votre nom.</p>
+    <div id="sigSlot"></div>
+    <label class="agree"><input type="checkbox" id="agree"> J'ai lu le contrat et j'accepte l'ensemble de ses conditions générales.</label>
+    <button class="btn btn-primary" id="signBtn">Signer le contrat</button>
+    <div class="err-msg" id="errMsg"></div>
+  </div>
+  <p class="foot">Lien personnel et confidentiel. Ne le partagez pas.</p>
+</div>
+<div class="jump" id="jump"><button class="btn btn-primary" id="jumpBtn">Lire et signer ↓</button></div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(s){return document.querySelector(s);};
+  var token=(new URLSearchParams(location.hash.slice(1)).get('t')||'').trim();
+  var DATA=null, pad=null;
+
+  function state(ico,cls,title,text){
+    $('#main').innerHTML='<div class="state"><div class="ico '+cls+'">'+ico+'</div><h2>'+title+'</h2><p>'+text+'</p></div>';
+  }
+  function render(){
+    var c=DATA.contract, a=DATA.agency||{};
+    document.title='Contrat '+ContractDoc.number(c)+' | '+(a.name||'');
+    $('#agencyName').textContent=a.name||'Contrat de location';
+    $('#subtitle').textContent='Contrat N° '+ContractDoc.number(c)+' · '+(c.client_name||'');
+    $('#main').innerHTML='<div class="contract" id="doc">'+ContractDoc.html(c,a)+'</div>';
+    $('#pdfBtn').style.display='';
+    var canSign=c.status==='draft'&&!c.client_signature;
+    $('#signCard').style.display=canSign?'':'none';
+    $('#jump').classList.toggle('show',canSign);
+    var b='';
+    if(c.status==='draft'&&c.client_signature)
+      b='<div class="banner ok">✔ Merci, votre signature a bien été enregistrée. '+ContractDoc.esc(a.name||"L'agence")+' va finaliser le contrat. Vous pouvez télécharger une copie en PDF.</div>';
+    else if(c.status!=='draft')
+      b='<div class="banner ok">✔ Contrat signé par les deux parties. Vous pouvez le télécharger en PDF.</div>';
+    else
+      b='<div class="banner info">Merci de lire attentivement le contrat ci-dessous, puis de signer en bas de la page.</div>';
+    $('#banner').innerHTML=b;
+  }
+
+  async function load(){
+    if(!token){state('⚠️','err','Lien incomplet','Ce lien de contrat est incomplet. Demandez à l\'agence de vous le renvoyer.');return;}
+    try{
+      DATA=await BooklyDB.getContractByToken(token);
+    }catch(e){
+      console.error(e);
+      state('⚠️','err','Chargement impossible','Vérifiez votre connexion internet puis rechargez la page.');return;
+    }
+    if(!DATA||!DATA.contract){
+      state('⌛','err','Lien expiré ou invalide','Ce lien n\'est plus valable. Contactez l\'agence pour recevoir un nouveau lien.');
+      $('#subtitle').textContent='';return;
+    }
+    render();
+  }
+
+  pad=ContractDoc.signatureSlot($('#sigSlot'),{
+    title:'Votre signature',
+    subtitle:'Signez comme sur papier, en prenant toute la largeur du cadre.',
+    allowType:true,
+    placeholder:'Touchez ici pour signer',
+    getName:function(){return DATA&&DATA.contract?DATA.contract.client_name||'':'';},
+    onChange:function(){$('#errMsg').textContent='';}
+  });
+  $('#jumpBtn').addEventListener('click',function(){ $('#signCard').scrollIntoView({behavior:'smooth',block:'start'}); });
+  // hide the floating button once the signature area is on screen
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){
+      if(DATA&&DATA.contract.status==='draft'&&!DATA.contract.client_signature)
+        $('#jump').classList.toggle('show',!en[0].isIntersecting);
+    }).observe($('#signCard'));
+  }
+
+  $('#signBtn').addEventListener('click',async function(){
+    var err=$('#errMsg'); err.textContent='';
+    if(pad.isEmpty()){err.textContent='Veuillez signer avant de valider (touchez le cadre).';return;}
+    if(!$('#agree').checked){err.textContent='Veuillez cocher l\'acceptation des conditions.';return;}
+    var btn=this; btn.disabled=true; btn.textContent='Signature en cours…';
+    try{
+      var res=await BooklyDB.signContractByToken(token,pad.value,DATA.contract.updated_at,pad.method);
+      DATA=res||await BooklyDB.getContractByToken(token);
+      render();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e){
+      console.error(e);
+      err.textContent=(e&&e.message)||'Signature impossible, réessayez.';
+    }finally{btn.disabled=false;btn.textContent='Signer le contrat';}
+  });
+
+  $('#pdfBtn').addEventListener('click',async function(){
+    if(!DATA)return;
+    var btn=this; btn.disabled=true;
+    try{
+      var file=await ContractDoc.pdf($('#doc'),DATA.contract);
+      if(matchMedia('(pointer:coarse)').matches&&navigator.canShare&&navigator.canShare({files:[file]})){
+        try{await navigator.share({files:[file],title:file.name});return;}
+        catch(e){if(e.name==='AbortError')return;}
+      }
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(file); a.download=file.name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){URL.revokeObjectURL(a.href);},10000);
+    }catch(e){console.error(e);alert('Création du PDF impossible, réessayez.');}
+    finally{btn.disabled=false;}
+  });
+
+  window.addEventListener('hashchange',function(){location.reload();});
+  load();
+})();
+</script>
+</body>
+</html>

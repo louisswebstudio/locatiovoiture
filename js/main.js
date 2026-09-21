@@ -336,10 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   btn.addEventListener('click', () => {
-    const phone    = document.getElementById('bk-phone').value.trim()    || '—';
-    const location = document.getElementById('bk-location').value.trim() || '—';
-    const pickup   = pickupDate.value || '—';
-    const rtn      = returnDate ? returnDate.value || '—' : '—';
+    const phone    = document.getElementById('bk-phone').value.trim()    || '-';
+    const location = document.getElementById('bk-location').value.trim() || '-';
+    const pickup   = pickupDate.value || '-';
+    const rtn      = returnDate ? returnDate.value || '-' : '-';
 
     if (returnDate && pickupDate.value && returnDate.value && returnDate.value < pickupDate.value) {
       if (returnErr) returnErr.textContent = 'Return date must be after pickup date';

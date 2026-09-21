@@ -1,7 +1,7 @@
-# Bestore Car — Supabase backend
+# Bestore Car - Supabase backend
 
 The website + dashboard now read/write a real Supabase backend instead of
-`localStorage`. **All existing HTML/CSS/JS pages are unchanged in structure** —
+`localStorage`. **All existing HTML/CSS/JS pages are unchanged in structure** -
 only the data layer was swapped.
 
 Until you fill in real Supabase keys, the site automatically runs on a built-in
@@ -14,7 +14,7 @@ Until you fill in real Supabase keys, the site automatically runs on a built-in
 | File | Role |
 |------|------|
 | `schema.sql` | Tables + RLS + realtime. Run once in the Supabase SQL editor. |
-| `lib/supabase.js` | Canonical Supabase client (ESM, `process.env`) — for Node / a future bundler. |
+| `lib/supabase.js` | Canonical Supabase client (ESM, `process.env`) - for Node / a future bundler. |
 | `lib/db.js` | Canonical data layer (the brief's exact function signatures). |
 | `seed.js` | Node script that inserts the sample data (`node seed.js`). |
 | `js/supabase-config.js` | **Public** browser config (URL + anon key + agency id). Edit this. |
@@ -32,7 +32,7 @@ Until you fill in real Supabase keys, the site automatically runs on a built-in
 
 ---
 
-## Setup — do this to go live
+## Setup - do this to go live
 
 1. **Create a Supabase project** at [supabase.com](https://supabase.com) (free tier).
 
@@ -71,18 +71,18 @@ node create-agency-user.js owner@bestore-car.ma "StrongPass123!" 11111111-1111-1
 The script stamps `user_metadata.agency_id`, so on login the dashboard
 auto-loads that agency's data.
 
-## ⚠️ Security note — RLS (read before production)
+## ⚠️ Security note - RLS (read before production)
 
 `schema.sql` currently ships with permissive **"Demo anon" RLS policies** so the
 publishable key can read/write. Now that Auth is in place, tighten this:
 
-1. Enable the auth-based policies (commented at the bottom of `schema.sql`) — the
+1. Enable the auth-based policies (commented at the bottom of `schema.sql`) - the
    helper reads `agency_id` from the signed-in user's JWT.
 2. Drop the four "Demo anon" policies.
 3. For best security, move `agency_id` from `user_metadata` to `app_metadata`
    (users can't edit `app_metadata`).
 
-Until you do that, any holder of the publishable key can read/write — fine for a
+Until you do that, any holder of the publishable key can read/write - fine for a
 single-operator demo, not for real multi-tenant isolation.
 
 ---
@@ -92,7 +92,7 @@ single-operator demo, not for real multi-tenant isolation.
 1. Insert a row in `agencies` (unique `slug`).
 2. Insert their `cars` (set `ref_id` if the public widget should pre-select them).
 3. Point `their-slug.bookly.ma` at the same deployment.
-4. The same `dashboard.html` initializes itself from the subdomain — no per-client
+4. The same `dashboard.html` initializes itself from the subdomain - no per-client
    code. (For the public website's booking widget, set `window.BESTORE_AGENCY_ID`
    / config per client build.)
 
@@ -106,7 +106,7 @@ fallback** active (placeholder keys):
 - Dashboard renders 4 KPI cards, 8 fleet cars, 15 bookings, working stats charts.
 - Create / confirm / cancel booking, edit car, and contracts all work.
 - The public booking widget adds a `source: website`, `status: pending` booking
-  (visible in the dashboard) just before opening WhatsApp — and never blocks it.
+  (visible in the dashboard) just before opening WhatsApp - and never blocks it.
 
 Once real keys are in `js/supabase-config.js`, the exact same pages use Supabase,
 and the dashboard's overview/bookings refresh live via realtime when a new

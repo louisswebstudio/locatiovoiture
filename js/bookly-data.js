@@ -1,9 +1,9 @@
 /* js/bookly-data.js
-   Browser data layer for Bestore Car — exposes window.BooklyDB.
+   Browser data layer for Bestore Car - exposes window.BooklyDB.
 
    Two interchangeable drivers behind one API:
-     • Supabase driver  — used when js/supabase-client.js produced window.sbClient
-     • Local driver     — localStorage demo fallback (keeps every page working
+     • Supabase driver  - used when js/supabase-client.js produced window.sbClient
+     • Local driver     - localStorage demo fallback (keeps every page working
                           before Supabase is configured)
 
    The dashboard and the booking widget only ever call window.BooklyDB.* , so
@@ -13,6 +13,8 @@
   'use strict';
 
   var FB_IMG = 'https://images.unsplash.com/photo-1549924231-f129b911e442?w=600';
+  // Shown for a car whose own photo hasn't been supplied yet.
+  var NO_PHOTO = 'assets/images/cars/placeholder.svg';
 
   // ── shared helpers ───────────────────────────────────────
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -23,6 +25,14 @@
   }
   function todayISO() { var d = new Date(); d.setHours(0, 0, 0, 0); return isoOf(d); }
 
+  // True when a car is fully filled in (price + its own photo). The dashboard
+  // uses it to flag what the agency still has to complete.
+  function isPublishable(row) {
+    var price = row.price_per_day != null ? row.price_per_day : row.price;
+    var photo = row.photo_url || row.img;
+    return Number(price) > 0 && !!photo && photo !== FB_IMG && photo !== NO_PHOTO;
+  }
+
   // UI ↔ DB status vocabulary (dashboard says "inprogress", DB says "active")
   function uiStatus(s) { return s === 'active' ? 'inprogress' : s; }
   function dbStatus(s) { return s === 'inprogress' ? 'active' : s; }
@@ -30,11 +40,20 @@
   // ══════════════════════════════════════════════════════════
   //  SUPABASE DRIVER
   // ══════════════════════════════════════════════════════════
+  // Photo livrée avec le site (js/car-images.js) pour une voiture dont la base
+  // n'a pas encore de photo_url. Les fichiers et leur référence partent ensemble
+  // au déploiement : rien à écrire en base pour qu'ils s'affichent.
+  function localPhoto(r) {
+    if (typeof window.getCarImages !== 'function') return null;
+    var e = window.getCarImages({ ref_id: r.ref_id, name: r.name });
+    return e ? (e.front || e.hero || e.side || null) : null;
+  }
+
   function supabaseDriver(sb) {
     function mapCar(r) {
       return {
         id: r.id, name: r.name, cat: r.category || '',
-        price: r.price_per_day, img: r.photo_url || FB_IMG,
+        price: r.price_per_day, img: r.photo_url || localPhoto(r) || FB_IMG,
         plate: r.plate || '', status: r.status || 'available',
       };
     }
@@ -44,7 +63,7 @@
       return {
         id: r.id, ref_id: r.ref_id != null ? r.ref_id : null,
         name: r.name, category: r.category || '',
-        price_per_day: r.price_per_day, photo_url: r.photo_url || FB_IMG,
+        price_per_day: r.price_per_day, photo_url: r.photo_url || localPhoto(r) || NO_PHOTO,
         plate: r.plate || '', status: r.status || 'available',
         features: Array.isArray(r.features) ? r.features
                 : (r.features == null ? [] : r.features),
@@ -52,7 +71,7 @@
     }
     function mapBooking(r) {
       var c = r.client || {}, car = r.car || {};
-      var name = c.full_name || (r.source === 'website' ? 'Lead — site web' : 'Client');
+      var name = c.full_name || (r.source === 'website' ? 'Lead (site web)' : 'Client');
       return {
         id: r.id, client: name, phone: c.phone || '', email: c.email || '',
         carId: r.car_id, pickup: r.pickup_date, return: r.return_date,
@@ -113,6 +132,8 @@
         var res = await sb.from('cars').select('*')
           .eq('agency_id', agencyId || window.BESTORE_AGENCY_ID).order('category');
         if (res.error) throw res.error;
+        // The whole fleet is shown; cars without a price display "sur demande"
+        // and cars without a photo use the neutral placeholder.
         return (res.data || []).map(mapCarFull);
       },
 
@@ -264,6 +285,64 @@
         if (res.error) throw res.error;
       },
 
+      // ── contracts (auth-only table, see migrate-contracts.sql) ──
+      async getContracts(agencyId) {
+        var res = await sb.from('contracts').select('*')
+          .eq('agency_id', agencyId).order('created_at', { ascending: false });
+        if (res.error) throw res.error;
+        return res.data || [];
+      },
+
+      async createContract(row) {
+        var res = await sb.from('contracts').insert(row).select().single();
+        if (res.error) throw res.error;
+        return res.data;
+      },
+
+      async updateContract(id, patch) {
+        patch.updated_at = new Date().toISOString();
+        var res = await sb.from('contracts').update(patch).eq('id', id).select().single();
+        if (res.error) throw res.error;
+        return res.data;
+      },
+
+      // Public signing link (sign.html) - goes through SECURITY DEFINER functions,
+      // see migrate-contracts-remote.sql. Returns { contract, agency } or null.
+      async getContractByToken(token) {
+        var res = await sb.rpc('get_contract_by_token', { p_token: token });
+        if (res.error) throw res.error;
+        return res.data || null;
+      },
+
+      async signContractByToken(token, signature, version, method) {
+        var res = await sb.rpc('sign_contract_by_token', { p_token: token, p_signature: signature, p_version: version, p_method: method || 'draw' });
+        if (res.error) throw res.error;
+        return res.data;
+      },
+
+      // Saved agency signature (auth-only agency_settings table).
+      async getAgencySignature(agencyId) {
+        var res = await sb.from('agency_settings').select('agency_signature').eq('agency_id', agencyId).maybeSingle();
+        if (res.error) throw res.error;
+        return res.data ? res.data.agency_signature : null;
+      },
+
+      async saveAgencySignature(agencyId, signature) {
+        var res = await sb.from('agency_settings').upsert({
+          agency_id: agencyId, agency_signature: signature, updated_at: new Date().toISOString(),
+        });
+        if (res.error) throw res.error;
+      },
+
+      subscribeContracts(agencyId, cb) {
+        var ch = sb.channel('contracts-' + agencyId)
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'contracts', filter: 'agency_id=eq.' + agencyId },
+            function (payload) { cb(payload); })
+          .subscribe();
+        return function () { try { sb.removeChannel(ch); } catch (e) {} };
+      },
+
       subscribeBookings(agencyId, cb) {
         var ch = sb.channel('bookings-' + agencyId)
           .on('postgres_changes',
@@ -354,7 +433,7 @@
         return load(K.cars, SEED_CARS).map(function (c) {
           return {
             id: c.id, ref_id: c.id, name: c.name, category: c.cat,
-            price_per_day: c.price, photo_url: c.img, plate: c.plate || '',
+            price_per_day: c.price, photo_url: c.img || NO_PHOTO, plate: c.plate || '',
             status: c.status || 'available', features: c.features || [],
           };
         });
@@ -398,7 +477,7 @@
         if (d.id_type)         noteBits.push('Pièce : ' + d.id_type);
         if (d.notes)           noteBits.push('Message : ' + d.notes);
         var row = {
-          id: id, client: d.client_name || 'Lead — site web', phone: d.client_phone || '', email: '',
+          id: id, client: d.client_name || 'Lead (site web)', phone: d.client_phone || '', email: '',
           carId: car ? car.id : (d.car_id != null ? d.car_id : (d.car_ref != null ? d.car_ref : null)),
           pickup: d.pickup_date, return: d.return_date, time: d.pickup_time || '10:00',
           days: days, total: price * days, deposit: 0, status: 'pending', source: 'website',
@@ -471,6 +550,63 @@
           localStorage.setItem('bookly_client_meta', JSON.stringify(stored));
         } catch(e) {}
       },
+      async getContracts() {
+        try { return JSON.parse(localStorage.getItem('bookly_contracts') || '[]'); }
+        catch (e) { return []; }
+      },
+      async createContract(row) {
+        var list = await this.getContracts();
+        var num = Math.max.apply(null, [0].concat(list.map(function (c) { return Number(c.number) || 0; }))) + 1;
+        var now = new Date().toISOString();
+        var rec = Object.assign({ status: 'draft' }, row, {
+          id: 'ct-' + Date.now(), number: num, created_at: now, updated_at: now,
+        });
+        list.unshift(rec);
+        localStorage.setItem('bookly_contracts', JSON.stringify(list));
+        return rec;
+      },
+      async updateContract(id, patch) {
+        var list = await this.getContracts();
+        var c = list.filter(function (x) { return String(x.id) === String(id); })[0];
+        if (!c) throw new Error('Contrat introuvable');
+        Object.assign(c, patch, { updated_at: new Date().toISOString() });
+        localStorage.setItem('bookly_contracts', JSON.stringify(list));
+        announce({ eventType: 'UPDATE', table: 'contracts' });
+        return c;
+      },
+      // Demo only: the link works in the same browser (no server to share data).
+      async getContractByToken(token) {
+        var list = await this.getContracts();
+        var c = list.filter(function (x) { return x.share_token && x.share_token === token; })[0];
+        if (!c || new Date(c.share_expires) <= new Date()) return null;
+        var a = await this.getAgency();
+        return { contract: c, agency: { name: a.name, address: a.address, phone: a.phone } };
+      },
+      async signContractByToken(token, signature, version, method) {
+        var found = await this.getContractByToken(token);
+        if (!found) throw new Error('Lien invalide ou expiré');
+        var c = found.contract;
+        if (c.status !== 'draft' || c.client_signature) throw new Error('Ce contrat est déjà signé');
+        if (version !== c.updated_at) throw new Error("Le contrat a été modifié par l'agence. Rechargez la page pour lire la nouvelle version.");
+        var now = new Date().toISOString();
+        var patch = { client_signature: signature, client_signed_at: now, client_sign_ua: navigator.userAgent.slice(0, 300), client_sign_method: method === 'type' ? 'type' : 'draw' };
+        if (c.agency_signature) { patch.status = 'signed'; patch.signed_at = now; }
+        await this.updateContract(c.id, patch);
+        return this.getContractByToken(token);
+      },
+      async getAgencySignature() {
+        try { return localStorage.getItem('bookly_agency_signature'); } catch (e) { return null; }
+      },
+      async saveAgencySignature(agencyId, signature) {
+        if (signature) localStorage.setItem('bookly_agency_signature', signature);
+        else localStorage.removeItem('bookly_agency_signature');
+      },
+      subscribeContracts(agencyId, cb) {
+        if (!bc) return function () {};
+        var h = function (ev) { if (ev.data && ev.data.table === 'contracts') cb(ev.data); };
+        bc.addEventListener('message', h);
+        return function () { bc.removeEventListener('message', h); };
+      },
       subscribeBookings(agencyId, cb) {
         if (!bc) return function () {};
         var h = function (ev) { cb(ev.data || { eventType: 'UPDATE' }); };
@@ -482,5 +618,6 @@
 
   // ── pick driver + expose ─────────────────────────────────
   var driver = window.sbClient ? supabaseDriver(window.sbClient) : localDriver();
+  driver.isPublishable = isPublishable;
   window.BooklyDB = driver;
 })();
