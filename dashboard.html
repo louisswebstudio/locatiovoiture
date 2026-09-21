@@ -1567,6 +1567,10 @@ const money=n=>Number(n).toLocaleString('fr-FR')+' MAD';
 /* ─── data state (Supabase-backed via js/bookly-data.js, local demo fallback) ─── */
 let AGENCY_ID=window.BESTORE_AGENCY_ID||null;
 let CARS=[],BOOKINGS=[],CLIENTS_DB=[];
+/* agencies.plan decides which views the agency sees (see migrate-plan.sql) */
+const PLAN_VIEWS={contracts:['contracts','leads','fleet']};
+let PLAN='full';
+const planAllows=v=>!PLAN_VIEWS[PLAN]||PLAN_VIEWS[PLAN].includes(v);
 let _cpClientId=null;
 
 /* derive clients from bookings - keyed by phone (unique identifier) */
@@ -1629,6 +1633,7 @@ async function initData(){
       if(agency.name)AGENCY.name=agency.name;
       if(agency.address)AGENCY.addr=agency.address;
       if(agency.phone)AGENCY.phone=agency.phone;
+      if(agency.plan)PLAN=agency.plan;
     }
   }catch(e){console.warn('Agency lookup failed, using defaults',e);}
   await reloadData();
@@ -1657,6 +1662,7 @@ async function showApp(){
   $('#app').classList.add('active');
   try{ await initData(); }
   catch(e){ console.error(e); toast('Erreur de chargement des données'); }
+  applyPlan();
   renderAll();
   subscribeRealtime();
 }
@@ -1777,6 +1783,7 @@ $('#newPwCard').addEventListener('submit',async e=>{
 const TITLES={overview:'Tableau de bord',leads:'Demandes en ligne',bookings:'Réservations',calendar:'Calendrier',fleet:'Flotte',clients:'Clients',contracts:'Contrats',stats:'Statistiques'};
 let charts={};
 function switchView(v){
+  if(!planAllows(v))v='contracts';
   $$('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===v));
   $$('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));
   $('#viewTitle').textContent=TITLES[v];
@@ -1788,6 +1795,16 @@ function switchView(v){
   if(v==='contracts')loadContracts().then(renderContracts);
 }
 $$('.nav-item').forEach(n=>n.addEventListener('click',()=>switchView(n.dataset.view)));
+
+/* hide the views the agency's plan doesn't include; contracts-only agencies land on Contrats */
+function applyPlan(){
+  $$('.nav-item').forEach(n=>{n.style.display=planAllows(n.dataset.view)?'':'none';});
+  if(PLAN==='contracts'){
+    const nav=$('.sidebar__nav'), ct=$('.nav-item[data-view="contracts"]');
+    nav.insertBefore(ct,nav.querySelector('.nav-item'));
+    switchView('contracts');
+  }
+}
 
 /* sidebar mobile */
 function openSidebar(){$('#sidebar').classList.add('open');$('#backdrop').classList.add('show')}
@@ -1959,6 +1976,7 @@ function leadCard(b){
     <div class="lead-card__actions">
       <a class="btn lead-wa-btn" href="${waLeadLink(b)}" target="_blank" rel="noopener" onclick="markLeadContacted('${id}')">${LEAD_WA_SVG}Répondre sur WhatsApp</a>
       <button class="btn lead-confirm-btn" onclick="confirmLead('${id}')"${confirmed?' disabled':''}>${confirmed?'Confirmée ✓':'Confirmer la réservation'}</button>
+      ${PLAN==='contracts'?`<button class="btn lead-confirm-btn" onclick="openContract('${id}')">Créer le contrat</button>`:''}
       <button type="button" class="lead-edit-link" onclick="openEditBooking('${id}')">Modifier</button>
     </div>
   </div>`;
@@ -2778,7 +2796,8 @@ function openContractForm(data,title){
   $('#c-deposit').value=data.deposit!=null?data.deposit:(car.price?car.price*3:'');
   set('#c-payment',data.payment_method); set('#c-paid',data.amount_paid); set('#c-notes',data.notes);
   // offer to create a booking only for brand-new standalone contracts
-  $('#c-mkbooking-wrap').style.display=(!data.id&&!data.booking_id)?'':'none';
+  /* contracts-only plan: no calendar to show, but still record the booking so fleet status and history stay right */
+  $('#c-mkbooking-wrap').style.display=(!data.id&&!data.booking_id&&PLAN!=='contracts')?'':'none';
   $('#c-mkbooking').checked=true;
   ctCompute();
   $('#ctFormOverlay').classList.add('show');

@@ -18,6 +18,7 @@ create table if not exists agencies (
   whatsapp text,
   logo_url text,
   primary_color text default '#C41E2A',
+  plan text not null default 'full' check (plan in ('full', 'contracts')),  -- dashboard modules, see migrate-plan.sql
   created_at timestamptz default now()
 );
 
