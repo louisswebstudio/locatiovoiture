@@ -659,7 +659,7 @@ html[lang="en"] .hero__heading {
   align-items: center;
   gap: 15px;
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 0;
 }
 
 .fleet__label-row {
@@ -882,6 +882,7 @@ html[lang="en"] .hero__heading {
   align-items: center;
   gap: 12px;
   align-self: flex-end;               /* above the cards, on the right */
+  margin: -6px 0 -4px;                /* keep the title close to the cards */
 }
 
 .fleet__nav {
