@@ -211,21 +211,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let current  = 0;
   let maxIndex = 0;
+  let maxShift = 0;   // px: the last card sits flush with the right edge, no empty gap
 
   function calcMax() {
     const wrapW  = track.parentElement.clientWidth;
     const card   = track.querySelector('.fleet__card');
     STEP = (card ? card.getBoundingClientRect().width : 327.5) + GAP;
-    const visible = Math.max(1, Math.floor((wrapW + GAP) / STEP));
-    maxIndex = Math.max(0, cars.length - visible);
+    maxShift = Math.max(0, track.scrollWidth - wrapW);
+    maxIndex = Math.ceil(maxShift / STEP - 0.01);
   }
 
   function goTo(idx) {
     const rtl = document.documentElement.dir === 'rtl';
     current = Math.max(0, Math.min(idx, maxIndex));
+    const shift = Math.min(current * STEP, maxShift);
     track.style.transform = rtl
-      ? `translateX(${current * STEP}px)`
-      : `translateX(-${current * STEP}px)`;
+      ? `translateX(${shift}px)`
+      : `translateX(-${shift}px)`;
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current >= maxIndex;
   }

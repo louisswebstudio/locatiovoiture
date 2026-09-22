@@ -660,6 +660,7 @@ html[lang="en"] .hero__heading {
   gap: 15px;
   width: 100%;
   padding-bottom: 0;
+  position: relative;                 /* anchors the arrows */
 }
 
 .fleet__label-row {
@@ -683,6 +684,8 @@ html[lang="en"] .hero__heading {
   line-height: 1.2;
   color: var(--primary);
   text-align: center;
+  max-width: 640px;                   /* two balanced lines, leaves room for the arrows */
+  text-wrap: balance;
 }
 
 /* Carousel */
@@ -701,7 +704,7 @@ html[lang="en"] .hero__heading {
 /* Card */
 .fleet__card {
   flex-shrink: 0;
-  width: calc((100% - 60px) / 3);   /* exactly 3 whole cards, no clipped 4th */
+  width: calc((100% - 90px) / 3.5); /* 3 cards + half of the 4th, hinting there is more */
   border: 1px solid var(--divider);
   border-radius: 30px;
   padding: 21px;
@@ -881,8 +884,9 @@ html[lang="en"] .hero__heading {
   display: flex;
   align-items: center;
   gap: 12px;
-  align-self: flex-end;               /* above the cards, on the right */
-  margin: -6px 0 -4px;                /* keep the title close to the cards */
+  position: absolute;                 /* beside the title, level with its last line */
+  inset-inline-end: 0;
+  bottom: 4px;
 }
 
 .fleet__nav {
@@ -3996,7 +4000,7 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
    TABLET RESPONSIVE - max-width: 1024px
    ══════════════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 769px) {
-  .fleet__card { width: calc((100% - 30px) / 2); }
+  .fleet__card { width: calc((100% - 60px) / 2.5); }
 
   .container {
     padding: 0 30px;
