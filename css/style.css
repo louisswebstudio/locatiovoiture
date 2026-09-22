@@ -884,7 +884,11 @@ html[lang="en"] .hero__heading {
   display: flex;
   align-items: center;
   gap: 12px;
-  position: absolute;                 /* beside the title, level with its last line */
+}
+/* in a section header: beside the title, level with its last line */
+.fleet__header .fleet__nav-row,
+.cd-similar__header .fleet__nav-row {
+  position: absolute;
   inset-inline-end: 0;
   bottom: 4px;
 }
@@ -4557,7 +4561,8 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
   align-items: center;
   gap: 15px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
+  position: relative;                 /* anchors the arrows */
 }
 .cd-similar__label-row {
   display: flex;
@@ -5005,11 +5010,7 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
 /* Floating WhatsApp: always above everything */
 .wa-float { z-index: 9999; }
 
-/* ── Similar cars: reuse homepage fleet carousel ──────── */
-.cd-similar__nav-row {
-  justify-content: center;
-  padding-top: 30px;
-}
+/* ── Similar cars: reuse homepage fleet carousel (arrows sit in .cd-similar__header) ── */
 
 /* ── Booking form modal ───────────────────────────────── */
 .bk-modal {

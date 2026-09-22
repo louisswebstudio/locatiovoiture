@@ -445,19 +445,20 @@
   }
 
   // ── Similar-cars carousel (same behaviour as the homepage fleet carousel) ──
-  var CARD_W = 327.5;
   var GAP    = 30;
-  var STEP   = CARD_W + GAP;
+  var STEP   = 0;       // card width + gap, measured (cards are sized by CSS)
   var simCurrent = 0;
   var simMax = 0;
+  var simShift = 0;     // px: the last card ends flush with the right edge
 
   function simCalcMax() {
     var track = document.getElementById('similarTrack');
     if (!track) return;
     var wrapW = track.parentElement.clientWidth;
-    var count = track.children.length;
-    var visible = Math.max(1, Math.floor((wrapW + GAP) / STEP));
-    simMax = Math.max(0, count - visible);
+    var card = track.querySelector('.fleet__card');
+    STEP = (card ? card.getBoundingClientRect().width : 327.5) + GAP;
+    simShift = Math.max(0, track.scrollWidth - wrapW);
+    simMax = Math.ceil(simShift / STEP - 0.01);
   }
 
   function simGoTo(idx) {
@@ -467,9 +468,10 @@
     if (!track) return;
     var rtl = document.documentElement.dir === 'rtl';
     simCurrent = Math.max(0, Math.min(idx, simMax));
+    var shift = Math.min(simCurrent * STEP, simShift);
     track.style.transform = rtl
-      ? 'translateX(' + (simCurrent * STEP) + 'px)'
-      : 'translateX(-' + (simCurrent * STEP) + 'px)';
+      ? 'translateX(' + shift + 'px)'
+      : 'translateX(-' + shift + 'px)';
     if (prevBtn) prevBtn.disabled = simCurrent === 0;
     if (nextBtn) nextBtn.disabled = simCurrent >= simMax;
   }
