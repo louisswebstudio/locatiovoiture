@@ -71,16 +71,15 @@
     min-height: var(--tap);
   }
 
-  /* Le logo est un badge circulaire : style.css ne forçait que la hauteur,
-     ce qui l'étirait. On impose les deux dimensions pour le garder rond. */
+  /* Logo horizontal : on fixe la hauteur, la largeur suit les proportions. */
   .logo-img {
-    height: 46px !important;
-    width: 46px !important;
+    height: 42px !important;
+    width: auto !important;
   }
 
   .footer-logo {
     height: 56px !important;
-    width: 56px !important;
+    width: auto !important;
   }
 
   .contact-info__social {
