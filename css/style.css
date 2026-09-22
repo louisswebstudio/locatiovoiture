@@ -849,7 +849,7 @@ html[lang="en"] .hero__heading {
   font-weight: 700;
   font-size: 24px;
   line-height: 1.2;
-  color: var(--gold);
+  color: var(--primary);
   white-space: nowrap;
 }
 
@@ -2617,7 +2617,7 @@ html[lang="en"] .hero__heading {
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 24px;
-  color: var(--gold);
+  color: var(--primary);
   line-height: 1.2;
 }
 
@@ -2625,7 +2625,7 @@ html[lang="en"] .hero__heading {
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 16px;
-  color: var(--gold);
+  color: var(--primary);
   line-height: 1.3;
 }
 
@@ -4321,7 +4321,7 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
   font-weight: 800;
   font-size: 48px;
   line-height: 1.1;
-  color: var(--gold);
+  color: var(--primary);
 }
 .cd-price-label {
   font-family: var(--font-body);
@@ -4657,7 +4657,7 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 22px;
-  color: var(--gold);
+  color: var(--primary);
 }
 .car-price-row .price-label {
   font-family: var(--font-body);
