@@ -1805,10 +1805,11 @@ html[lang="en"] .hero__heading {
   margin: 0 auto;
 }
 
-/* 4-column grid */
+/* 3-column grid: brand, quick links, contact */
 .footer__cols {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1.6fr 1fr 1.2fr;
+  column-gap: 60px;
   align-items: start;
   padding-bottom: 40px;
 }
@@ -1821,12 +1822,7 @@ html[lang="en"] .hero__heading {
 }
 
 .footer__col--brand {
-  padding-right: 40px;
-}
-
-.footer__col:nth-child(2),
-.footer__col:nth-child(3) {
-  padding-left: 70px;
+  max-width: 360px;
 }
 
 /* Logo */
@@ -2803,6 +2799,19 @@ html[lang="en"] .hero__heading {
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
   max-width: 240px;
+}
+
+/* contact column: same size and rhythm as the quick links next to it */
+.footer__col--contact { gap: 10px; }
+.footer__col--contact .footer__col-title { margin-bottom: 10px; }
+.footer__col--contact .footer__hours { margin-bottom: 0; }
+.footer__col--contact .footer__hours p,
+.footer__col--contact .footer__phone,
+.footer__col--contact .footer__address {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0;
 }
 
 .footer__wa-btn {
@@ -4106,11 +4115,12 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
 
   .footer__cols {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 30px;
   }
 
-  .footer__col:nth-child(2),
-  .footer__col:nth-child(3) {
-    padding-left: 30px;
+  .footer__col--brand {
+    grid-column: 1 / -1;
+    max-width: none;
   }
 
   .fleet__inner {
