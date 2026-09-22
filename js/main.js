@@ -134,9 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ];
 
-  const CARD_W = 327.5;
   const GAP    = 30;
-  const STEP   = CARD_W + GAP;
+  let   STEP   = 0;   // card width + gap, measured: cards are sized by CSS to fit whole
 
   const track   = document.getElementById('fleetTrack');
   const prevBtn = document.getElementById('fleetPrev');
@@ -215,6 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calcMax() {
     const wrapW  = track.parentElement.clientWidth;
+    const card   = track.querySelector('.fleet__card');
+    STEP = (card ? card.getBoundingClientRect().width : 327.5) + GAP;
     const visible = Math.max(1, Math.floor((wrapW + GAP) / STEP));
     maxIndex = Math.max(0, cars.length - visible);
   }

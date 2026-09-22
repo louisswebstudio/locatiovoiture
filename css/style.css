@@ -701,7 +701,7 @@ html[lang="en"] .hero__heading {
 /* Card */
 .fleet__card {
   flex-shrink: 0;
-  width: 327.5px;
+  width: calc((100% - 60px) / 3);   /* exactly 3 whole cards, no clipped 4th */
   border: 1px solid var(--divider);
   border-radius: 30px;
   padding: 21px;
@@ -3995,6 +3995,7 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
    TABLET RESPONSIVE - max-width: 1024px
    ══════════════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 769px) {
+  .fleet__card { width: calc((100% - 30px) / 2); }
 
   .container {
     padding: 0 30px;
