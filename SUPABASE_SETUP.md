@@ -1,4 +1,4 @@
-# Bestore Car - Supabase backend
+# AYM Rent Car - Supabase backend
 
 The website + dashboard now read/write a real Supabase backend instead of
 `localStorage`. **All existing HTML/CSS/JS pages are unchanged in structure** -

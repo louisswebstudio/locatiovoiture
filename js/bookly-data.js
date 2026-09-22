@@ -1,5 +1,5 @@
 /* js/bookly-data.js
-   Browser data layer for Bestore Car - exposes window.BooklyDB.
+   Browser data layer for AYM Rent Car - exposes window.BooklyDB.
 
    Two interchangeable drivers behind one API:
      • Supabase driver  - used when js/supabase-client.js produced window.sbClient
@@ -421,7 +421,7 @@
       async getAgency() {
         return {
           id: window.BESTORE_AGENCY_ID,
-          name: 'Bestore Car', slug: window.BESTORE_AGENCY_SLUG || 'bestore-car',
+          name: 'AYM Rent Car', slug: window.BESTORE_AGENCY_SLUG || 'bestore-car',
           address: 'Avenue Arrar N°27, Tanger', phone: '+212 6 61 66 12 30',
           city: 'Tanger', primary_color: '#C41E2A',
         };

@@ -1,7 +1,7 @@
 {
   "name": "bestore-car",
   "version": "1.0.0",
-  "description": "Bestore Car - public website + agency dashboard, backed by Supabase.",
+  "description": "AYM Rent Car - public website + agency dashboard, backed by Supabase.",
   "private": true,
   "type": "module",
   "scripts": {

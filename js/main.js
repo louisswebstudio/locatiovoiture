@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const msg =
-      `Hello Bestore Car! I'd like to book a rental.\n\n` +
+      `Hello AYM Rent Car! I'd like to book a rental.\n\n` +
       `📞 Phone: ${phone}\n` +
       `📍 Pickup Location: ${location}\n` +
       `📅 Pickup Date: ${pickup}\n` +

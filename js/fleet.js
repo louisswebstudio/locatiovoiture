@@ -413,7 +413,7 @@
     } catch (e) {
       // Never fall back to the old demo list: it would advertise cars the
       // agency does not rent. An outage shows the 'fleet being updated' note.
-      console.warn('[Bestore] fleet: Supabase load failed.', e);
+      console.warn('[AYM] fleet: Supabase load failed.', e);
       cars = [];
     }
     renderBrandFilters(cars);

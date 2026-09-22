@@ -1,4 +1,4 @@
-// seed.js - populate Supabase with Bestore Car sample data.
+// seed.js - populate Supabase with AYM Rent Car sample data.
 //
 //   1. npm install
 //   2. fill in .env.local (needs SUPABASE_SERVICE_ROLE_KEY to bypass RLS)
@@ -48,7 +48,7 @@ const addDays = (d, n) => {
 // ── sample data ───────────────────────────────────────────
 const AGENCY = {
   id: AGENCY_ID,
-  name: 'Bestore Car',
+  name: 'AYM Rent Car',
   slug: 'bestore-car',
   phone: '+212 6 61 66 12 30',
   whatsapp: '212661661230',
@@ -111,7 +111,7 @@ const TIMES = ['09:00', '10:00', '11:30', '14:00', '16:00']
 
 // ── run ───────────────────────────────────────────────────
 async function main() {
-  console.log('→ Seeding Bestore Car…')
+  console.log('→ Seeding AYM Rent Car…')
 
   // Wipe previous data for this agency (children first via FK cascade isn't
   // guaranteed for clients/cars set-null, so delete explicitly).

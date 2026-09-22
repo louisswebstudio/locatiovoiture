@@ -7,7 +7,7 @@
 // Usage:
 //   node create-agency-user.js <email> <password> <agency_id>
 //
-// Example (Bestore Car - agency_id matches seed.js / supabase-config.js):
+// Example (AYM Rent Car - agency_id matches seed.js / supabase-config.js):
 //   node create-agency-user.js owner@bestore-car.ma "StrongPass123!" 11111111-1111-1111-1111-111111111111
 //
 // Needs SUPABASE_SERVICE_ROLE_KEY in .env.local (admin API, server-only).
@@ -21,7 +21,7 @@ dotenv.config()
 const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-const DEFAULT_AGENCY_ID = '11111111-1111-1111-1111-111111111111' // Bestore Car
+const DEFAULT_AGENCY_ID = '11111111-1111-1111-1111-111111111111' // AYM Rent Car
 
 const [email, password, agencyIdArg] = process.argv.slice(2)
 const agencyId = agencyIdArg || DEFAULT_AGENCY_ID

@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────
-   Bestore Car - Simple booking modal (car-detail page)
+   AYM Rent Car - Simple booking modal (car-detail page)
    ONE screen · 3 fields only: départ date · retour date · prénom
    - Live price total (price/day × days, min 1 day)
    - Multilingual labels (AR/FR/EN) via the shared i18n `translations`
@@ -15,7 +15,7 @@
 
   var WA_PHONE = '212661661230';
   // French label used in the WhatsApp message / saved lead (no field shown).
-  var PICKUP_LOCATION = 'Agence Bestore Car, Avenue Arrar N°27, Tanger';
+  var PICKUP_LOCATION = 'Agence AYM Rent Car, Avenue Arrar N°27, Tanger';
 
   // ── i18n helpers ─────────────────────────────────────────
   function getLang() {
@@ -175,10 +175,10 @@
         status:          'pending'
       });
       if (p && typeof p.catch === 'function') {
-        p.catch(function (err) { console.warn('[Bestore] booking save failed (non-blocking):', err); });
+        p.catch(function (err) { console.warn('[AYM] booking save failed (non-blocking):', err); });
       }
     } catch (e) {
-      console.warn('[Bestore] booking save error (non-blocking):', e);
+      console.warn('[AYM] booking save error (non-blocking):', e);
     }
   }
 

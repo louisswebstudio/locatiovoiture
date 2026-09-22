@@ -1,5 +1,5 @@
 -- ════════════════════════════════════════════════════════════════════
---  BESTORE CAR - Supabase schema
+--  AYM RENT CAR - Supabase schema
 --  Run this in the Supabase SQL editor (Dashboard → SQL Editor → New query).
 --  Safe to re-run: uses "if not exists" / "drop policy if exists".
 -- ════════════════════════════════════════════════════════════════════

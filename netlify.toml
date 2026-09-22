@@ -1,4 +1,4 @@
-# Netlify config - Bestore Car
+# Netlify config - AYM Rent Car
 # Static site (plain HTML/CSS/JS, no build step). The browser talks directly
 # to Supabase using the public keys in js/supabase-config.js, so there is no
 # server-side backend to deploy here - Netlify just serves these files.

@@ -20,7 +20,7 @@
   if (!configured) {
     window.sbClient = null;
     console.info(
-      '[Bestore] Supabase not configured, using local demo data. ' +
+      '[AYM] Supabase not configured, using local demo data. ' +
         'Fill in js/supabase-config.js to go live.'
     );
     return;
@@ -28,7 +28,7 @@
 
   if (!window.supabase || !window.supabase.createClient) {
     window.sbClient = null;
-    console.warn('[Bestore] supabase-js CDN script did not load; using local demo data.');
+    console.warn('[AYM] supabase-js CDN script did not load; using local demo data.');
     return;
   }
 

@@ -4877,6 +4877,8 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
 
   /* Keep nav-right visible but hide only the CTA button */
   .nav-right { display: flex !important; align-items: center; gap: 8px; }
+  /* push the lang switcher next to the hamburger instead of the bar's centre */
+  .nav-right { margin-inline-start: auto; }
   .nav-cta   { display: none !important; }
 
   .navbar__inner {

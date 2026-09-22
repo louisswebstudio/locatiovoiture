@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/png" sizes="64x64" href="assets/images/logo-aym-64.png">
 <link rel="apple-touch-icon" sizes="192x192" href="assets/images/logo-aym-192.png">
-<title>Espace Agence | Bestore Car</title>
+<title>Espace Agence | AYM Rent Car</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -820,7 +820,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 <div id="login">
   <form class="login-card" id="loginCard" autocomplete="off">
     <div class="login-logo">
-      <div class="login-logo-mark">B</div>
+      <div class="login-logo-mark">A</div>
       <div class="login-logo-text">Bookly</div>
     </div>
     <div class="login-sub">Espace de gestion agence</div>
@@ -841,7 +841,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
   <!-- Reset request: enter email to receive a reset link -->
   <form class="login-card" id="resetCard" autocomplete="off" style="display:none">
     <div class="login-logo">
-      <div class="login-logo-mark">B</div>
+      <div class="login-logo-mark">A</div>
       <div class="login-logo-text">Bookly</div>
     </div>
     <div class="login-sub">Réinitialiser le mot de passe</div>
@@ -858,7 +858,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
   <!-- New password: shown after the user clicks the email recovery link -->
   <form class="login-card" id="newPwCard" autocomplete="off" style="display:none">
     <div class="login-logo">
-      <div class="login-logo-mark">B</div>
+      <div class="login-logo-mark">A</div>
       <div class="login-logo-text">Bookly</div>
     </div>
     <div class="login-sub">Choisissez un nouveau mot de passe</div>
@@ -885,7 +885,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
       </span>
       <div class="sidebar__brand-text">
         <div class="sidebar__brand-name">Bookly</div>
-        <div class="sidebar__brand-sub">Bestore Car</div>
+        <div class="sidebar__brand-sub">AYM Rent Car</div>
       </div>
     </div>
     <nav class="sidebar__nav">
@@ -1544,13 +1544,13 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 
 <script>
 /* ════════════════════════════════════════════════
-   BESTORE CAR - DASHBOARD LOGIC
+   AYM RENT CAR - DASHBOARD LOGIC
    ════════════════════════════════════════════════ */
 const PASSWORD='bestore2024';
 const FB_IMG='https://images.unsplash.com/photo-1549924231-f129b911e442?w=600';
 /* shown for a car that has no photo yet */
 const NO_PHOTO='assets/images/cars/placeholder.svg';
-const AGENCY={name:'Bestore Car',addr:'Avenue Arrar N°27, Tanger',phone:'+212 6 61 66 12 30'};
+const AGENCY={name:'AYM Rent Car',addr:'Avenue Arrar N°27, Tanger',phone:'+212 6 61 66 12 30'};
 const STATUS_LABELS={pending:'En attente',confirmed:'Confirmée',inprogress:'En cours',completed:'Terminée',cancelled:'Annulée'};
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2550,7 +2550,7 @@ function renderClients(){
 $('#clSearch').addEventListener('input',e=>{clQuery=e.target.value;renderClients();});
 function waLink(name,phone){
   const num=phone.replace(/[^0-9]/g,'');
-  const msg=`Bonjour ${name.split(' ')[0]}, merci d'avoir choisi Bestore Car. Comment pouvons-nous vous aider avec votre location ?`;
+  const msg=`Bonjour ${name.split(' ')[0]}, merci d'avoir choisi AYM Rent Car. Comment pouvons-nous vous aider avec votre location ?`;
   return`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
 }
 const panel=$('#clientPanel');

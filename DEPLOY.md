@@ -1,4 +1,4 @@
-# Deploying Bestore Car to Vercel
+# Deploying AYM Rent Car to Vercel
 
 This is a **static site** (plain HTML/CSS/JS, no build step). Vercel just serves
 the files; `vercel.json` adds clean routes.

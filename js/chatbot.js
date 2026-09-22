@@ -1,5 +1,5 @@
 /* ============================================================
-   Bestore Car - Rule-based Chatbot "Karim"
+   AYM Rent Car - Rule-based Chatbot "Karim"
    Pure vanilla JS · No API · 100% offline
    ============================================================ */
 (function () {
@@ -8,7 +8,7 @@
   /* ── Config ─────────────────────────────────────────── */
   var WA_NUMBER = '212661661230';
   var WA_BASE   = 'https://wa.me/' + WA_NUMBER;
-  var WA_RESERVE = WA_BASE + '?text=' + encodeURIComponent('Bonjour, je souhaite faire une réservation chez Bestore Car');
+  var WA_RESERVE = WA_BASE + '?text=' + encodeURIComponent('Bonjour, je souhaite faire une réservation chez AYM Rent Car');
   var MAPS_URL  = 'https://maps.google.com/?q=Avenue+Arrar+Tanger+Maroc';
 
   /* Brand colors (match css/style.css) */
@@ -28,9 +28,9 @@
 
   /* ── UI strings (header / placeholder / aria) ───────── */
   var UI = {
-    fr: { online: 'En ligne', placeholder: 'Écrivez votre message…', send: 'Envoyer', sub: 'Bestore Car', open: 'Ouvrir le chat', close: 'Fermer' },
-    en: { online: 'Online',   placeholder: 'Type your message…',    send: 'Send',     sub: 'Bestore Car', open: 'Open chat',    close: 'Close' },
-    ar: { online: 'متصل',     placeholder: 'اكتب رسالتك…',          send: 'إرسال',    sub: 'Bestore Car', open: 'افتح المحادثة', close: 'إغلاق' }
+    fr: { online: 'En ligne', placeholder: 'Écrivez votre message…', send: 'Envoyer', sub: 'AYM Rent Car', open: 'Ouvrir le chat', close: 'Fermer' },
+    en: { online: 'Online',   placeholder: 'Type your message…',    send: 'Send',     sub: 'AYM Rent Car', open: 'Open chat',    close: 'Close' },
+    ar: { online: 'متصل',     placeholder: 'اكتب رسالتك…',          send: 'إرسال',    sub: 'AYM Rent Car', open: 'افتح المحادثة', close: 'إغلاق' }
   }[LANG];
 
   /* ── WhatsApp button (styled per spec) ──────────────── */
@@ -53,7 +53,7 @@
       ]
     },
     en: {
-      text: "Hello! I'm Karim from Bestore Car 🚗<br>How can I help you today?",
+      text: "Hello! I'm Karim from AYM Rent Car 🚗<br>How can I help you today?",
       chips: [
         { label: '🚗 Our Cars',  action: 'cars' },
         { label: '💰 Prices',    action: 'tarifs' },
@@ -62,7 +62,7 @@
       ]
     },
     ar: {
-      text: "مرحبا! أنا كريم، مساعد Bestore Car 🚗<br>كيف يمكنني مساعدتك؟",
+      text: "مرحبا! أنا كريم، مساعد AYM Rent Car 🚗<br>كيف يمكنني مساعدتك؟",
       chips: [
         { label: '🚗 السيارات', action: 'cars' },
         { label: '💰 الأسعار',  action: 'tarifs' },
@@ -135,7 +135,7 @@
     },
     trouver: function () {
       return {
-        text: "📍 Bestore Car<br>Avenue Arrar N°27, Tanger, Maroc<br><br>🕐 Horaires d'ouverture :<br>Lun - Dim : 8h00 - 20h00<br>7j/7, même les jours fériés<br><br>📞 Téléphone : +212 6 61 66 12 30<br>📱 WhatsApp : +212 6 61 66 12 30",
+        text: "📍 AYM Rent Car<br>Avenue Arrar N°27, Tanger, Maroc<br><br>🕐 Horaires d'ouverture :<br>Lun - Dim : 8h00 - 20h00<br>7j/7, même les jours fériés<br><br>📞 Téléphone : +212 6 61 66 12 30<br>📱 WhatsApp : +212 6 61 66 12 30",
         chips: [
           { label: '🗺️ Ouvrir sur Google Maps', action: 'maps' },
           { label: '📱 Contacter sur WhatsApp',  action: 'wa' }
@@ -319,7 +319,7 @@
       '<div id="bsc-head">' +
         '<div id="bsc-avatar">' + ICON_CAR + '</div>' +
         '<div>' +
-          '<div class="bsc-name">Karim · Bestore Car</div>' +
+          '<div class="bsc-name">Karim · AYM Rent Car</div>' +
           '<div class="bsc-status"><span class="bsc-dot"></span>' + UI.online + '</div>' +
         '</div>' +
         '<button id="bsc-close" aria-label="' + UI.close + '">&times;</button>' +

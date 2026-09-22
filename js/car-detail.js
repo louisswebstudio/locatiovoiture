@@ -205,7 +205,7 @@
         }
       }
     } catch (e) {
-      console.warn('[Bestore] car-detail: Supabase load failed, using static fallback.', e);
+      console.warn('[AYM] car-detail: Supabase load failed, using static fallback.', e);
     }
     if (db) return mergeCar(db);
     // Supabase unreachable: static data, but only for the car that was asked for.
@@ -347,14 +347,14 @@
     document.getElementById('car-description').textContent = c.desc[lang] || c.desc.en;
 
     // Page title
-    document.title = c.name + ' | Bestore Car';
+    document.title = c.name + ' | AYM Rent Car';
 
     // WhatsApp button
     var pickup = sessionStorage.getItem('pickup_date') || '';
     var ret    = sessionStorage.getItem('return_date') || '';
     var msg = pickup && ret
-      ? 'Hello Bestore Car! I want to book the ' + displayName + ' from ' + pickup + ' to ' + ret + '. Please confirm.'
-      : 'Hello Bestore Car! I am interested in the ' + displayName + '.';
+      ? 'Hello AYM Rent Car! I want to book the ' + displayName + ' from ' + pickup + ' to ' + ret + '. Please confirm.'
+      : 'Hello AYM Rent Car! I am interested in the ' + displayName + '.';
     document.getElementById('whatsapp-book').href =
       'https://wa.me/212661661230?text=' + encodeURIComponent(msg);
 

@@ -7,7 +7,7 @@ ALTER TABLE agencies
 ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT 'full'
   CHECK (plan IN ('full', 'contracts'));
 
--- Bestore Car (Aymen) : contracts only for now.
+-- AYM Rent Car (Aymen) : contracts only for now.
 UPDATE agencies SET plan = 'contracts' WHERE slug = 'bestore-car';
 
 -- To give him the full dashboard later:

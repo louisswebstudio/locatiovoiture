@@ -34,7 +34,7 @@
   function orDash(v) { return (v === 0 || v) ? esc(v) : '-'; }
 
   function number(c) {
-    return 'BC-' + new Date(c.created_at || Date.now()).getFullYear() + '-' + String(c.number || 0).padStart(4, '0');
+    return 'AYM-' + new Date(c.created_at || Date.now()).getFullYear() + '-' + String(c.number || 0).padStart(4, '0');
   }
 
   // Chemin du cachet de l'agence. Le <img> disparaît tout seul si le

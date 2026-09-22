@@ -1,4 +1,4 @@
-// scripts/import-fleet.js - load Bestore Car's real fleet into Supabase.
+// scripts/import-fleet.js - load AYM Rent Car's real fleet into Supabase.
 //
 // Cars are matched on ref_id, so running this again updates instead of
 // duplicating. Cars with price 0 or no photo stay hidden on the public
@@ -18,7 +18,7 @@ dotenv.config()
 
 const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
-const AGENCY_ID = '11111111-1111-1111-1111-111111111111' // Bestore Car
+const AGENCY_ID = '11111111-1111-1111-1111-111111111111' // AYM Rent Car
 
 const AC = 'Clim', SEATS = '5 places', AUTO = 'Automatique', MAN = 'Manuelle'
 
