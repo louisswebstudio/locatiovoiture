@@ -11,9 +11,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="preload" as="image" href="assets/images/logo-aym-mark.webp">
   <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="page-loader__mark">
+      <img class="page-loader__base" src="assets/images/logo-aym-mark.webp" alt="" width="360" height="154">
+      <img class="page-loader__fill" src="assets/images/logo-aym-mark.webp" alt="" width="360" height="154">
+    </div>
+  </div>
+  <script src="js/loader.js"></script>
   <!-- ── Top Bar ──────────────────────────────────────── -->
   <div class="top-bar">
     <div class="top-bar__inner">

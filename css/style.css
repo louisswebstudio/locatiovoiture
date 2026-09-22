@@ -5933,3 +5933,51 @@ html[dir="rtl"] .lang-dd { margin-right: 0; margin-left: 8px; }
   .fc__grid { grid-template-columns: repeat(2, 1fr); }
   #fcBrands { width: min(420px, 80vw); }
 }
+
+/* ══════════════════════════════════════════════════════
+   PAGE LOADER - the AYM mark fills in left to right
+   (js/loader.js hides it on window load)
+   ══════════════════════════════════════════════════════ */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white, #fff);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  /* safety net if the script never runs */
+  animation: page-loader-out 0.4s ease 5s forwards;
+}
+.page-loader.is-done { opacity: 0; visibility: hidden; }
+
+.page-loader__mark {
+  position: relative;
+  width: 180px;
+  max-width: 50vw;
+}
+.page-loader__mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.page-loader__base { opacity: 0.12; filter: grayscale(1); }
+.page-loader__fill {
+  position: absolute;
+  inset: 0;
+  animation: page-loader-sweep 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes page-loader-sweep {
+  0%   { clip-path: inset(0 100% 0 0); }
+  50%  { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+@keyframes page-loader-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__fill { animation: none; }
+}
