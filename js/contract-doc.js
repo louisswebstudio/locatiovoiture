@@ -121,11 +121,9 @@
 
     var h = '';
 
-    /* ── En-tête : logo, raison sociale, numéro de contrat ── */
+    /* ── En-tête : raison sociale (sans logo, comme le contrat papier) + numéro ── */
     h += '<div class="ct-top">' +
       '<div class="ct-top__brand">' +
-        '<img class="ct-top__logo" src="assets/images/logo-aym.webp" alt="" ' +
-             'onerror="this.style.display=\'none\'">' +
         '<div class="ct-top__names">' +
           '<div class="ct-top__name">' + esc(name) + '</div>' +
           '<div class="ct-top__tag">Location de voiture</div>' +
