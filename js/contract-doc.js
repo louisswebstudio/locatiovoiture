@@ -33,8 +33,9 @@
   function money(n) { return Number(n || 0).toLocaleString('fr-FR') + ' MAD'; }
   function orDash(v) { return (v === 0 || v) ? esc(v) : '-'; }
 
+  // Numérotation de la liasse papier : un simple compteur sur 6 chiffres (000214).
   function number(c) {
-    return 'AYM-' + new Date(c.created_at || Date.now()).getFullYear() + '-' + String(c.number || 0).padStart(4, '0');
+    return String(c.number || 0).padStart(6, '0');
   }
 
   // Chemin du cachet de l'agence. Le <img> disparaît tout seul si le
