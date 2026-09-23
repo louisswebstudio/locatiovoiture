@@ -1427,7 +1427,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 
         <div class="ct-sec">Véhicule & état au départ</div>
         <div class="form-grid">
-          <div class="field"><label>Voiture *</label><select id="c-car" required></select></div>
+          <div class="field"><label>Voiture *</label><input type="text" id="c-car" required list="ctCarList" placeholder="Ex : Dacia Logan" autocomplete="off"><datalist id="ctCarList"></datalist></div>
           <div class="field"><label>Immatriculation</label><input type="text" id="c-plate"></div>
           <div class="field"><label>Kilométrage départ</label><input type="number" id="c-km-out" min="0" inputmode="numeric"></div>
           <div class="field"><label>Carburant départ</label><select id="c-fuel-out" class="fuel-select"></select></div>
@@ -2742,8 +2742,14 @@ function ctCompute(){
   $('#c-total').textContent='0 MAD';$('#c-days-lbl').textContent='';return 0;
 }
 ['#c-pickup','#c-return','#c-price'].forEach(s=>$(s).addEventListener('input',ctCompute));
+/* the car is typed freely; if it matches one from the fleet we prefill plate and price */
+const carByTypedName=v=>{
+  const n=String(v||'').trim().toLowerCase();
+  return n?CARS.find(c=>String(c.name||'').trim().toLowerCase()===n):null;
+};
 $('#c-car').addEventListener('change',()=>{
-  const car=carById($('#c-car').value);
+  const car=carByTypedName($('#c-car').value);
+  if(!car){ctCompute();return;}                 // typed by hand: leave what the user entered
   $('#c-plate').value=car.plate&&car.plate!=='-'?car.plate:'';
   $('#c-price').value=car.price||'';
   $('#c-deposit').value=car.price?car.price*3:'';
@@ -2771,7 +2777,7 @@ $('#c-phone').addEventListener('change',()=>{
 function openContractForm(data,title){
   const f=$('#ctForm'); f.reset();
   $('#ctFormTitle').textContent=title;
-  $('#c-car').innerHTML=CARS.map(c=>`<option value="${c.id}">${esc(c.name)} · ${c.price} MAD/j</option>`).join('');
+  $('#ctCarList').innerHTML=CARS.map(c=>`<option value="${esc(c.name)}">${c.price} MAD/j</option>`).join('');
   const phones=[...new Set([...CONTRACTS.map(c=>c.client_phone),...BOOKINGS.map(b=>b.phone)].filter(Boolean))];
   $('#ctPhoneList').innerHTML=phones.map(p=>`<option value="${esc(p)}">`).join('');
   const set=(sel,v)=>{if(v!=null&&v!=='')$(sel).value=v;};
@@ -2781,8 +2787,9 @@ function openContractForm(data,title){
   set('#c-address',data.client_address);
   set('#c-d2-name',data.driver2_name); set('#c-d2-cin',data.driver2_cin); set('#c-d2-licence',data.driver2_licence);
   $('#c-driver2-wrap').open=!!data.driver2_name;
-  if(data.car_id!=null&&CARS.some(c=>String(c.id)===String(data.car_id)))$('#c-car').value=data.car_id;
-  const car=carById($('#c-car').value);
+  const linked=data.car_id!=null?CARS.find(c=>String(c.id)===String(data.car_id)):null;
+  $('#c-car').value=data.car_name||(linked?linked.name:'');
+  const car=linked||carByTypedName($('#c-car').value)||{name:'',plate:'',price:0};
   $('#c-plate').value=data.car_plate||(car.plate&&car.plate!=='-'?car.plate:'');
   set('#c-km-out',data.km_out); set('#c-fuel-out',data.fuel_out||'Plein'); set('#c-damages-out',data.damages_out);
   $('#c-pickup').value=data.pickup_date||iso(TODAY);
@@ -2833,13 +2840,14 @@ $('#ctForm').addEventListener('submit',async e=>{
   const num=sel=>$(sel).value===''?null:Number($(sel).value);
   const txt=sel=>$(sel).value.trim()||null;
   const days=daysBetween(p,r), price=num('#c-price')||0;
-  const car=carById($('#c-car').value);
+  const carName=$('#c-car').value.trim();
+  const car=carByTypedName(carName);
   const row={
     client_name:txt('#c-name'), client_phone:txt('#c-phone'),
     client_cin:txt('#c-cin'), client_birth_date:txt('#c-birth'), client_address:txt('#c-address'),
     licence_no:txt('#c-licence'),
     driver2_name:txt('#c-d2-name'), driver2_cin:txt('#c-d2-cin'), driver2_licence:txt('#c-d2-licence'),
-    car_id:car.id!=null?car.id:null, car_name:car.name, car_plate:txt('#c-plate'),
+    car_id:car&&car.id!=null?car.id:null, car_name:carName, car_plate:txt('#c-plate'),
     km_out:num('#c-km-out'), fuel_out:$('#c-fuel-out').value, damages_out:txt('#c-damages-out'),
     pickup_date:p, pickup_time:txt('#c-pickup-time'), pickup_place:txt('#c-pickup-place'),
     return_date:r, return_time:txt('#c-return-time'), return_place:txt('#c-return-place'),
@@ -2866,7 +2874,7 @@ $('#ctForm').addEventListener('submit',async e=>{
         let status='confirmed';
         if(parse(p)<=TODAY&&parse(r)>=TODAY)status='inprogress';
         const bk=await BooklyDB.createBookingFromDashboard({
-          agency_id:AGENCY_ID, car_id:car.id, client_name:row.client_name, client_phone:row.client_phone,
+          agency_id:AGENCY_ID, car_id:car&&car.id!=null?car.id:null, client_name:row.client_name, client_phone:row.client_phone,
           client_email:row.client_email, pickup_date:p, return_date:r, pickup_time:row.pickup_time||'10:00',
           price_per_day:price, deposit:row.deposit, status, notes:row.pickup_place?'Lieu : '+row.pickup_place:'',
         });
