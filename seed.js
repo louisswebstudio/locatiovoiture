@@ -52,7 +52,7 @@ const AGENCY = {
   slug: 'bestore-car',
   phone: '+212 6 13 61 61 45',
   whatsapp: '212613616145',
-  address: 'Avenue Arrar N°27, Tanger',
+  address: 'Hay Al Firdaous, Bâtiment 32, Appt. 10 - Témara',
   city: 'Tanger',
   primary_color: '#C41E2A',
 }
