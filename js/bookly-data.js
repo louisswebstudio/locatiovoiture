@@ -433,7 +433,7 @@
         return {
           id: window.BESTORE_AGENCY_ID,
           name: 'AYM Rent Car', slug: window.BESTORE_AGENCY_SLUG || 'bestore-car',
-          address: 'Avenue Arrar N°27, Tanger', phone: '+212 6 61 66 12 30',
+          address: 'Avenue Arrar N°27, Tanger', phone: '+212 6 13 61 61 45',
           city: 'Tanger', primary_color: '#C41E2A',
         };
       },

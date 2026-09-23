@@ -356,7 +356,7 @@
       ? 'Hello AYM Rent Car! I want to book the ' + displayName + ' from ' + pickup + ' to ' + ret + '. Please confirm.'
       : 'Hello AYM Rent Car! I am interested in the ' + displayName + '.';
     document.getElementById('whatsapp-book').href =
-      'https://wa.me/212661661230?text=' + encodeURIComponent(msg);
+      'https://wa.me/212613616145?text=' + encodeURIComponent(msg);
 
     // Similar cars
     renderSimilarCars(c, lang);
