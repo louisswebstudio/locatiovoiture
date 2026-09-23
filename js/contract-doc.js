@@ -198,11 +198,19 @@
     '</div>';
 
     /* ── Acceptation + première signature ── */
+    // Un seul cadre, comme sur le contrat papier : texte à gauche, signature à droite.
+    var acceptSig = c.client_signature;
+    var acceptWhen = c.client_signed_at || (c.client_signature ? c.signed_at : null);
     h += '<div class="ct-accept">' +
       '<div class="ct-accept__txt">Je reconnais avoir lu et accepté les conditions générales ' +
         'de location mentionnées aux 1 et 2 du présent contrat</div>' +
-      signBox('Signature du Client', c.client_signature,
-              c.client_signed_at || (c.client_signature ? c.signed_at : null)) +
+      '<div class="ct-accept__sign">' +
+        '<div class="ct-accept__sign-head">Signature du Client</div>' +
+        '<div class="ct-accept__sign-area">' +
+          (acceptSig ? '<img src="' + esc(acceptSig) + '" alt="Signature du client">' : '') +
+        '</div>' +
+        (acceptWhen ? '<div class="ct-accept__sign-meta">Signé le ' + dateTimeFR(acceptWhen) + '</div>' : '') +
+      '</div>' +
     '</div>';
 
     /* ── Visa de la direction (cachet) + signature client ── */

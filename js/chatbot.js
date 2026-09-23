@@ -9,7 +9,7 @@
   var WA_NUMBER = '212613616145';
   var WA_BASE   = 'https://wa.me/' + WA_NUMBER;
   var WA_RESERVE = WA_BASE + '?text=' + encodeURIComponent('Bonjour, je souhaite faire une réservation chez AYM Rent Car');
-  var MAPS_URL  = 'https://maps.google.com/?q=Avenue+Arrar+Tanger+Maroc';
+  var MAPS_URL  = 'https://maps.google.com/?q=AYM+Rent+Car+Tanger';
 
   /* Brand colors (match css/style.css) */
   var C_PRIMARY = '#C41E2A';   /* accent red = chatbot primary */
@@ -135,7 +135,7 @@
     },
     trouver: function () {
       return {
-        text: "📍 AYM Rent Car<br>Avenue Arrar N°27, Tanger, Maroc<br><br>🕐 Horaires d'ouverture :<br>Lun - Dim : 8h00 - 20h00<br>7j/7, même les jours fériés<br><br>📞 Téléphone : +212 6 13 61 61 45<br>📱 WhatsApp : +212 6 13 61 61 45",
+        text: "📍 AYM Rent Car<br>Tanger, Maroc<br><br>🕐 Horaires d'ouverture :<br>Lun - Dim : 8h00 - 20h00<br>7j/7, même les jours fériés<br><br>📞 Téléphone : +212 6 13 61 61 45<br>📱 WhatsApp : +212 6 13 61 61 45",
         chips: [
           { label: '🗺️ Ouvrir sur Google Maps', action: 'maps' },
           { label: '📱 Contacter sur WhatsApp',  action: 'wa' }

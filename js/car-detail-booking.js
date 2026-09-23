@@ -15,7 +15,7 @@
 
   var WA_PHONE = '212613616145';
   // French label used in the WhatsApp message / saved lead (no field shown).
-  var PICKUP_LOCATION = 'Agence AYM Rent Car, Avenue Arrar N°27, Tanger';
+  var PICKUP_LOCATION = 'Agence AYM Rent Car, Tanger';
 
   // ── i18n helpers ─────────────────────────────────────────
   function getLang() {
