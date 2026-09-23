@@ -81,6 +81,8 @@
       };
     }
 
+    // Look the client up by phone, then update or insert. A plain upsert would
+    // need a unique (agency_id, phone) constraint the database may not have.
     async function upsertClient(agencyId, name, phone, email) {
       var row = {
         agency_id: agencyId,
@@ -89,10 +91,19 @@
         email: email || null,
       };
       if (phone) {
-        var up = await sb.from('clients')
-          .upsert(row, { onConflict: 'agency_id,phone' }).select().single();
-        if (up.error) throw up.error;
-        return up.data;
+        var found = await sb.from('clients').select('id')
+          .eq('agency_id', agencyId).eq('phone', phone).limit(1).maybeSingle();
+        if (found.error) throw found.error;
+        if (found.data) {
+          var patch = {};                       // never wipe details we already have
+          if (name) patch.full_name = name;
+          if (email) patch.email = email;
+          if (!Object.keys(patch).length) return found.data;
+          var upd = await sb.from('clients').update(patch)
+            .eq('id', found.data.id).select().single();
+          if (upd.error) throw upd.error;
+          return upd.data;
+        }
       }
       var ins = await sb.from('clients').insert(row).select().single();
       if (ins.error) throw ins.error;
