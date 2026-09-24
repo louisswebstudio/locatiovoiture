@@ -185,10 +185,14 @@
       line('Le Reste', money(balance)) +
       line('Voiture Rendez le Reste à payer', '');
 
+    // Le cadre des conducteurs additionnels n'apparaît que s'il est rempli.
+    var hasDriver2 = !!(c.driver2_name || c.driver2_licence || c.driver2_cin ||
+                        c.driver3_name || c.driver3_licence || c.driver3_cin);
+
     h += '<div class="ct-cols">' +
       '<div class="ct-col">' +
         box('Renseignements concernant le 1<sup>er</sup> locataire', locataire) +
-        box('2ème et 3ème Conducteur', conducteurs) +
+        (hasDriver2 ? box('2ème et 3ème Conducteur', conducteurs) : '') +
       '</div>' +
       '<div class="ct-col">' +
         box('Caractéristiques du véhicule', vehicule) +

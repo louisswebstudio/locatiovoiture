@@ -1408,7 +1408,8 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
         <div class="ct-sec">Locataire</div>
         <div class="form-grid">
           <div class="field"><label>Téléphone *</label><input type="tel" id="c-phone" required placeholder="+212 6 12 34 56 78" list="ctPhoneList"></div>
-          <div class="field"><label>Nom complet *</label><input type="text" id="c-name" required></div>
+          <div class="field"><label>Nom *</label><input type="text" id="c-name" required></div>
+          <div class="field"><label>Prénom</label><input type="text" id="c-firstname"></div>
           <div class="field"><label>CIN / Passeport *</label><input type="text" id="c-cin"></div>
           <div class="field"><label>Date de naissance</label><input type="date" id="c-birth"></div>
           <div class="field"><label>N° permis de conduire *</label><input type="text" id="c-licence"></div>
@@ -2711,10 +2712,10 @@ function renderContracts(){
   }
   const q=ctQuery.trim().toLowerCase();
   let list=CONTRACTS.filter(c=>ctFilter==='all'||c.status===ctFilter);
-  if(q)list=list.filter(c=>[ctNo(c),c.client_name,c.client_phone,c.client_cin,c.car_name,c.car_plate].some(v=>String(v||'').toLowerCase().includes(q)));
+  if(q)list=list.filter(c=>[ctNo(c),c.client_name,c.client_firstname,c.client_phone,c.client_cin,c.car_name,c.car_plate].some(v=>String(v||'').toLowerCase().includes(q)));
   $('#contractsBody').innerHTML=list.length?list.map(c=>`<tr>
       <td class="t-id">${ctNo(c)}</td>
-      <td class="t-client">${esc(c.client_name)}<div style="font-size:12px;color:var(--muted)">${esc(c.client_cin||c.client_phone||'')}</div></td>
+      <td class="t-client">${esc([c.client_name,c.client_firstname].filter(Boolean).join(' '))}<div style="font-size:12px;color:var(--muted)">${esc(c.client_cin||c.client_phone||'')}</div></td>
       <td>${esc(c.car_name)}</td>
       <td>${fmtFR(c.pickup_date)} → ${fmtFR(c.return_date)}</td>
       <td class="t-total">${money(c.total_price||0)}</td>
@@ -2774,7 +2775,7 @@ $('#c-phone').addEventListener('change',()=>{
   if(!ph)return;
   const prev=CONTRACTS.find(c=>(c.client_phone||'').replace(/\s/g,'')===ph);
   if(prev){
-    [['#c-name','client_name'],['#c-cin','client_cin'],['#c-birth','client_birth_date'],['#c-licence','licence_no'],
+    [['#c-name','client_name'],['#c-firstname','client_firstname'],['#c-cin','client_cin'],['#c-birth','client_birth_date'],['#c-licence','licence_no'],
      ['#c-address','client_address']]
       .forEach(([sel,k])=>{if(!$(sel).value&&prev[k])$(sel).value=prev[k];});
     toast('Client connu, informations reprises du dernier contrat');
@@ -2795,7 +2796,7 @@ function openContractForm(data,title){
   $('#ctPhoneList').innerHTML=phones.map(p=>`<option value="${esc(p)}">`).join('');
   const set=(sel,v)=>{if(v!=null&&v!=='')$(sel).value=v;};
   $('#c-id').value=data.id||''; $('#c-booking').value=data.booking_id||'';
-  set('#c-phone',data.client_phone); set('#c-name',data.client_name); set('#c-cin',data.client_cin);
+  set('#c-phone',data.client_phone); set('#c-name',data.client_name); set('#c-firstname',data.client_firstname); set('#c-cin',data.client_cin);
   set('#c-birth',data.client_birth_date); set('#c-licence',data.licence_no);
   set('#c-address',data.client_address);
   set('#c-d2-name',data.driver2_name); set('#c-d2-cin',data.driver2_cin); set('#c-d2-licence',data.driver2_licence);
@@ -2856,7 +2857,7 @@ $('#ctForm').addEventListener('submit',async e=>{
   const carName=$('#c-car').value.trim();
   const car=carByTypedName(carName);
   const row={
-    client_name:txt('#c-name'), client_phone:txt('#c-phone'),
+    client_name:txt('#c-name'), client_firstname:txt('#c-firstname'), client_phone:txt('#c-phone'),
     client_cin:txt('#c-cin'), client_birth_date:txt('#c-birth'), client_address:txt('#c-address'),
     licence_no:txt('#c-licence'),
     driver2_name:txt('#c-d2-name'), driver2_cin:txt('#c-d2-cin'), driver2_licence:txt('#c-d2-licence'),
@@ -2887,7 +2888,8 @@ $('#ctForm').addEventListener('submit',async e=>{
         let status='confirmed';
         if(parse(p)<=TODAY&&parse(r)>=TODAY)status='inprogress';
         const bk=await BooklyDB.createBookingFromDashboard({
-          agency_id:AGENCY_ID, car_id:car&&car.id!=null?car.id:null, client_name:row.client_name, client_phone:row.client_phone,
+          agency_id:AGENCY_ID, car_id:car&&car.id!=null?car.id:null,
+          client_name:[row.client_name,row.client_firstname].filter(Boolean).join(' '), client_phone:row.client_phone,
           client_email:row.client_email, pickup_date:p, return_date:r, pickup_time:row.pickup_time||'10:00',
           price_per_day:price, deposit:row.deposit, status, notes:row.pickup_place?'Lieu : '+row.pickup_place:'',
         });
@@ -2955,7 +2957,7 @@ const SLOTS={
   client:ContractDoc.signatureSlot($('#slotClient'),{
     title:'Signature du locataire', allowType:true, placeholder:'Touchez pour faire signer le client',
     subtitle:'Signez comme sur papier, en utilisant toute la largeur du cadre.',
-    getName:()=>CT_OPEN?CT_OPEN.client_name||'':'',
+    getName:()=>CT_OPEN?[CT_OPEN.client_name,CT_OPEN.client_firstname].filter(Boolean).join(' '):'',
   }),
   agency:ContractDoc.signatureSlot($('#slotAgency'),{
     title:'Signature de l\'agence', allowType:false, placeholder:'Touchez pour signer (agence)',
@@ -3047,7 +3049,7 @@ $('#ctSendBtn').addEventListener('click',async()=>{
       renderContracts();
     }
     const url=new URL('sign.html',location.href).href.split('#')[0].split('?')[0]+'#t='+token;
-    const first=(c.client_name||'').split(' ')[0];
+    const first=(c.client_firstname||c.client_name||'').split(' ')[0];
     const msg=draft
       ? `Bonjour ${first}, voici votre contrat de location ${ctNo(c)} chez ${AGENCY.name} (${c.car_name}, du ${parse(c.pickup_date).toLocaleDateString('fr-FR')} au ${parse(c.return_date).toLocaleDateString('fr-FR')}).\n\nMerci de le lire et de le signer ici :\n${url}\n\nLe lien est valable ${LINK_DAYS_SIGN} jours.`
       : `Bonjour ${first}, voici votre contrat de location signé ${ctNo(c)} chez ${AGENCY.name}. Vous pouvez le consulter et le télécharger en PDF ici :\n${url}\n\nMerci pour votre confiance !`;
@@ -3130,7 +3132,7 @@ function subscribeContractsRealtime(){
     await loadContracts(); renderContracts();
     const newly=CONTRACTS.find(c=>c.client_signature&&before[c.id]===false);
     if(newly){
-      toast('✍️ '+newly.client_name+' a signé le contrat '+ctNo(newly));
+      toast('✍️ '+[newly.client_name,newly.client_firstname].filter(Boolean).join(' ')+' a signé le contrat '+ctNo(newly));
       if(CT_OPEN&&CT_OPEN.id===newly.id&&$('#contractOverlay').classList.contains('show'))viewContract(newly.id);
     }
   });
