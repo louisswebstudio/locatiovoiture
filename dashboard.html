@@ -1425,9 +1425,6 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
           <div class="field"><label>N° permis de conduire *</label><input type="text" id="c-licence"></div>
           <div class="field"><label>Adresse</label><input type="text" id="c-address"></div>
           <div class="field"><label>Nationalité</label><input type="text" id="c-nationality" placeholder="Marocain(e)"></div>
-          <div class="field"><label>Passeport n°</label><input type="text" id="c-passport"></div>
-          <div class="field"><label>Passeport délivré par</label><input type="text" id="c-passport-place"></div>
-          <div class="field"><label>Passeport délivré le</label><input type="date" id="c-passport-date"></div>
         </div>
         <datalist id="ctPhoneList"></datalist>
 
@@ -1445,8 +1442,8 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 
         <div class="ct-sec">Véhicule & état au départ</div>
         <div class="form-grid">
-          <div class="field"><label>Voiture *</label><input type="text" id="c-car" required list="ctCarList" placeholder="Ex : Dacia Logan" autocomplete="off"><datalist id="ctCarList"></datalist></div>
-          <div class="field"><label>Type / modèle</label><input type="text" id="c-car-type" placeholder="Ex : Logan"></div>
+          <div class="field"><label>Marque *</label><input type="text" id="c-car" required list="ctBrandList" placeholder="Ex : Dacia" autocomplete="off"><datalist id="ctBrandList"></datalist></div>
+          <div class="field"><label>Type / modèle</label><input type="text" id="c-car-type" list="ctModelList" placeholder="Ex : Logan" autocomplete="off"><datalist id="ctModelList"></datalist></div>
           <div class="field"><label>Immatriculation</label><input type="text" id="c-plate"></div>
           <div class="field"><label>Carburant</label>
             <select id="c-fuel-type"><option value="">-</option><option value="essence">Super sans plomb</option><option value="diesel">Gasoil</option></select></div>
@@ -2801,17 +2798,31 @@ const carByTypedName=v=>{
   const n=String(v||'').trim().toLowerCase();
   return n?CARS.find(c=>String(c.name||'').trim().toLowerCase()===n):null;
 };
-$('#c-car').addEventListener('change',()=>{
-  /* « Dacia Logan » : la marque part dans Marque, le reste dans Type / modèle */
-  const parts=$('#c-car').value.trim().split(/\s+/);
-  if(!$('#c-car-type').value && parts.length>1) $('#c-car-type').value=parts.slice(1).join(' ');
-  const car=carByTypedName($('#c-car').value);
-  if(!car){ctCompute();return;}                 // typed by hand: leave what the user entered
-  $('#c-plate').value=car.plate&&car.plate!=='-'?car.plate:'';
-  $('#c-price').value=car.price||'';
-  $('#c-deposit').value=car.price?car.price*3:'';
+/* nom complet de la voiture = « Marque Type » (ex. Dacia + Logan) */
+const ctCarFullName=()=>[$('#c-car').value.trim(),$('#c-car-type').value.trim()].filter(Boolean).join(' ');
+/* la marque seule peut déjà désigner une voiture de la flotte (ex. « Duster ») */
+function ctCarSync(){
+  const brand=$('#c-car').value.trim();
+  const full=ctCarFullName();
+  const car=carByTypedName(full)||carByTypedName(brand)||
+            CARS.find(c=>String(c.name||'').toLowerCase().startsWith(brand.toLowerCase()+' ')&&!$('#c-car-type').value);
+  if(car){
+    // marque saisie seule : on complète le modèle depuis la flotte
+    if(!$('#c-car-type').value){
+      const rest=String(car.name||'').trim().split(/\s+/).slice(1).join(' ');
+      if(rest&&car.name.toLowerCase().startsWith(brand.toLowerCase())){
+        $('#c-car').value=String(car.name).trim().split(/\s+/)[0];
+        $('#c-car-type').value=rest;
+      }
+    }
+    $('#c-plate').value=car.plate&&car.plate!=='-'?car.plate:'';
+    $('#c-price').value=car.price||'';
+    $('#c-deposit').value=car.price?car.price*3:'';
+  }
   ctCompute();
-});
+}
+$('#c-car').addEventListener('change',ctCarSync);
+$('#c-car-type').addEventListener('change',ctCarSync);
 /* returning client: fill identity from their latest contract */
 $('#c-phone').addEventListener('change',()=>{
   const ph=$('#c-phone').value.replace(/\s/g,'');
@@ -2834,7 +2845,10 @@ $('#c-phone').addEventListener('change',()=>{
 function openContractForm(data,title){
   const f=$('#ctForm'); f.reset();
   $('#ctFormTitle').textContent=title;
-  $('#ctCarList').innerHTML=CARS.map(c=>`<option value="${esc(c.name)}">${c.price} MAD/j</option>`).join('');
+  const brands=[...new Set(CARS.map(c=>String(c.name||'').trim().split(/\s+/)[0]).filter(Boolean))];
+  const models=[...new Set(CARS.map(c=>String(c.name||'').trim().split(/\s+/).slice(1).join(' ')).filter(Boolean))];
+  $('#ctBrandList').innerHTML=brands.map(b=>`<option value="${esc(b)}">`).join('');
+  $('#ctModelList').innerHTML=models.map(m=>`<option value="${esc(m)}">`).join('');
   const phones=[...new Set([...CONTRACTS.map(c=>c.client_phone),...BOOKINGS.map(b=>b.phone)].filter(Boolean))];
   $('#ctPhoneList').innerHTML=phones.map(p=>`<option value="${esc(p)}">`).join('');
   const set=(sel,v)=>{if(v!=null&&v!=='')$(sel).value=v;};
@@ -2842,16 +2856,17 @@ function openContractForm(data,title){
   set('#c-phone',data.client_phone); set('#c-name',data.client_name); set('#c-firstname',data.client_firstname); set('#c-cin',data.client_cin);
   set('#c-birth',data.client_birth_date); set('#c-licence',data.licence_no);
   set('#c-address',data.client_address); set('#c-nationality',data.client_nationality);
-  set('#c-passport',data.client_passport); set('#c-passport-place',data.passport_place); set('#c-passport-date',data.passport_date);
   set('#c-d2-name',data.driver2_name); set('#c-d2-cin',data.driver2_cin); set('#c-d2-licence',data.driver2_licence);
   set('#c-d3-name',data.driver3_name); set('#c-d3-cin',data.driver3_cin); set('#c-d3-licence',data.driver3_licence);
   $('#c-driver2-wrap').open=!!(data.driver2_name||data.driver3_name);
   const linked=data.car_id!=null?CARS.find(c=>String(c.id)===String(data.car_id)):null;
-  $('#c-car').value=data.car_name||(linked?linked.name:'');
-  const car=linked||carByTypedName($('#c-car').value)||{name:'',plate:'',price:0};
+  const fullName=data.car_name||(linked?linked.name:'');
+  const nameParts=String(fullName).trim().split(/\s+/);
+  $('#c-car').value=nameParts[0]||'';
+  const car=linked||carByTypedName(fullName)||{name:'',plate:'',price:0};
   $('#c-plate').value=data.car_plate||(car.plate&&car.plate!=='-'?car.plate:'');
   set('#c-km-out',data.km_out); set('#c-fuel-out',data.fuel_out||'Plein'); set('#c-damages-out',data.damages_out);
-  set('#c-car-type',data.car_type); set('#c-fuel-type',data.fuel_type);
+  set('#c-car-type',data.car_type||nameParts.slice(1).join(' ')); set('#c-fuel-type',data.fuel_type);
   set('#c-auto-radio',data.auto_radio); set('#c-spare',data.spare_wheel);
   $('#c-pickup').value=data.pickup_date||iso(TODAY);
   $('#c-return').value=data.return_date||iso(addDays(TODAY,3));
@@ -2901,13 +2916,12 @@ $('#ctForm').addEventListener('submit',async e=>{
   const num=sel=>$(sel).value===''?null:Number($(sel).value);
   const txt=sel=>$(sel).value.trim()||null;
   const days=daysBetween(p,r), price=num('#c-price')||0;
-  const carName=$('#c-car').value.trim();
-  const car=carByTypedName(carName);
+  const carName=ctCarFullName();
+  const car=carByTypedName(carName)||carByTypedName($('#c-car').value.trim());
   const row={
     client_name:txt('#c-name'), client_firstname:txt('#c-firstname'), client_phone:txt('#c-phone'),
     client_cin:txt('#c-cin'), client_birth_date:txt('#c-birth'), client_address:txt('#c-address'),
-    client_nationality:txt('#c-nationality'), client_passport:txt('#c-passport'),
-    passport_place:txt('#c-passport-place'), passport_date:txt('#c-passport-date'),
+    client_nationality:txt('#c-nationality'),
     licence_no:txt('#c-licence'),
     driver2_name:txt('#c-d2-name'), driver2_cin:txt('#c-d2-cin'), driver2_licence:txt('#c-d2-licence'),
     driver3_name:txt('#c-d3-name'), driver3_cin:txt('#c-d3-cin'), driver3_licence:txt('#c-d3-licence'),
