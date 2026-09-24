@@ -1,13 +1,27 @@
 {
-  "version": 2,
-  "builds": [{ "src": "*.html", "use": "@vercel/static" }],
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/fleet", "dest": "/fleet.html" },
-    { "src": "/contact", "dest": "/contact.html" },
-    { "src": "/dashboard", "dest": "/dashboard.html" }
-  ],
-  "env": {
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/vendor/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
 }

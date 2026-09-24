@@ -1,6 +1,18 @@
-.env.local
-node_modules
+# Server-only / tooling files: never upload them to the CDN.
+# (netlify.toml blocked these with 404 rules; on Vercel we simply don't deploy them.)
+*.sql
+*.mjs
 seed.js
 create-agency-user.js
 lib/
-*.md
+scripts/
+docs/
+node_modules/
+.env*
+package.json
+package-lock.json
+netlify.toml
+serve.json
+DEPLOY.md
+SUPABASE_SETUP.md
+_armap.txt
