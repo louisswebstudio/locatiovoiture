@@ -281,6 +281,11 @@
         if (res.error) throw res.error;
       },
 
+      async deleteContract(id) {
+        var res = await sb.from('contracts').delete().eq('id', id);
+        if (res.error) throw res.error;
+      },
+
       async getClientsUI(agencyId) {
         var res = await sb.from('clients').select('*').eq('agency_id', agencyId);
         if (res.error) throw res.error;
@@ -541,6 +546,12 @@
       async deleteCar(id) {
         var cars = load(K.cars, SEED_CARS).filter(function (c) { return String(c.id) !== String(id); });
         save(K.cars, cars); announce({ eventType: 'UPDATE' });
+      },
+      async deleteContract(id) {
+        var list = JSON.parse(localStorage.getItem('bookly_contracts') || '[]')
+          .filter(function (c) { return String(c.id) !== String(id); });
+        localStorage.setItem('bookly_contracts', JSON.stringify(list));
+        announce({ eventType: 'DELETE', table: 'contracts' });
       },
       async getClientsUI() {
         try {

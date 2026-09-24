@@ -378,6 +378,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 .icon-btn:active{transform:scale(.96)}
 .icon-btn.ok:hover{background:var(--status-available-bg);color:var(--status-available);border-color:transparent}
 .icon-btn.doc:hover{background:var(--blue-bg);color:var(--blue);border-color:transparent}
+.icon-btn.danger:hover{background:#FEE2E2;color:#B91C1C;border-color:transparent}
 .icon-btn.del:hover{background:var(--status-maintenance-bg);color:var(--status-maintenance);border-color:transparent}
 
 /* BUTTONS */
@@ -2768,6 +2769,9 @@ function renderContracts(){
       <td>${ctListBadge(c)}</td>
       <td><div class="ct-actions">
         <button class="btn btn-ghost" style="padding:7px 13px" onclick="viewContract('${c.id}')">${c.status==='draft'?(c.client_signature?'Finaliser':'Faire signer'):'Voir'}</button>
+        <button class="icon-btn danger" title="Supprimer ce contrat" onclick="askDeleteContract('${c.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>
+        </button>
       </div></td>
     </tr>`).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:28px">Aucun contrat${q||ctFilter!=='all'?' pour ce filtre':'. Cliquez sur « Nouveau contrat »'}</td></tr>`;
 
@@ -2898,6 +2902,22 @@ $('#newContractBtn').addEventListener('click',()=>{
 });
 
 /* from a booking row: open its contract, or prefill a new one */
+/* suppression d'un contrat : confirmation, et avertissement s'il est signé */
+window.askDeleteContract=async id=>{
+  const c=CONTRACTS.find(x=>String(x.id)===String(id)); if(!c)return;
+  const who=[c.client_name,c.client_firstname].filter(Boolean).join(' ')||'client';
+  const signed=c.status!=='draft'||c.client_signature||c.agency_signature;
+  const msg=signed
+    ? `Le contrat ${ctNo(c)} (${who}) est signé. Le supprimer efface définitivement le document et les signatures. Continuer ?`
+    : `Supprimer le brouillon ${ctNo(c)} (${who}) ? Cette action est définitive.`;
+  if(!confirm(msg))return;
+  try{
+    await BooklyDB.deleteContract(c.id);
+    if(CT_OPEN&&String(CT_OPEN.id)===String(c.id)){ $('#contractOverlay').classList.remove('show'); CT_OPEN=null; }
+    await persist('Contrat '+ctNo(c)+' supprimé');
+  }catch(err){ console.error(err); toast('Erreur : '+(err.message||'suppression impossible')); }
+};
+
 window.openContract=id=>{
   const existing=contractForBooking(id);
   if(existing){viewContract(existing.id);return;}
