@@ -473,6 +473,9 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
 .mini-cal__day.busy{background:var(--accent)}
 .mini-cal__day.today{outline:2px solid var(--text-primary);outline-offset:1px}
 .car-card__edit{margin-top:8px}
+/* disponibilite choisie par l'agence, directement sur la carte */
+.car-card__avail{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--muted)}
+.car-card__avail select{flex:1;max-width:160px;height:32px;padding:0 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-primary);font-size:12px;cursor:pointer}
 
 /* fleet management: add button, delete + inline confirm */
 .fleet-add-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:8px;background:var(--accent);color:#fff;font-size:13px;font-weight:500;border:none;white-space:nowrap;cursor:pointer;transition:all .15s ease}
@@ -1082,9 +1085,12 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
         <div class="fleet-cats" id="fleetCats">
           <button class="cat-pill active" data-cat="all">Toutes catégories <span class="cat-count">0</span></button>
           <button class="cat-pill" data-cat="Économique"><span class="cat-ico">🚗</span>Économique <span class="cat-count">0</span></button>
-          <button class="cat-pill" data-cat="Confort"><span class="cat-ico">🚙</span>Confort <span class="cat-count">0</span></button>
+          <button class="cat-pill" data-cat="Compacte"><span class="cat-ico">🚙</span>Compacte <span class="cat-count">0</span></button>
+          <button class="cat-pill" data-cat="Berline"><span class="cat-ico">🚗</span>Berline <span class="cat-count">0</span></button>
           <button class="cat-pill" data-cat="SUV"><span class="cat-ico">🚐</span>SUV <span class="cat-count">0</span></button>
           <button class="cat-pill" data-cat="Luxe"><span class="cat-ico">⭐</span>Luxe <span class="cat-count">0</span></button>
+          <button class="cat-pill" data-cat="Sport"><span class="cat-ico">🏎️</span>Sport <span class="cat-count">0</span></button>
+          <button class="cat-pill" data-cat="Utilitaire"><span class="cat-ico">🚚</span>Utilitaire <span class="cat-count">0</span></button>
         </div>
         <div class="fleet-grid" id="fleetGrid"></div>
       </section>
@@ -1279,8 +1285,10 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
           <div class="field"><label>Catégorie</label><select id="ec-cat">
             <option value="Économique">Économique</option>
             <option value="Compacte">Compacte</option>
-            <option value="SUV">SUV</option>
             <option value="Berline">Berline</option>
+            <option value="SUV">SUV</option>
+            <option value="Luxe">Luxe</option>
+            <option value="Sport">Sport</option>
             <option value="Utilitaire">Utilitaire</option>
           </select></div>
           <div class="field"><label>Statut</label><select id="ec-status">
@@ -1323,8 +1331,10 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
           <div class="field"><label>Catégorie</label><select id="ac-cat" required>
             <option value="Économique">Économique</option>
             <option value="Compacte">Compacte</option>
-            <option value="SUV">SUV</option>
             <option value="Berline">Berline</option>
+            <option value="SUV">SUV</option>
+            <option value="Luxe">Luxe</option>
+            <option value="Sport">Sport</option>
             <option value="Utilitaire">Utilitaire</option>
           </select></div>
           <div class="field"><label>Prix par jour (MAD)</label><input type="number" id="ac-price" min="0" required></div>
@@ -1665,9 +1675,8 @@ async function reloadData(){
   CARS=cars; BOOKINGS=bookings; CLIENTS_DB=clientsDb||[];
   if(BooklyDB.getContracts)await loadContracts();
   /* display status: maintenance is kept; otherwise rented when a booking is in progress */
-  CARS.forEach(c=>{ if(c.status==='maintenance')return;
-    c.status=BOOKINGS.some(b=>String(b.carId)===String(c.id)&&b.status==='inprogress')?'rented':'available';
-  });
+  /* le statut vient de la fiche voiture : l'agence le change elle-même */
+  CARS.forEach(c=>{ if(!c.status)c.status='available'; });
 }
 
 /* ════════ LOGIN - Supabase Auth (with demo-password fallback) ════════ */
@@ -2325,6 +2334,14 @@ function fleetCardHTML(c){
           <div class="mini-cal__label">Disponibilité sur 14 jours</div>
           <div class="mini-cal__grid">${cal.join('')}</div>
         </div>
+        <div class="car-card__avail">
+          <span>Disponibilité</span>
+          <select onchange="setCarStatus('${c.id}',this.value)" aria-label="Disponibilité de ${c.name}">
+            <option value="available"${c.status==='available'?' selected':''}>Disponible</option>
+            <option value="rented"${c.status==='rented'?' selected':''}>En location</option>
+            <option value="maintenance"${c.status==='maintenance'?' selected':''}>Maintenance</option>
+          </select>
+        </div>
         <button class="btn btn-ghost car-card__edit" onclick="openEditCar('${c.id}')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
           Modifier
@@ -2333,6 +2350,14 @@ function fleetCardHTML(c){
       <div class="car-card__confirm"></div>
     </div>`;
 }
+
+/* change la disponibilite d'une voiture depuis sa carte */
+window.setCarStatus=async (id,status)=>{
+  try{
+    await BooklyDB.updateCar(id,{status});
+    await persist('Disponibilité mise à jour');
+  }catch(e){ console.error(e); toast('Erreur : '+(e.message||'mise à jour impossible')); }
+};
 
 function renderFleet(){
   updateFleetCounts();

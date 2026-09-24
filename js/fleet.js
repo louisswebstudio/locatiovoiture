@@ -155,13 +155,14 @@
     if (s.indexOf('économ') === 0 || s.indexOf('econom') === 0 || s.indexOf('اقتصاد') !== -1) return 'Economy';
     if (s.indexOf('suv') !== -1 || s.indexOf('رباعي') !== -1) return 'SUV';
     if (s.indexOf('luxe') !== -1 || s.indexOf('luxury') !== -1 || s.indexOf('فاخر') !== -1) return 'Luxury';
+    if (s.indexOf('sport') !== -1 || s.indexOf('رياضي') !== -1) return 'Sport';
     if (s.indexOf('confort') !== -1 || s.indexOf('berline') !== -1 || s.indexOf('sedan') !== -1 || s.indexOf('سيدان') !== -1) return 'Sedan';
     return fallbackKey || 'Sedan';
   }
 
   // Build a multilingual category object for a car that has no static metadata.
   function catObjFor(catKey, raw) {
-    var keyMap = { Economy: 'fleet.economy', Sedan: 'fleet.sedan', SUV: 'fleet.suv', Luxury: 'fleet.luxury' };
+    var keyMap = { Economy: 'fleet.economy', Sedan: 'fleet.sedan', SUV: 'fleet.suv', Luxury: 'fleet.luxury', Sport: 'fleet.sport' };
     var k = keyMap[catKey];
     function lbl(lang) {
       if (k && typeof translations !== 'undefined' && translations[lang] && translations[lang][k]) {
