@@ -2672,15 +2672,17 @@ const agencyInfo=()=>({name:AGENCY.name,address:AGENCY.addr,phone:AGENCY.phone,
   patente:AGENCY.patente,rc:AGENCY.rc,if_no:AGENCY.if_no,ice:AGENCY.ice});
 const linkActive=c=>!!(c.share_token&&c.share_expires&&new Date(c.share_expires)>new Date());
 
+let CT_ERROR=null;
 async function loadContracts(){
   try{
     CONTRACTS=await BooklyDB.getContracts(AGENCY_ID);
-    CT_AVAILABLE=true;
-    if(!_sigLoaded)await loadAgencySignature();
+    CT_AVAILABLE=true; CT_ERROR=null;
   }catch(e){
     console.warn('Contracts unavailable',e);
-    CONTRACTS=[]; CT_AVAILABLE=false;
+    CONTRACTS=[]; CT_AVAILABLE=false; CT_ERROR=e;
   }
+  /* la signature de l'agence ne doit pas faire croire que les contrats sont HS */
+  if(!_sigLoaded){ try{ await loadAgencySignature(); }catch(e){ console.warn('Signature agence indisponible',e); } }
 }
 
 /* status shown in the list: drafts are split by signing progress */
@@ -2695,7 +2697,18 @@ function ctListBadge(c){
 
 function renderContracts(){
   $('#ctWarn').classList.toggle('show',!CT_AVAILABLE);
-  $('#ctWarn').innerHTML='La table <b>contracts</b> est introuvable dans Supabase. Exécutez <b>migrate-contracts.sql</b> puis <b>migrate-contracts-remote.sql</b> dans Supabase → SQL Editor, puis rechargez la page.';
+  /* message selon la cause reelle : table absente, droits, ou autre */
+  if(!CT_AVAILABLE){
+    const err=CT_ERROR||{}, code=String(err.code||''), msg=String(err.message||'Erreur inconnue');
+    let html;
+    if(code==='42P01'||/relation .* does not exist/i.test(msg))
+      html='La table <b>contracts</b> est introuvable dans Supabase. Exécutez <b>migrate-contracts.sql</b> puis <b>migrate-contracts-remote.sql</b> dans Supabase → SQL Editor, puis rechargez la page.';
+    else if(code==='42501'||code==='PGRST301'||/JWT|permission|policy/i.test(msg))
+      html='Votre session n'a pas accès aux contrats de cette agence. <b>Déconnectez-vous puis reconnectez-vous</b>. Si le problème persiste, contactez votre administrateur.';
+    else
+      html='Les contrats n'ont pas pu être chargés : <b>'+esc(msg)+'</b>'+(code?' (code '+esc(code)+')':'')+'. Rechargez la page, puis contactez votre administrateur si cela continue.';
+    $('#ctWarn').innerHTML=html;
+  }
   const q=ctQuery.trim().toLowerCase();
   let list=CONTRACTS.filter(c=>ctFilter==='all'||c.status===ctFilter);
   if(q)list=list.filter(c=>[ctNo(c),c.client_name,c.client_phone,c.client_cin,c.car_name,c.car_plate].some(v=>String(v||'').toLowerCase().includes(q)));
