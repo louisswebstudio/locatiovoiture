@@ -81,6 +81,17 @@
       '</svg>';
   }
 
+  // « Dacia Logan » -> Marque : Dacia / Type : Logan.
+  // Un type saisi à la main dans le formulaire est prioritaire.
+  function carBrand(c) {
+    return String(c.car_name || '').trim().split(/\s+/)[0] || '';
+  }
+  function carModel(c) {
+    if (c.car_type) return c.car_type;
+    var parts = String(c.car_name || '').trim().split(/\s+/);
+    return parts.slice(1).join(' ');
+  }
+
   function html(c, agency) {
     agency = agency || {};
 
@@ -162,7 +173,7 @@
 
     /* ── Colonne droite : véhicule + facturation ── */
     var vehicule =
-      line2('Marque', c.car_name, 'Type', c.car_type) +
+      line2('Marque', carBrand(c), 'Type', carModel(c)) +
       line('Immatriculation', c.car_plate) +
       '<div class="ct-fuel">' +
         '<span class="' + (fuel.indexOf('ess') === 0 || fuel.indexOf('sans plomb') > -1 ? 'on' : '') + '">Super sans plomb</span>' +

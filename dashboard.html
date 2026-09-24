@@ -1450,7 +1450,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
         <div class="ct-sec">Véhicule & état au départ</div>
         <div class="form-grid">
           <div class="field"><label>Voiture *</label><input type="text" id="c-car" required list="ctCarList" placeholder="Ex : Dacia Logan" autocomplete="off"><datalist id="ctCarList"></datalist></div>
-          <div class="field"><label>Type</label><input type="text" id="c-car-type" placeholder="Ex : Berline, SUV..."></div>
+          <div class="field"><label>Type / modèle</label><input type="text" id="c-car-type" placeholder="Ex : Logan"></div>
           <div class="field"><label>Immatriculation</label><input type="text" id="c-plate"></div>
           <div class="field"><label>Carburant</label>
             <select id="c-fuel-type"><option value="">-</option><option value="essence">Super sans plomb</option><option value="diesel">Gasoil</option></select></div>
@@ -2806,6 +2806,9 @@ const carByTypedName=v=>{
   return n?CARS.find(c=>String(c.name||'').trim().toLowerCase()===n):null;
 };
 $('#c-car').addEventListener('change',()=>{
+  /* « Dacia Logan » : la marque part dans Marque, le reste dans Type / modèle */
+  const parts=$('#c-car').value.trim().split(/\s+/);
+  if(!$('#c-car-type').value && parts.length>1) $('#c-car-type').value=parts.slice(1).join(' ');
   const car=carByTypedName($('#c-car').value);
   if(!car){ctCompute();return;}                 // typed by hand: leave what the user entered
   $('#c-plate').value=car.plate&&car.plate!=='-'?car.plate:'';
