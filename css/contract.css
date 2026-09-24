@@ -190,3 +190,9 @@ html.sigcap-lock,html.sigcap-lock body{overflow:hidden;overscroll-behavior:none}
 .ct-pdf .ct-top__title{margin-left:auto;width:auto;text-align:right;justify-content:flex-end}
 .ct-pdf .ct-visual{flex-direction:row;align-items:center}
 .ct-pdf .ct-damage svg{max-width:none}
+
+/* --ct-fill : espace restant sur la page 1, reparti par js/contract-doc.js */
+.ct-pdf .ct-box__body{padding-bottom:calc(9px + var(--ct-fill, 0px) * 0.20)}
+.ct-pdf .ct-accept__sign-area,
+.ct-pdf .ct-accept__txt{min-height:calc(60px + var(--ct-fill, 0px) * 0.22)}
+.ct-pdf .ct-sign__area{min-height:calc(76px + var(--ct-fill, 0px) * 0.40)}

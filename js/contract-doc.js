@@ -274,6 +274,25 @@
       document.head.appendChild(s);
     });
   }
+  // Hauteur utile d'une page A4 en pixels CSS, marges de pdf() deduites
+  // (297mm - 10mm haut - 12mm bas) a 96 dpi.
+  var PAGE_INNER_PX = (297 - 10 - 12) / 25.4 * 96;
+
+  function fillFirstPage(clone) {
+    var terms = clone.querySelector('.ct-terms');
+    if (!terms) return;
+    function page1Height() {
+      return terms.getBoundingClientRect().top - clone.getBoundingClientRect().top;
+    }
+    // deux passes : la premiere repartit l'espace, la seconde corrige l'arrondi
+    for (var pass = 0; pass < 2; pass++) {
+      var left = PAGE_INNER_PX - page1Height();
+      if (left < 8) break;
+      var cur = parseFloat(clone.style.getPropertyValue('--ct-fill')) || 0;
+      clone.style.setProperty('--ct-fill', (cur + left) + 'px');
+    }
+  }
+
   // Le PDF est rendu depuis une copie hors écran figée en largeur bureau :
   // sinon, sur téléphone, la mise en page passe en une colonne et le contrat
   // s'étale sur plusieurs pages au lieu d'une.
@@ -292,6 +311,11 @@
     holder.appendChild(clone);
     document.body.appendChild(holder);
     function cleanup() { if (holder.parentNode) holder.parentNode.removeChild(holder); }
+
+    // La page 1 doit descendre jusqu'en bas de la feuille : on mesure l'espace
+    // restant et on le redistribue aux cadres et aux zones de signature.
+    fillFirstPage(clone);
+
     return loadH2P().then(function (h2p) {
       return h2p().set({
         margin: [10, 10, 12, 10],
