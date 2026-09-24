@@ -12,7 +12,7 @@
 <link href="https://fonts.cdnfonts.com/css/geist-mono" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <!-- Supabase data layer (falls back to local demo data until configured) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="vendor/supabase.js"></script><script>window.supabase||document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>')</script>
 <script src="js/supabase-config.js"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/car-images.js"></script>
@@ -2704,9 +2704,9 @@ function renderContracts(){
     if(code==='42P01'||/relation .* does not exist/i.test(msg))
       html='La table <b>contracts</b> est introuvable dans Supabase. Exécutez <b>migrate-contracts.sql</b> puis <b>migrate-contracts-remote.sql</b> dans Supabase → SQL Editor, puis rechargez la page.';
     else if(code==='42501'||code==='PGRST301'||/JWT|permission|policy/i.test(msg))
-      html='Votre session n'a pas accès aux contrats de cette agence. <b>Déconnectez-vous puis reconnectez-vous</b>. Si le problème persiste, contactez votre administrateur.';
+      html='Votre session n\'a pas accès aux contrats de cette agence. <b>Déconnectez-vous puis reconnectez-vous</b>. Si le problème persiste, contactez votre administrateur.';
     else
-      html='Les contrats n'ont pas pu être chargés : <b>'+esc(msg)+'</b>'+(code?' (code '+esc(code)+')':'')+'. Rechargez la page, puis contactez votre administrateur si cela continue.';
+      html='Les contrats n\'ont pas pu être chargés : <b>'+esc(msg)+'</b>'+(code?' (code '+esc(code)+')':'')+'. Rechargez la page, puis contactez votre administrateur si cela continue.';
     $('#ctWarn').innerHTML=html;
   }
   const q=ctQuery.trim().toLowerCase();
