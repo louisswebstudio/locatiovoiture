@@ -2711,6 +2711,15 @@ const agencyInfo=()=>({name:AGENCY.name,address:AGENCY.addr,phone:AGENCY.phone,
 const linkActive=c=>!!(c.share_token&&c.share_expires&&new Date(c.share_expires)>new Date());
 
 let CT_ERROR=null;
+async function sessionAgencyId(){
+  try{
+    if(!SB)return null;
+    const { data:{ session } }=await SB.auth.getSession();
+    if(!session)return null;
+    const claims=JSON.parse(atob(session.access_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    return (claims.user_metadata&&claims.user_metadata.agency_id)||(claims.app_metadata&&claims.app_metadata.agency_id)||null;
+  }catch(e){ return null; }
+}
 async function loadContracts(){
   try{
     CONTRACTS=await BooklyDB.getContracts(AGENCY_ID);
@@ -2968,7 +2977,17 @@ $('#ctForm').addEventListener('submit',async e=>{
     if(_ctNext==='sign')viewContract(saved.id);
   }catch(err){
     console.error(err);
-    toast('Erreur : '+(err.message||'enregistrement impossible'));
+    if(String(err.code||'')==='42501'){
+      const mine=await sessionAgencyId();
+      toast(mine
+        ? (String(mine)===String(AGENCY_ID)
+            ? 'Refus de Supabase alors que votre compte est bien sur cette agence. Prévenez votre administrateur.'
+            : 'Votre session appartient à une autre agence. Déconnectez-vous puis reconnectez-vous.')
+        : "Votre session ne contient pas d'agence : déconnectez-vous puis reconnectez-vous.");
+      console.warn('[contrat] agence du contrat:',AGENCY_ID,'| agence du jeton:',mine);
+    }else{
+      toast('Erreur : '+(err.message||'enregistrement impossible'));
+    }
   }finally{btns.forEach(b=>b.disabled=false);}
 });
 
