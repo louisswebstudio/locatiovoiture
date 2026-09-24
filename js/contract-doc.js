@@ -269,18 +269,32 @@
       document.head.appendChild(s);
     });
   }
+  // Le PDF est rendu depuis une copie hors écran figée en largeur bureau :
+  // sinon, sur téléphone, la mise en page passe en une colonne et le contrat
+  // s'étale sur plusieurs pages au lieu d'une.
   function pdf(el, c) {
+    var holder = document.createElement('div');
+    holder.className = 'ct-pdf-holder';
+    var clone = el.cloneNode(true);
+    clone.classList.add('ct-pdf');
+    holder.appendChild(clone);
+    document.body.appendChild(holder);
+    function cleanup() { if (holder.parentNode) holder.parentNode.removeChild(holder); }
     return loadH2P().then(function (h2p) {
       return h2p().set({
         margin: [10, 10, 12, 10],
         filename: 'Contrat-' + number(c) + '.pdf',
         image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: 900 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['css', 'legacy'], avoid: ['.contract__sec', '.contract__sign', 'li'] },
-      }).from(el).outputPdf('blob');
+      }).from(clone).outputPdf('blob');
     }).then(function (blob) {
+      cleanup();
       return new File([blob], 'Contrat-' + number(c) + '.pdf', { type: 'application/pdf' });
+    }, function (err) {
+      cleanup();
+      throw err;
     });
   }
 

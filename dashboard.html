@@ -2821,7 +2821,7 @@ function openContractForm(data,title){
 }
 
 $('#newContractBtn').addEventListener('click',()=>{
-  if(!CT_AVAILABLE){toast('Exécutez d\'abord migrate-contracts.sql dans Supabase');return;}
+  if(!CT_AVAILABLE){toast('Contrats indisponibles : reconnectez-vous, puis réessayez');return;}
   openContractForm({},'Nouveau contrat');
 });
 
@@ -2829,7 +2829,7 @@ $('#newContractBtn').addEventListener('click',()=>{
 window.openContract=id=>{
   const existing=contractForBooking(id);
   if(existing){viewContract(existing.id);return;}
-  if(!CT_AVAILABLE){toast('Exécutez d\'abord migrate-contracts.sql dans Supabase');return;}
+  if(!CT_AVAILABLE){toast('Contrats indisponibles : reconnectez-vous, puis réessayez');return;}
   const b=BOOKINGS.find(x=>String(x.id)===String(id));if(!b)return;
   const car=carById(b.carId);
   const place=(String(b.notes||'').match(/Lieu : ([^·]+)/)||[])[1];
@@ -2970,7 +2970,7 @@ function syncAgencySlot(){
 }
 $('#useSavedSig').addEventListener('click',()=>{ if(AGENCY_SIG){SLOTS.agency.set(AGENCY_SIG,'saved');syncAgencySlot();} });
 $('#agencySigBtn').addEventListener('click',async()=>{
-  if(!CT_AVAILABLE){toast('Exécutez d\'abord les migrations contrats dans Supabase');return;}
+  if(!CT_AVAILABLE){toast('Contrats indisponibles : reconnectez-vous, puis réessayez');return;}
   if(AGENCY_SIG&&!confirm('Une signature de l\'agence est déjà enregistrée. La remplacer par une nouvelle ?'))return;
   try{
     const r=await ContractDoc.captureSignature({title:'Signature de l\'agence',subtitle:'Signez une fois, soigneusement (idéalement avec un stylet), elle sera apposée sur chaque contrat.'});

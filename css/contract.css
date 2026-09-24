@@ -179,3 +179,12 @@ html.sigcap-lock,html.sigcap-lock body{overflow:hidden;overscroll-behavior:none}
 @media (orientation:portrait) and (max-width:600px){.sigcap__area[data-pane="draw"]{flex:0 0 auto;height:min(42vh,320px);margin-top:auto;margin-bottom:auto}.sigcap__line{bottom:22%}}
 @media (max-width:560px){.sigcap{padding:0}.sigcap__box{border-radius:0;height:100%}.sigcap__tool{padding:0 10px;font-size:12px}.sigcap__ok{padding:0 16px}}
 @media (max-height:460px){.sigcap__head{padding:8px 14px 4px}.sigcap__sub,.sigcap__rotate{display:none!important}.sigcap__tabs{margin-bottom:4px}.sigcap__foot{padding:8px 14px}}
+
+/* ── Copie hors écran utilisée pour le PDF : toujours en mise en page bureau ── */
+.ct-pdf-holder{position:fixed;left:-10000px;top:0;width:820px;background:#fff;z-index:-1}
+.ct-pdf{width:800px;font-size:11px}
+.ct-pdf .ct-cols,.ct-pdf .ct-accept,.ct-pdf .ct-sigs{grid-template-columns:1fr 1fr}
+.ct-pdf .ct-top{flex-wrap:nowrap}
+.ct-pdf .ct-top__title{margin-left:auto;width:auto;text-align:right;justify-content:flex-end}
+.ct-pdf .ct-visual{flex-direction:row;align-items:center}
+.ct-pdf .ct-damage svg{max-width:none}
