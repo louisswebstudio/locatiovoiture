@@ -1414,24 +1414,42 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
           <div class="field"><label>Date de naissance</label><input type="date" id="c-birth"></div>
           <div class="field"><label>N° permis de conduire *</label><input type="text" id="c-licence"></div>
           <div class="field"><label>Adresse</label><input type="text" id="c-address"></div>
+          <div class="field"><label>Nationalité</label><input type="text" id="c-nationality" placeholder="Marocain(e)"></div>
+          <div class="field"><label>CIN délivrée par</label><input type="text" id="c-cin-place"></div>
+          <div class="field"><label>CIN délivrée le</label><input type="date" id="c-cin-date"></div>
+          <div class="field"><label>Permis délivré par</label><input type="text" id="c-licence-place"></div>
+          <div class="field"><label>Permis délivré le</label><input type="date" id="c-licence-date"></div>
+          <div class="field"><label>Passeport n°</label><input type="text" id="c-passport"></div>
+          <div class="field"><label>Passeport délivré par</label><input type="text" id="c-passport-place"></div>
+          <div class="field"><label>Passeport délivré le</label><input type="date" id="c-passport-date"></div>
         </div>
         <datalist id="ctPhoneList"></datalist>
 
         <details class="ct-more" id="c-driver2-wrap">
-          <summary>Deuxième conducteur (optionnel)</summary>
+          <summary>Deuxième et troisième conducteur (optionnel)</summary>
           <div class="form-grid">
-            <div class="field"><label>Nom complet</label><input type="text" id="c-d2-name"></div>
-            <div class="field"><label>CIN / Passeport</label><input type="text" id="c-d2-cin"></div>
-            <div class="field full"><label>N° permis</label><input type="text" id="c-d2-licence"></div>
+            <div class="field"><label>2e conducteur - Nom / Prénom</label><input type="text" id="c-d2-name"></div>
+            <div class="field"><label>2e conducteur - CIN</label><input type="text" id="c-d2-cin"></div>
+            <div class="field full"><label>2e conducteur - N° permis</label><input type="text" id="c-d2-licence"></div>
+            <div class="field"><label>3e conducteur - Nom / Prénom</label><input type="text" id="c-d3-name"></div>
+            <div class="field"><label>3e conducteur - CIN</label><input type="text" id="c-d3-cin"></div>
+            <div class="field full"><label>3e conducteur - N° permis</label><input type="text" id="c-d3-licence"></div>
           </div>
         </details>
 
         <div class="ct-sec">Véhicule & état au départ</div>
         <div class="form-grid">
           <div class="field"><label>Voiture *</label><input type="text" id="c-car" required list="ctCarList" placeholder="Ex : Dacia Logan" autocomplete="off"><datalist id="ctCarList"></datalist></div>
+          <div class="field"><label>Type</label><input type="text" id="c-car-type" placeholder="Ex : Berline, SUV..."></div>
           <div class="field"><label>Immatriculation</label><input type="text" id="c-plate"></div>
+          <div class="field"><label>Carburant</label>
+            <select id="c-fuel-type"><option value="">-</option><option value="essence">Super sans plomb</option><option value="diesel">Gasoil</option></select></div>
           <div class="field"><label>Kilométrage départ</label><input type="number" id="c-km-out" min="0" inputmode="numeric"></div>
-          <div class="field"><label>Carburant départ</label><select id="c-fuel-out" class="fuel-select"></select></div>
+          <div class="field"><label>Niveau carburant départ</label><select id="c-fuel-out" class="fuel-select"></select></div>
+          <div class="field"><label>Auto radio</label>
+            <select id="c-auto-radio"><option value="">-</option><option value="oui">oui</option><option value="non">Non</option></select></div>
+          <div class="field"><label>Roue de secours</label>
+            <select id="c-spare"><option value="">-</option><option value="oui">oui</option><option value="non">Non</option></select></div>
           <div class="field full"><label>Dommages / remarques au départ</label><textarea id="c-damages-out" placeholder="Ex : rayure pare-choc arrière gauche, jante avant droite..."></textarea></div>
         </div>
 
@@ -1476,6 +1494,7 @@ tbody tr:hover{background:#FAFAFA;transition:background .12s ease}
         <div class="form-grid">
           <div class="field"><label>Kilométrage retour</label><input type="number" id="r-km" min="0" inputmode="numeric"></div>
           <div class="field"><label>Carburant retour</label><select id="r-fuel" class="fuel-select"></select></div>
+          <div class="field"><label>Heure de restitution</label><input type="time" id="r-time"></div>
           <div class="field full"><label>Nouveaux dommages constatés</label><textarea id="r-damages" placeholder="Laisser vide si aucun"></textarea></div>
           <div class="field full"><label>Frais supplémentaires (MAD)</label><input type="number" id="r-fees" min="0" value="0" inputmode="numeric">
             <small style="color:var(--muted);font-size:11px">Retard, carburant manquant, dommages, amendes...</small></div>
@@ -2798,14 +2817,20 @@ function openContractForm(data,title){
   $('#c-id').value=data.id||''; $('#c-booking').value=data.booking_id||'';
   set('#c-phone',data.client_phone); set('#c-name',data.client_name); set('#c-firstname',data.client_firstname); set('#c-cin',data.client_cin);
   set('#c-birth',data.client_birth_date); set('#c-licence',data.licence_no);
-  set('#c-address',data.client_address);
+  set('#c-address',data.client_address); set('#c-nationality',data.client_nationality);
+  set('#c-cin-place',data.cin_place); set('#c-cin-date',data.cin_date);
+  set('#c-licence-place',data.licence_place); set('#c-licence-date',data.licence_date);
+  set('#c-passport',data.client_passport); set('#c-passport-place',data.passport_place); set('#c-passport-date',data.passport_date);
   set('#c-d2-name',data.driver2_name); set('#c-d2-cin',data.driver2_cin); set('#c-d2-licence',data.driver2_licence);
-  $('#c-driver2-wrap').open=!!data.driver2_name;
+  set('#c-d3-name',data.driver3_name); set('#c-d3-cin',data.driver3_cin); set('#c-d3-licence',data.driver3_licence);
+  $('#c-driver2-wrap').open=!!(data.driver2_name||data.driver3_name);
   const linked=data.car_id!=null?CARS.find(c=>String(c.id)===String(data.car_id)):null;
   $('#c-car').value=data.car_name||(linked?linked.name:'');
   const car=linked||carByTypedName($('#c-car').value)||{name:'',plate:'',price:0};
   $('#c-plate').value=data.car_plate||(car.plate&&car.plate!=='-'?car.plate:'');
   set('#c-km-out',data.km_out); set('#c-fuel-out',data.fuel_out||'Plein'); set('#c-damages-out',data.damages_out);
+  set('#c-car-type',data.car_type); set('#c-fuel-type',data.fuel_type);
+  set('#c-auto-radio',data.auto_radio); set('#c-spare',data.spare_wheel);
   $('#c-pickup').value=data.pickup_date||iso(TODAY);
   $('#c-return').value=data.return_date||iso(addDays(TODAY,3));
   $('#c-pickup-time').value=data.pickup_time||'10:00'; $('#c-return-time').value=data.return_time||data.pickup_time||'10:00';
@@ -2859,9 +2884,16 @@ $('#ctForm').addEventListener('submit',async e=>{
   const row={
     client_name:txt('#c-name'), client_firstname:txt('#c-firstname'), client_phone:txt('#c-phone'),
     client_cin:txt('#c-cin'), client_birth_date:txt('#c-birth'), client_address:txt('#c-address'),
+    client_nationality:txt('#c-nationality'), client_passport:txt('#c-passport'),
+    cin_place:txt('#c-cin-place'), cin_date:txt('#c-cin-date'),
+    licence_place:txt('#c-licence-place'), licence_date:txt('#c-licence-date'),
+    passport_place:txt('#c-passport-place'), passport_date:txt('#c-passport-date'),
     licence_no:txt('#c-licence'),
     driver2_name:txt('#c-d2-name'), driver2_cin:txt('#c-d2-cin'), driver2_licence:txt('#c-d2-licence'),
+    driver3_name:txt('#c-d3-name'), driver3_cin:txt('#c-d3-cin'), driver3_licence:txt('#c-d3-licence'),
     car_id:car&&car.id!=null?car.id:null, car_name:carName, car_plate:txt('#c-plate'),
+    car_type:txt('#c-car-type'), fuel_type:$('#c-fuel-type').value||null,
+    auto_radio:$('#c-auto-radio').value||null, spare_wheel:$('#c-spare').value||null,
     km_out:num('#c-km-out'), fuel_out:$('#c-fuel-out').value, damages_out:txt('#c-damages-out'),
     pickup_date:p, pickup_time:txt('#c-pickup-time'), pickup_place:txt('#c-pickup-place'),
     return_date:r, return_time:txt('#c-return-time'), return_place:txt('#c-return-place'),
@@ -3112,6 +3144,7 @@ $('#ctReturnForm').addEventListener('submit',async e=>{
   try{
     await BooklyDB.updateContract(c.id,{
       status:'closed', km_in:km, fuel_in:$('#r-fuel').value,
+      return_actual_time:$('#r-time').value||null,
       damages_in:$('#r-damages').value.trim()||null,
       extra_fees:Number($('#r-fees').value)||0, closed_at:new Date().toISOString(),
     });

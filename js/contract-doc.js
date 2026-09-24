@@ -118,7 +118,8 @@
     var balance = Math.max(0, (c.total_price || 0) - (c.amount_paid || 0));
     var name    = agency.name || 'AYM Rent Car';
     var terms   = (c.terms ? c.terms.split('\n') : TERMS).filter(Boolean);
-    var fuel    = String(c.fuel_out || '').toLowerCase();
+    // type de carburant : colonne dediee, avec repli sur l'ancien champ texte
+    var fuel    = String(c.fuel_type || c.fuel_out || '').toLowerCase();
 
     var h = '';
 
