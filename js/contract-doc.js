@@ -277,6 +277,13 @@
     holder.className = 'ct-pdf-holder';
     var clone = el.cloneNode(true);
     clone.classList.add('ct-pdf');
+    // le clone ne doit hériter d'aucun positionnement de l'original,
+    // sinon html2canvas peut capturer une page blanche
+    clone.style.position = 'static';
+    clone.style.left = clone.style.top = clone.style.right = clone.style.bottom = 'auto';
+    clone.style.transform = 'none';
+    clone.style.visibility = 'visible';
+    clone.style.display = 'block';
     holder.appendChild(clone);
     document.body.appendChild(holder);
     function cleanup() { if (holder.parentNode) holder.parentNode.removeChild(holder); }
