@@ -181,8 +181,10 @@ html.sigcap-lock,html.sigcap-lock body{overflow:hidden;overscroll-behavior:none}
 @media (max-height:460px){.sigcap__head{padding:8px 14px 4px}.sigcap__sub,.sigcap__rotate{display:none!important}.sigcap__tabs{margin-bottom:4px}.sigcap__foot{padding:8px 14px}}
 
 /* ── Copie hors écran utilisée pour le PDF : toujours en mise en page bureau ── */
-.ct-pdf-holder{position:fixed;left:-10000px;top:0;width:820px;background:#fff;z-index:-1}
-.ct-pdf{width:800px;font-size:11px}
+.ct-pdf-holder{position:fixed;left:-10000px;top:0;width:800px;background:#fff;z-index:-1}
+/* largeur laissee libre : html2pdf place la copie dans un conteneur
+   a la largeur utile de la page A4, une largeur fixe deborderait */
+.ct-pdf{width:100%;max-width:none;font-size:11px}
 .ct-pdf .ct-cols,.ct-pdf .ct-accept,.ct-pdf .ct-sigs{grid-template-columns:1fr 1fr}
 .ct-pdf .ct-top{flex-wrap:nowrap}
 .ct-pdf .ct-top__title{margin-left:auto;width:auto;text-align:right;justify-content:flex-end}

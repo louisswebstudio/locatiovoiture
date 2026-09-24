@@ -292,7 +292,7 @@
         margin: [10, 10, 12, 10],
         filename: 'Contrat-' + number(c) + '.pdf',
         image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: 900 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['css', 'legacy'], avoid: ['.contract__sec', '.contract__sign', 'li'] },
       }).from(clone).outputPdf('blob');
