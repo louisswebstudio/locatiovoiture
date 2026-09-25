@@ -102,7 +102,8 @@
       ref: 29,
       hero:  'assets/images/34/vw-golf-85.webp',
       front: 'assets/images/cars/vw-golf-85.webp',
-      side:  'assets/images/side view/vw-golf-85.webp'
+      side:  'assets/images/side view/vw-golf-85.webp',
+      extra: ['assets/images/interior/vw-golf-85-1.webp']
     },
     'audi-a3': {
       ref: 30,
