@@ -319,7 +319,8 @@
     var fallback = 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800';
     var imgs = (typeof getCarImages === 'function') ? getCarImages(c) : null;
     var photos = imgs
-      ? [imgs.front, imgs.hero, imgs.side]   // 3/4 avant d'abord, comme la vignette des cartes
+      // 3/4 avant d'abord (comme la vignette des cartes), puis les photos en plus
+      ? [imgs.front, imgs.hero, imgs.side].concat(imgs.extra || []).filter(Boolean)
       : [c.img, c.img, c.img];
 
     var mainImg = document.getElementById('gallery-main-img');
@@ -327,13 +328,20 @@
     mainImg.src = photos[0] || c.img || fallback;
     mainImg.alt = displayName;
 
-    ['thumb-0', 'thumb-1', 'thumb-2'].forEach(function(id, i) {
-      var el = document.getElementById(id);
-      el.src = photos[i] || c.img || fallback;
+    // autant de vignettes que de photos (3 par défaut, plus s'il y en a)
+    var thumbsWrap = document.querySelector('.gallery-thumbs');
+    thumbsWrap.innerHTML = '';
+    photos.forEach(function (src, i) {
+      var el = document.createElement('img');
+      el.className = 'thumb' + (i === 0 ? ' active' : '');
+      el.id = 'thumb-' + i;
+      el.width = 120; el.height = 80; el.loading = 'lazy';
+      el.src = src || c.img || fallback;
       el.alt = displayName;
-      el.classList.toggle('active', i === 0);
-      el.onerror = function() { el.onerror = null; el.src = fallback; };
+      el.onerror = function () { el.onerror = null; el.src = fallback; };
+      thumbsWrap.appendChild(el);
     });
+    initThumbs();
 
     // Car name + badge
     document.getElementById('car-detail-name').textContent  = displayName;

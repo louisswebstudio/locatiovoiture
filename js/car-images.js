@@ -7,7 +7,7 @@
  *
  * Loaded BEFORE car-detail.js. Exposes:
  *   - window.CAR_IMAGES            the raw mapping (keyed by slug)
- *   - window.getCarImages(car)    resolves a car (by ref_id, then name) → {hero, front, side}
+ *   - window.getCarImages(car)    resolves a car (by ref_id, then name) → {hero, front, side, extra?}
  *
  * `ref` matches the Supabase cars.ref_id so lookup works regardless of the
  * URL using a Supabase UUID or a numeric ref.
@@ -153,10 +153,13 @@
       side:  'assets/images/side view/range-rover-sport.webp'
     },
     'audi-q3': {
-      ref: 37,
+      ref: 24,
       hero:  'assets/images/34/audi-q3.webp',
       front: 'assets/images/cars/audi-q3.webp',
-      side:  'assets/images/side view/audi-q3.webp'
+      side:  'assets/images/side view/audi-q3.webp',
+      // photos supplémentaires (intérieur) : ajoutées à la suite dans la galerie
+      extra: ['assets/images/interior/audi-q3-1.webp',
+              'assets/images/interior/audi-q3-2.webp']
     },
     'vw-touareg': {
       ref: 42,
