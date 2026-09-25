@@ -256,6 +256,28 @@
     return Array.from(document.querySelectorAll('.fc__brand-checkbox')).filter(cb => cb.checked).map(cb => cb.value);
   }
 
+  // Vitrine : sans filtre, on alterne les catégories pour que la première page
+  // montre un peu de tout (dont du haut de gamme) et pas 12 citadines d'affilée.
+  const SHOWCASE_ORDER = ['Luxury', 'SUV', 'Sedan', 'Sport', 'Economy'];
+  function showcase(list) {
+    var groups = {};
+    list.forEach(function (car) {
+      var k = car.catKey || 'Sedan';
+      (groups[k] = groups[k] || []).push(car);
+    });
+    var keys = SHOWCASE_ORDER.filter(function (k) { return groups[k] && groups[k].length; })
+      .concat(Object.keys(groups).filter(function (k) { return SHOWCASE_ORDER.indexOf(k) === -1; }));
+    var out = [], added = true;
+    while (added) {
+      added = false;
+      keys.forEach(function (k) {
+        var car = groups[k].shift();
+        if (car) { out.push(car); added = true; }
+      });
+    }
+    return out;
+  }
+
   function applyFilters() {
     const checked  = getChecked();
     const brands   = getCheckedBrands();
@@ -269,6 +291,10 @@
       const matchQuery = query === '' || carName.includes(query);
       return matchCat && matchBrand && matchQuery;
     });
+    // l'ordre vitrine ne s'applique que sans filtre ni recherche
+    if (checked.length === 0 && brands.length === 0 && query === '') {
+      filtered = showcase(filtered);
+    }
     currentPage = 1;
     render();
   }
