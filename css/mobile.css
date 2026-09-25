@@ -555,9 +555,7 @@
 
   /* Le bouton WhatsApp flottant remonte au-dessus de la barre. */
   body.has-stickybar .wa-float,
-  body.has-stickybar .whatsapp-float,
-  body.has-stickybar #chatbot-toggle,
-  body.has-stickybar .chatbot-toggle {
+  body.has-stickybar .whatsapp-float {
     bottom: calc(80px + var(--safe-b));
   }
 }
